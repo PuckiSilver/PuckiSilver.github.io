@@ -3,13 +3,13 @@
 .wrapper {
     min-height: 100vh;
     // background-image: url('');
-    background-color: var(--section-color);
+    background-color: var(--background-color);
     display: flex;
     flex-direction: column;
 
     .content {
         flex: 1;
-        background-color: var(--background-color);
+        background-color: var(--section-color);
         padding: 1rem 2rem;
         margin: 0 auto;
         box-sizing: border-box;

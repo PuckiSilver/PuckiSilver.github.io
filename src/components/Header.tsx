@@ -4,6 +4,7 @@ import './Header.scss'
 const routes = [
     { path: '/', name: 'Home' },
     { path: '/links', name: 'Linklist' },
+    { path: '/faq', name: 'FAQ' },
 ];
 
 export default function Header() {
