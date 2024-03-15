@@ -5,6 +5,8 @@ import Header from './components/Header';
 import Home from './views/Home';
 import Faq from './views/Faq';
 import Socials from './views/Socials';
+import Tools from './views/Tools';
+import FancitPants from './views/tools/FancitPants';
 
 const App = () => {
   return (
@@ -14,8 +16,11 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />}  />
-            <Route path="/faq" element={<Faq />} />
             <Route path="/socials" element={<Socials />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/tools" element={<Tools />} />
+
+            <Route path="/tools/fancit-pants" element={<FancitPants />} />
           </Routes>
         </BrowserRouter>
       </div>

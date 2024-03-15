@@ -1,0 +1,30 @@
+@import './../colors.scss';
+
+div.toolsHeader {
+    border-radius: 0;
+    border-bottom: .125rem solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+
+    a {
+        display: flex;
+        gap: .5rem;
+        text-decoration: none;
+        color: var(--text-color);
+        align-items: center;
+        transition: color .2s ease;
+
+        img {
+            height: 1rem;
+            filter: invert(1);
+        }
+
+        p {
+            margin: 0;
+        }
+
+        &:hover {
+            color: var(--secondary-color)
+        }
+    }
+}

@@ -28,6 +28,13 @@ export default function Home() {
                         image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/240px-Icon-round-Question_mark.svg.png'
                         internal
                     />
+                    <LinkCard
+                        title='Tools'
+                        description='Tools and resources for Minecraft Data Pack development'
+                        link='/tools'
+                        image='https://raw.githubusercontent.com/misode/mcmeta/assets/assets/minecraft/textures/item/diamond_leggings.png'
+                        internal
+                    />
                 </div>
             </div>
         </main>

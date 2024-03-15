@@ -2,9 +2,10 @@ import React from 'react'
 import './Header.scss'
 
 const routes = [
-    { path: '/', name: 'Home' },
+    { path: '/',        name: 'Home' },
     { path: '/socials', name: 'Socials' },
-    { path: '/faq', name: 'FAQ' },
+    { path: '/faq',     name: 'FAQ' },
+    { path: '/tools',   name: 'Tools', match: ['/tools/fancit-pants'] },
 ];
 
 const Header = () => {
@@ -22,7 +23,10 @@ const Header = () => {
                 <ul>
                     {routes.map(route => (
                         <li key={route.path}>
-                            <a href={route.path} className={selectedRoute === route.path ? 'selected' : undefined}>
+                            <a
+                                href={route.path}
+                                className={selectedRoute === route.path || route.match?.includes(selectedRoute) ? 'selected' : undefined}
+                            >
                                 {route.name}
                             </a>
                         </li>
