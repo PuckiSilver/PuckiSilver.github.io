@@ -3,18 +3,19 @@ import './Header.scss'
 
 const routes = [
     { path: '/', name: 'Home' },
-    { path: '/links', name: 'Linklist' },
+    { path: '/socials', name: 'Socials' },
     { path: '/faq', name: 'FAQ' },
 ];
 
-export default function Header() {
+const Header = () => {
     const selectedRoute = window.location.pathname;
 
     return (
         <header>
             <h1>
                 <a href="/">
-                    PuckiSilver
+                    <span className='full'>PuckiSilver</span>
+                    <span className='short'>PS</span>
                 </a>
             </h1>
             <nav>
@@ -31,3 +32,5 @@ export default function Header() {
         </header>
     )
 }
+
+export default Header

@@ -1,11 +1,35 @@
 import React from 'react'
 import './Home.scss'
+import LinkCard from '../components/LinkCard'
 
 export default function Home() {
     return (
         <main className='home'>
-            <h2>Hey!</h2>
-            <p>There is nothing here yet, this page is still in developement, but while you are here, feel free to checkout the <a href="/links">Linklist</a>!</p>
+            <div className='section'>
+                <div className='title'>
+                    <h3>Welcome to the Website of</h3>
+                    <h1 className='fancyName'>PuckiSilver</h1>
+                </div>
+            </div>
+            <div className='section'>
+                <h1>Explore the Website</h1>
+                <div className='grid'>
+                    <LinkCard
+                        title='Socials'
+                        description='Find me on various platforms'
+                        link='/socials'
+                        image='https://docs.modrinth.com/img/logo.svg'
+                        internal
+                    />
+                    <LinkCard
+                        title='FAQ'
+                        description='Frequently asked questions'
+                        link='/faq'
+                        image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/240px-Icon-round-Question_mark.svg.png'
+                        internal
+                    />
+                </div>
+            </div>
         </main>
     )
 }

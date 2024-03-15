@@ -1,0 +1,48 @@
+@import './../colors.scss';
+
+a.linkCard {
+    width: 16rem;
+    height: 9rem;
+    border: .125rem solid var(--border-color);
+    border-radius: .25rem;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: border-color 0.2s ease-in-out;
+    padding: 1rem;
+    box-sizing: border-box;
+    z-index: 1;
+    position: relative;
+    background-color: var(--background-color);
+    overflow: hidden;
+
+    h3 {
+        margin: 0 0 .5rem 0;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .backgroundImage {
+        position: absolute;
+        z-index: -1;
+        width: 16rem;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+
+        filter: blur(.25rem);
+        opacity: .3;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    &:hover {
+        border-color: var(--primary-color);
+
+        .backgroundImage {
+            opacity: .8;
+        }
+    }
+}

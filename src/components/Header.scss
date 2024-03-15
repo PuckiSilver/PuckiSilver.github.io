@@ -8,6 +8,7 @@ header {
     border-bottom: 0.125rem solid var(--border-color);
     padding: 1rem;
     gap: 2rem;
+    overflow-x: auto;
     
     h1 {
         color: var(--primary-color);
@@ -16,6 +17,21 @@ header {
         a {
             text-decoration: none;
             color: var(--primary-color);
+            .short {
+                display: none;
+            }
+            .full {
+                display: block;
+            }
+
+            @media (max-width: 50rem) {
+                .full {
+                    display: none;
+                }
+                .short {
+                    display: block;
+                }
+            }
         }
     }
 
