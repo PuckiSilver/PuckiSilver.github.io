@@ -1,10 +1,10 @@
 import React from 'react'
-import ToolsHeader from '../../components/ToolsHeader'
+import Breadcrumb from '../../components/Breadcrumb'
 
 const FancitPants = () => {
     return (
         <>
-            <ToolsHeader />
+            <Breadcrumb path={[{ name: "Home", link: "/" }, { name: "Tools", link: "/tools" }, { name: "FanCIT Pants", link: "/tools/fancit-pants" }]} />
             <div>FancitPants</div>
         </>
     )
