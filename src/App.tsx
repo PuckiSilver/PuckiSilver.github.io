@@ -6,7 +6,7 @@ import Home from './views/Home';
 import Faq from './views/Faq';
 import Socials from './views/Socials';
 import Tools from './views/Tools';
-import FancitPants from './views/tools/FancitPants';
+import Velvet from './views/tools/Velvet';
 import Cardboard from './views/tools/Cardboard';
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
             <Route path="/faq" element={<Faq />} />
             <Route path="/tools" element={<Tools />} />
 
-            <Route path="/tools/fancit-pants" element={<FancitPants />} />
+            <Route path="/tools/velvet" element={<Velvet />} />
             <Route path="/tools/cardboard" element={<Cardboard />} />
           </Routes>
         </BrowserRouter>

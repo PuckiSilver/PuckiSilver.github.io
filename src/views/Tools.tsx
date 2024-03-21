@@ -9,9 +9,9 @@ const Tools = () => {
                 <h1>Tools</h1>
                 <div className='grid'>
                     <LinkCard
-                        title='FanCIT Pants'
+                        title='Velvet'
                         description='Create custom armor textures that work with CIT and vanilla Minecraft'
-                        link='/tools/fancit-pants'
+                        link='/tools/velvet'
                         image='https://raw.githubusercontent.com/misode/mcmeta/assets/assets/minecraft/textures/item/diamond_leggings.png'
                         internal
                     />

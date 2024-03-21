@@ -1,4 +1,4 @@
-@import './../colors.scss';
+@import './../styles.scss';
 
 div.breadcrumb {
     border-radius: 0;
@@ -18,17 +18,8 @@ div.breadcrumb {
         align-items: center;
         transition: color .2s ease;
 
-        img {
-            height: 1rem;
-            filter: invert(1);
-        }
-
-        p {
-            margin: 0;
-        }
-
         &:hover {
-            color: var(--secondary-color)
+            color: var(--primary-color)
         }
     }
 }

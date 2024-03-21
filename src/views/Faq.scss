@@ -1,4 +1,4 @@
-@import '../colors.scss';
+@import '../styles.scss';
 
 main.faq {
     display: flex;
@@ -19,19 +19,6 @@ main.faq {
         }
 
         p {
-            b {
-                color: var(--secondary-color);
-            }
-
-            a {
-                color: var(--secondary-color);
-                transition: color 0.2s ease-in-out;
-                
-                &:hover {
-                    color: var(--primary-color);
-                }
-            }
-
             color: var(--text-color);
             text-decoration: none;
             font-size: 1.25rem;

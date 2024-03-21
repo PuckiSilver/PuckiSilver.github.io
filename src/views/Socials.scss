@@ -1,24 +1,7 @@
-@import '../colors.scss';
+@import '../styles.scss';
 
 main.socials {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-
-    div.section {
-        h1 {
-            margin: 0 auto;
-        }
-
-        div.grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, 16rem);
-            gap: 1rem;
-            padding: 1rem;
-            justify-content: center;
-        }
-
-        border-radius: 0;
-        border-bottom: .125rem solid var(--border-color);
-    }
 }

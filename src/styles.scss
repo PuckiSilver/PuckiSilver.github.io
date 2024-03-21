@@ -1,0 +1,38 @@
+:root {
+    --primary-color: #00FF2B;
+    --secondary-color: #6affbf;
+    --border-color: #00753c;
+    --section-color: #1d1f1d;
+    --background-color: #131615;
+    --text-color: #FFFFFF;
+}
+
+div.section {
+    border-radius: 0;
+    border-bottom: .125rem solid var(--border-color);
+
+    h1 {
+        margin: 0 auto;
+    }
+}
+
+div.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 16rem);
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
+}
+
+a {
+    color: var(--secondary-color);
+    transition: color 0.2s ease-in-out;
+    
+    &:hover {
+        color: var(--primary-color);
+    }
+}
+
+b {
+    color: var(--secondary-color);
+}

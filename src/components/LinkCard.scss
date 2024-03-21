@@ -1,4 +1,4 @@
-@import './../colors.scss';
+@import './../styles.scss';
 
 a.linkCard {
     width: 16rem;
@@ -40,6 +40,7 @@ a.linkCard {
 
     &:hover {
         border-color: var(--primary-color);
+        color: var(--text-color);
 
         .backgroundImage {
             opacity: .8;
