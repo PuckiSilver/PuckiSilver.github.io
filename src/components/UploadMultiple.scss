@@ -1,6 +1,9 @@
 @import './../styles.scss';
 
 div.uploadMultiple {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
 
     input.upload {
         width: 16rem;
@@ -8,24 +11,29 @@ div.uploadMultiple {
         border: .125rem solid var(--border-color);
         border-radius: .25rem;
         display: flex;
-        flex-direction: column;
-        color: var(--text-color);
-        text-decoration: none;
+        color: #00000000;
         transition: border-color 0.2s ease-in-out;
         padding: 1rem;
         box-sizing: border-box;
-        z-index: 1;
         position: relative;
         background-color: var(--background-color);
-        overflow: hidden;
+
+        &::file-selector-button {
+            display: none;
+        }
 
         &:hover {
             border-color: var(--primary-color);
-            color: var(--text-color);
-    
+
             .backgroundImage {
                 opacity: .8;
             }
+        }
+
+        div.files {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 1rem;
         }
     }
 }
