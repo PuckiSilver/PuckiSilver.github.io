@@ -22,7 +22,7 @@ export default function Links() {
             </div>
             <div className='section'>
                 <h2>How can I <u>contact</u> you?</h2>
-                <p>It's best to create an <b>issue on GitHub</b> or leave a <b>comment on PlanetMinecraft</b> of the page corresponding to the pack. If you need to reach me directly, feel free to add <b>puckisilver on Discord</b>.</p>
+                <p>It's best to create an <b>issue on GitHub</b> or leave a <b>comment on PlanetMinecraft</b> of the page corresponding to the pack. If you need to reach me directly, feel free to add <code>puckisilver</code> <b>on Discord</b>.</p>
             </div>
         </main>
     )
