@@ -1,49 +1,47 @@
 @import './../styles.scss';
 
-a.linkCard {
+a.link_card {
     width: 16rem;
-    height: 9rem;
-    border: .125rem solid var(--border-color);
+    height: 6.5rem;
     border-radius: .25rem;
+    background: linear-gradient(120deg, var(--background-color) 0%, var(--section-color) 50%, var(--background-color) 100%);
+    border: .125rem solid var(--background-color);
     display: flex;
     flex-direction: column;
+    gap: .25rem;
+    padding: .5rem;
     color: var(--text-color);
     text-decoration: none;
-    transition: border-color 0.2s ease-in-out;
-    padding: 1rem;
-    box-sizing: border-box;
-    z-index: 1;
-    position: relative;
-    background-color: var(--background-color);
-    overflow: hidden;
-
-    h3 {
-        margin: 0 0 .5rem 0;
-    }
-
-    p {
-        margin: 0;
-    }
-
-    .backgroundImage {
-        position: absolute;
-        z-index: -1;
-        width: 16rem;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-
-        filter: blur(.25rem);
-        opacity: .3;
-        transition: opacity 0.2s ease-in-out;
-    }
 
     &:hover {
-        border-color: var(--primary-color);
         color: var(--text-color);
 
-        .backgroundImage {
-            opacity: .8;
+        .link_card_title {
+            background-color: var(--background-color);
         }
+
+        .link_card_description {
+            background-color: var(--background-color);
+        }
+    }
+
+    .link_card_title {
+        border-radius: .25rem;
+        background-color: var(--section-color);
+        padding: .25rem .5rem;
+        width: fit-content;
+        display: flex;
+        gap: .25rem;
+
+        svg {
+            max-width: 1.5rem;
+            max-height: 1.5rem;
+        }
+    }
+
+    .link_card_description {
+        border-radius: .25rem;
+        background-color: var(--section-color);
+        padding: .25rem .5rem;
     }
 }

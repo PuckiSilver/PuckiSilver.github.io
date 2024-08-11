@@ -1,21 +1,24 @@
 import React from 'react'
 import './LinkCard.scss'
+import ArrowUpRightIcon from '../icons/arrow-up-right';
 
-const LinkCard = ({ title, description, link, image, internal }: { title:string, description:string, link:string, image:string, internal?:boolean }) => {
+const LinkCard = ({ title, description, link, icon }: { title:string, description:string, link:string, icon?:any }) => {
+    const isExternal: boolean = link.startsWith('http');
     return (
         <a
-            className='linkCard'
+            className='link_card'
             href={link}
-            target={internal ? '_self' : '_blank'}
-            rel={internal ? '' : 'noreferrer'}
+            target={isExternal ? '_blank' : undefined}
+            rel={isExternal ? 'noreferrer' : undefined}
         >
-            <img
-                className='backgroundImage'
-                src={image}
-                alt={`${title}BackgroundImage`}
-            />
-            <h3>{title}</h3>
-            <p>{description}</p>
+            <div className='link_card_title'>
+                {icon}
+                <h3>{title}</h3>
+                {isExternal && <ArrowUpRightIcon/>}
+            </div>
+            <div className='link_card_description'>
+                <span>{description}</span>
+            </div>
         </a>
     )
 }
