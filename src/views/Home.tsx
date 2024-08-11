@@ -5,14 +5,12 @@ import LinkCard from '../components/LinkCard'
 export default function Home() {
     return (
         <main className='home'>
-            <div className='section'>
-                <div className='title'>
-                    <h3>Welcome to the Website of</h3>
-                    <h1 className='fancyName'>PuckiSilver</h1>
-                </div>
+            <div className='title'>
+                <h3>Welcome to the Website of</h3>
+                <h1 className='fancyName'>PuckiSilver</h1>
             </div>
             <div className='section'>
-                <h1>Explore the Website</h1>
+                <h2>Explore the Website</h2>
                 <div className='grid'>
                     <LinkCard
                         title='Socials'

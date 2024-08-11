@@ -4,6 +4,7 @@ import './Faq.scss'
 export default function Links() {
     return (
         <main className='faq'>
+            <h1>Frequently Asked Questions</h1>
             <div className='section'>
                 <h2>Does the pack work on <u>PaperMC</u>?</h2>
                 <p><b>No</b>, PaperMC really aggressively disables features that Data Packs rely on and trying to make the pack work with Paper would really limit what I could do.</p>

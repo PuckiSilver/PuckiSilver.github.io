@@ -5,8 +5,9 @@ import LinkCard from '../components/LinkCard'
 const Socials = () => {
     return (
         <main className='socials'>
+            <h1>Socials</h1>
             <div className='section'>
-                <h1>Download my Packs</h1>
+                <h2>Download my Packs</h2>
                 <div className='grid'>
                     <LinkCard
                         title='Modrinth'
@@ -41,7 +42,7 @@ const Socials = () => {
                 </div>
             </div>
             <div className='section'>
-                <h1>Other Socials</h1>
+                <h2>Other Socials</h2>
                 <div className='grid'>
                     <LinkCard
                         title='GitHub'
