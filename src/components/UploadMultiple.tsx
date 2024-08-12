@@ -2,38 +2,31 @@ import React from 'react'
 import './UploadMultiple.scss'
 
 const UploadMultiple = () => {
-    const [files, setFiles] = React.useState<File[]>([]);
-
-    const addFiles = (files: FileList) => {
-        setFiles(prev => [...prev, ...Array.from(files)]);
-    }
+    const [file, setFile] = React.useState<File|undefined>(undefined);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        e.target.files && addFiles(e.target.files);
+        e.target.files && setFile(e.target.files[0]);
     }
 
     const onDrop = (e: React.DragEvent<HTMLInputElement>) => {
         e.preventDefault();
-        addFiles(e.dataTransfer.files);
+        setFile(e.dataTransfer.files[0]);
     }
 
     return (
-        <div className='uploadMultiple'>
+        <div className='upload_multiple'>
             <input
                 type='file'
                 className='upload'
-                multiple
                 onChange={onChange}
                 onDrop={onDrop}
             />
-            <div className='files'>
-                {files.map(file => (
-                    <div key={file.name} className='file'>
-                        <span>{file.name}</span>
-                        <button onClick={() => setFiles(prev => prev.filter(f => f !== file))}>Remove</button>
-                    </div>
-                ))}
+            <div className='file_name'>
+                {file ? <>
+                    <span>{file.name}</span>
+                    <button onClick={() => setFile(undefined)}>X</button>
+                </> : <span>No file chosen...</span>}
             </div>
         </div>
     )
