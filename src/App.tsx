@@ -16,6 +16,7 @@ import HomeIcon from './icons/home';
 import InfoIcon from './icons/info';
 import MessageIcon from './icons/message';
 import ArrowUpRightIcon from './icons/arrow-up-right';
+import Survive from './views/games/Survive';
 
 const App = () => {
   const [navActive, setNavActive] = React.useState(() => {
@@ -106,6 +107,8 @@ const App = () => {
 
             <Route path="/tools/velvet" element={<Velvet />} />
             <Route path="/tools/cardboard" element={<Cardboard />} />
+
+            <Route path="/g/survive" element={<Survive />} />
           </Routes>
         </BrowserRouter>
       </div>
