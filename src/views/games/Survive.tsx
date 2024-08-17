@@ -21,7 +21,7 @@ const Survive = () => {
     const lastTimestamp = useRef<number>(performance.now());
     const [cameraPosition, setCameraPosition] = useState({x: 0, y: 0});
     const cameraPosRef = useRef(cameraPosition);
-    const playerSpeed = useRef(.015);
+    const playerSpeed = useRef(.15);
     const isFullscreen = useRef(false);
     const playerHealthMax = useRef(100);
     const playerHealth = useRef(playerHealthMax.current);
@@ -188,7 +188,7 @@ const Survive = () => {
                     style={{left: entity.x * scale.current + screenSize.width / 2, top: entity.y * scale.current + screenSize.height / 2}}
                 />)
             })}
-            <div className={`player${playerInvincible.current ? ' invincible' : ''}`} />
+            <div className={`player${playerInvincible.current ? ' damaged' : ''}`} />
             <div className='health_bar'>
                 <span>Health: {playerHealth.current}</span>
                 <div className='health_background' style={{width: playerHealthMax.current}}>
