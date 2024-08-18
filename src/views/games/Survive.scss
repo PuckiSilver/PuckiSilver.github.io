@@ -36,7 +36,7 @@ main {
             left: 50%;
             width: 160rem;
             height: 90rem;
-            transform: translate(-50%, -50%) translate(calc(var(--camera-x) * var(--scale) * -1), calc(var(--camera-y) * var(--scale) * -1)) scale(var(--scale));
+            transform: translate(-50%, -50%) translate(calc(var(--player-x) * var(--scale) * -1), calc(var(--player-y) * var(--scale) * -1)) scale(var(--scale));
         }
 
         .player {
@@ -56,9 +56,9 @@ main {
             }
         }
 
-        .entity {
+        .enemy {
             position: absolute;
-            transform: translate(calc(-50% - var(--camera-x) * var(--scale)), calc(-50% - var(--camera-y) * var(--scale)));
+            transform: translate(calc(-50% - var(--player-x) * var(--scale)), calc(-50% - var(--player-y) * var(--scale)));
             width: calc(var(--scale) * .2rem);
             height: calc(var(--scale) * .2rem);
             background: red;

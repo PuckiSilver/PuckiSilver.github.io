@@ -1,47 +1,85 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import './Survive.scss';
 import ArrowsFullscreenIcon from '../../icons/arrows-fullscreen';
 import PauseIcon from '../../icons/pause';
 import PlayIcon from '../../icons/play';
-
-type Entity = {
-    x: number;
-    y: number;
-    speed: number;
-    damageRadius: number;
-    damage: number;
-}
+import { GameState, Entity } from './survive/SurviveTypes';
+import { damageEntity, getBaseStats, getStatTotal } from './survive/Utils';
 
 const Survive = () => {
     const gameWindow = useRef<HTMLDivElement>(null);
     const joystick = useRef<HTMLDivElement>(null);
     const isUsingJoystick = useRef(false);
     const joystickTouchIndex = useRef(0);
-    const isKeyPressed = useRef<{[key: string]: boolean}>({});
-    const lastTimestamp = useRef<number>(performance.now());
-    const [cameraPosition, setCameraPosition] = useState({x: 0, y: 0});
-    const cameraPosRef = useRef(cameraPosition);
-    const playerSpeed = useRef(.15);
+    const initialPinchDistance = useRef(0);
     const isFullscreen = useRef(false);
-    const playerHealthMax = useRef(100);
-    const playerHealth = useRef(playerHealthMax.current);
-    const playerIFrames = useRef(500);
-    const playerInvincible = useRef(false);
     const fps = useRef(60);
     const isPaused = useRef(false);
     const scale = useRef(12);
-    const [entities, setEntities] = useState<Entity[]>([{x: -18, y: -18, speed: .01, damageRadius: 1.7, damage: 2}]);
-    const playerRadius = 1.5;
+    const isKeyPressed = useRef<{[key: string]: boolean}>({});
+    const playerMoveDirection = useRef({x: 0, y: 0});
+    const lastTimestamp = useRef<number>(performance.now());
     const [, forceUpdate] = useState({});
-    const playerVector = useRef({x: 0, y: 0});
-    const initialPinchDistance = useRef(0);
 
-    const damagePlayer = (damage: number) => {
-        if (playerInvincible.current) return;
-        playerHealth.current -= damage;
-        playerInvincible.current = true;
-        setTimeout(() => playerInvincible.current = false, playerIFrames.current);
-    };
+    const player = useRef<Entity>(new Entity(
+        {x: 0, y: 0, r: 2.4},
+        getBaseStats({
+            health: 100,
+            speed: .02,
+            autoDamage: 2,
+            iFrames: 20,
+        }),
+        (player, _, delta) => {
+            if (!isUsingJoystick.current) {
+                playerMoveDirection.current = {x: 0, y: 0};
+                if (isKeyPressed.current['w']) playerMoveDirection.current.y++;
+                if (isKeyPressed.current['s']) playerMoveDirection.current.y--;
+                if (isKeyPressed.current['a']) playerMoveDirection.current.x++;
+                if (isKeyPressed.current['d']) playerMoveDirection.current.x--;
+            }
+            // normalize vector
+            const currentPlayerSpeed = Math.sqrt(playerMoveDirection.current.x ** 2 + playerMoveDirection.current.y ** 2);
+            if (currentPlayerSpeed === 0) {
+                return;
+            }
+            player.position = {
+                x: player.position.x - (playerMoveDirection.current.x / currentPlayerSpeed) * delta * getStatTotal(player.stats.speed),
+                y: player.position.y - (playerMoveDirection.current.y / currentPlayerSpeed) * delta * getStatTotal(player.stats.speed),
+                r: player.position.r
+            };
+            document.documentElement.style.setProperty('--player-x', `${player.position.x}px`);
+            document.documentElement.style.setProperty('--player-y', `${player.position.y}px`);
+    }));
+    const [gameState, setGameState] = useState<GameState>({
+        player: player,
+        enemies: [
+            new Entity(
+                {x: -18, y: -18, r: 1.6},
+                getBaseStats({
+                    health: 100,
+                    speed: .01,
+                    autoDamage: 2,
+                }),
+                (entity, gameState, delta) => {
+                    const entityVector = {x: entity.position.x - gameState.player.current.position.x, y: entity.position.y - gameState.player.current.position.y};
+                    const entitySpeed = Math.sqrt(entityVector.x ** 2 + entityVector.y ** 2);
+                    if (Math.abs(entitySpeed) < (entity.position.r + gameState.player.current.position.r)) {
+                        damageEntity(gameState.player.current, getStatTotal(entity.stats.autoDamage));
+                        setGameState({...gameState});
+                        return;
+                    };
+                    entity.position = {
+                        x: entity.position.x - (entityVector.x / entitySpeed) * delta * getStatTotal(entity.stats.speed),
+                        y: entity.position.y - (entityVector.y / entitySpeed) * delta * getStatTotal(entity.stats.speed),
+                        r: entity.position.r,
+                    };
+                    setGameState({...gameState});
+                }
+            ),
+        ],
+        bullets: [],
+    });
+    const gameStateRef = useRef(gameState);
 
 
     /*  Handle Key Presses  */
@@ -62,57 +100,30 @@ const Survive = () => {
 
 
     /*  Handle Movement and Render Frame  */
-    useEffect(() => {
-        cameraPosRef.current = cameraPosition;
-        document.documentElement.style.setProperty('--camera-x', `${cameraPosition.x}px`);
-        document.documentElement.style.setProperty('--camera-y', `${cameraPosition.y}px`);
-    }, [cameraPosition]);
-
     const gameLoop = useCallback(() => {
         const timestamp = performance.now();
-        const delta = lastTimestamp.current - timestamp;
+        const delta = Math.abs(lastTimestamp.current - timestamp);
         lastTimestamp.current = timestamp;
 
-        if (!isPaused.current) {
-            if (!isUsingJoystick.current) {
-                playerVector.current = {x: 0, y: 0};
-                if (isKeyPressed.current['w']) playerVector.current.y++;
-                if (isKeyPressed.current['s']) playerVector.current.y--;
-                if (isKeyPressed.current['a']) playerVector.current.x++;
-                if (isKeyPressed.current['d']) playerVector.current.x--;
-            }
-            // normalize vector
-            const currentPlayerSpeed = Math.sqrt(playerVector.current.x ** 2 + playerVector.current.y ** 2);
-            if (currentPlayerSpeed !== 0) {
-                setCameraPosition(prev => ({
-                    x: prev.x + (playerVector.current.x / currentPlayerSpeed) * delta * playerSpeed.current,
-                    y: prev.y + (playerVector.current.y / currentPlayerSpeed) * delta * playerSpeed.current,
-                }));
-            }
+        if (gameStateRef.current.player.current.iFramesLeft > 0) gameStateRef.current.player.current.iFramesLeft -= delta * fps.current / 1000;
+        if (gameStateRef.current.player.current.iFramesLeft < 0) gameStateRef.current.player.current.iFramesLeft = 0;
 
-            // advance entities towards player/camera
-            setEntities(prev => prev.map(entity => {
-                const entityVector = {x: entity.x - cameraPosRef.current.x, y: entity.y - cameraPosRef.current.y};
-                const entitySpeed = Math.sqrt(entityVector.x ** 2 + entityVector.y ** 2);
-                if (Math.abs(entitySpeed) < (entity.damageRadius + playerRadius)) {
-                    damagePlayer(entity.damage);
-                    return entity;
-                };
-                return {
-                    ...entity,
-                    x: entity.x + (entityVector.x / entitySpeed) * delta * entity.speed,
-                    y: entity.y + (entityVector.y / entitySpeed) * delta * entity.speed,
-                };
-            }));
-        } else {
-            ;
+        if (!isPaused.current) {
+            gameStateRef.current.player.current.onTick(gameStateRef.current.player.current, gameStateRef.current, delta);
+            gameStateRef.current.enemies.forEach(enemy => enemy.onTick(enemy, gameStateRef.current, delta));
+            gameStateRef.current.bullets.forEach(bullet => bullet.onTick(bullet, gameStateRef.current, delta));
         }
 
         setTimeout(gameLoop, 1000 / fps.current);
     }, []);
 
-    useEffect(() => { // set up game stuff
+    useEffect(() => {
+        document.documentElement.style.setProperty('--player-x', '0px');
+        document.documentElement.style.setProperty('--player-y', '0px');
         document.documentElement.style.setProperty('--scale', `${scale.current}`);
+    }, [])
+
+    useEffect(() => { // set up game stuff
         lastTimestamp.current = performance.now();
         setTimeout(gameLoop, 1000 / fps.current);
     }, [gameLoop]);
@@ -126,7 +137,7 @@ const Survive = () => {
                 if (scale.current < 4) scale.current = 4;
                 if (scale.current > 17) scale.current = 17;
                 document.documentElement.style.setProperty('--scale', `${scale.current}`);
-                setEntities(prev => prev.map(entity => entity));
+                forceUpdate({});
         }
         const currentGameWindow = gameWindow.current;
         if (!currentGameWindow) return;
@@ -158,7 +169,7 @@ const Survive = () => {
                     if (scale.current < 4) scale.current = 4;
                     if (scale.current > 17) scale.current = 17;
                     document.documentElement.style.setProperty('--scale', `${scale.current}`);
-                    setEntities(prev => prev.map(entity => entity));
+                    forceUpdate({});
                     initialPinchDistance.current = currentPinchDistance;
                 }
             }}
@@ -166,7 +177,7 @@ const Survive = () => {
             <div className='buttons'>
                 <button onClick={() => {
                     isFullscreen.current = !isFullscreen.current;
-                    setTimeout(() => setEntities(prev => prev.map(entity => entity)), 1); // timeout of 1 to wait for fullscreen to take effect
+                    setTimeout(() => setGameState(gs => ({...gs})), 1); // timeout of 1 to wait for fullscreen to take effect
                     forceUpdate({});
                 }}>
                     <ArrowsFullscreenIcon />
@@ -179,20 +190,20 @@ const Survive = () => {
                 </button>
             </div>
             <img src={require('../../assets/survive/background.png')} alt='background' className='background' />
-            {entities.map((entity, i) => {
+            {gameState.enemies.map((enemy, i) => {
                 const screenSize = gameWindow.current?.getBoundingClientRect();
                 if (!screenSize) return null;
                 return (<div
-                    key={`entity_${i}`}
-                    className='entity'
-                    style={{left: entity.x * scale.current + screenSize.width / 2, top: entity.y * scale.current + screenSize.height / 2}}
+                    key={`enemy_${i}`}
+                    className='enemy'
+                    style={{left: enemy.position.x * scale.current + screenSize.width / 2, top: enemy.position.y * scale.current + screenSize.height / 2}}
                 />)
             })}
-            <div className={`player${playerInvincible.current ? ' damaged' : ''}`} />
+            <div className={`player${gameState.player.current.iFramesLeft ? ' damaged' : ''}`} />
             <div className='health_bar'>
-                <span>Health: {playerHealth.current}</span>
-                <div className='health_background' style={{width: playerHealthMax.current}}>
-                    <div className='health' style={{width: `${100 * playerHealth.current / playerHealthMax.current}%`}} />
+                <span>Health: {gameState.player.current.health}</span>
+                <div className='health_background' style={{width: getStatTotal(gameState.player.current.stats.health)}}>
+                    <div className='health' style={{width: `${100 * gameState.player.current.health / getStatTotal(gameState.player.current.stats.health)}%`}} />
                 </div>
             </div>
             <div className='joystick' ref={joystick}
@@ -201,7 +212,7 @@ const Survive = () => {
                     if (!currentJoystick) return;
                     const joystickTouch = Array.from(e.touches).find(touch => touch.identifier === joystickTouchIndex.current);
                     if (!joystickTouch) return;
-                    playerVector.current = {
+                    playerMoveDirection.current = {
                         x: -(joystickTouch.clientX - currentJoystick.getBoundingClientRect().left - currentJoystick.clientWidth / 2),
                         y: -(joystickTouch.clientY - currentJoystick.getBoundingClientRect().top - currentJoystick.clientHeight / 2),
                     };
@@ -212,13 +223,13 @@ const Survive = () => {
                     const joystickTouch = e.touches[e.touches.length - 1];
                     joystickTouchIndex.current = joystickTouch.identifier;
                     isUsingJoystick.current = true;
-                    playerVector.current = {
+                    playerMoveDirection.current = {
                         x: -(joystickTouch.clientX - currentJoystick.getBoundingClientRect().left - currentJoystick.clientWidth / 2),
                         y: -(joystickTouch.clientY - currentJoystick.getBoundingClientRect().top - currentJoystick.clientHeight / 2),
                     };
                 }}
                 onTouchEnd={() => {
-                    playerVector.current = {x: 0, y: 0};
+                    playerMoveDirection.current = {x: 0, y: 0};
                     isUsingJoystick.current = false;
                 }}
             />
