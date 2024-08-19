@@ -1,4 +1,4 @@
-import { Entity, Stat, StatNames, Stats } from "./SurviveTypes";
+import { Entity, GameState, Stat, StatNames, Stats } from "./SurviveTypes";
 
 export const getStatTotal = (stat: Stat): number => {
     return (stat.base + stat.flat) * stat.mult.reduce((acc, val) => acc * val, 1);
@@ -24,11 +24,14 @@ export const getBaseStats = (partialStats: {[key in keyof Stats]?: number}): Sta
     return stats as Stats;
 }
 
-export const damageEntity = (entity: Entity, damage: number): void => {
+export const damageEntity = (entity: Entity, damage: number, gameState: GameState): void => {
     if (entity.iFramesLeft > 0) {
         return;
     }
     entity.health -= damage;
     console.log(entity.health);
+    if (entity.health <= 0) {
+        entity.onDeath(entity, gameState);
+    }
     entity.iFramesLeft = getStatTotal(entity.stats.iFrames);
 }

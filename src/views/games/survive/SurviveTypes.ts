@@ -16,7 +16,7 @@ export enum StatNames {
     health = "health",
     speed = "speed",
     autoDamage = "autoDamage",
-    iFrames = "iFrames"
+    iFrames = "iFrames",
 }
 
 export type Stats = {
@@ -34,13 +34,19 @@ export class Entity {
     stats: Stats;
     health: number;
     iFramesLeft: number;
+    motion: {x: number, y: number} = {x: 0, y: 0};
     onTick: (entity: Entity, gameState: GameState, delta: number) => void;
+    onDeath: (entity: Entity, gameState: GameState) => void;
 
-    constructor(position: Position, stats: Stats, onTick: (entity: Entity, gameState: GameState, delta: number) => void) {
+    constructor(position: Position, stats: Stats, onTick: (entity: Entity, gameState: GameState, delta: number) => void, onDeath: (entity: Entity, gameState: GameState) => void, motion?: {x: number, y: number}) {
         this.position = position;
         this.stats = stats;
         this.onTick = onTick;
+        this.onDeath = onDeath;
         this.health = getStatTotal(stats.health);
         this.iFramesLeft = 0;
+        if (motion) {
+            this.motion = motion;
+        }
     }
 }

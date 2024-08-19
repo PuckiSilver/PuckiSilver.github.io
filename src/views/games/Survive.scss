@@ -64,6 +64,20 @@ main {
             background: red;
             border-radius: 50%;
             filter: drop-shadow(.25rem .25rem 5px rgba(0, 0, 0, 0.2));
+
+            &.damaged {
+                opacity: .5;
+            }
+        }
+
+        .bullet {
+            position: absolute;
+            transform: translate(calc(-50% - var(--player-x) * var(--scale)), calc(-50% - var(--player-y) * var(--scale)));
+            width: calc(var(--scale) * .025rem);
+            height: calc(var(--scale) * .025rem);
+            background: red;
+            border-radius: 50%;
+            filter: drop-shadow(.25rem .25rem 5px rgba(0, 0, 0, 0.2));
         }
 
         .buttons {

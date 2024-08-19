@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './Survive.scss';
 import ArrowsFullscreenIcon from '../../icons/arrows-fullscreen';
 import PauseIcon from '../../icons/pause';
@@ -20,6 +20,7 @@ const Survive = () => {
     const playerMoveDirection = useRef({x: 0, y: 0});
     const lastTimestamp = useRef<number>(performance.now());
     const [, forceUpdate] = useState({});
+    const preventDefaultKeys = useMemo(() => ['w', 'a', 's', 'd', ' '], []);
 
     const player = useRef<Entity>(new Entity(
         {x: 0, y: 0, r: 2.4},
@@ -49,22 +50,25 @@ const Survive = () => {
             };
             document.documentElement.style.setProperty('--player-x', `${player.position.x}px`);
             document.documentElement.style.setProperty('--player-y', `${player.position.y}px`);
-    }));
+        },
+        () => {},
+    ));
     const [gameState, setGameState] = useState<GameState>({
         player: player,
         enemies: [
             new Entity(
                 {x: -18, y: -18, r: 1.6},
                 getBaseStats({
-                    health: 100,
+                    health: 20,
                     speed: .01,
                     autoDamage: 2,
+                    iFrames: 20,
                 }),
                 (entity, gameState, delta) => {
                     const entityVector = {x: entity.position.x - gameState.player.current.position.x, y: entity.position.y - gameState.player.current.position.y};
                     const entitySpeed = Math.sqrt(entityVector.x ** 2 + entityVector.y ** 2);
                     if (Math.abs(entitySpeed) < (entity.position.r + gameState.player.current.position.r)) {
-                        damageEntity(gameState.player.current, getStatTotal(entity.stats.autoDamage));
+                        damageEntity(gameState.player.current, getStatTotal(entity.stats.autoDamage), gameState);
                         setGameState({...gameState});
                         return;
                     };
@@ -74,10 +78,43 @@ const Survive = () => {
                         r: entity.position.r,
                     };
                     setGameState({...gameState});
-                }
+                },
+                (entity, gameState) => {
+                    gameState.enemies.splice(gameState.bullets.indexOf(entity), 1);
+                    setGameState({...gameState});
+                },
             ),
         ],
-        bullets: [],
+        bullets: [
+            new Entity(
+                {x: 0, y: 0, r: .2},
+                getBaseStats({
+                    autoDamage: 10,
+                }),
+                (bullet, gameState, delta) => {
+                    bullet.position = {
+                        x: bullet.position.x + bullet.motion.x * delta,
+                        y: bullet.position.y + bullet.motion.y * delta,
+                        r: bullet.position.r,
+                    };
+                    // implement friction if one generalizes this to more than one bullet
+                    gameState.enemies.forEach(enemy => {
+                        if (Math.sqrt((bullet.position.x - enemy.position.x) ** 2 + (bullet.position.y - enemy.position.y) ** 2) < bullet.position.r + enemy.position.r) {
+                            damageEntity(enemy, getStatTotal(bullet.stats.autoDamage), gameState);
+                        }
+                    });
+                    if (Math.abs(bullet.position.x) > 20 || Math.abs(bullet.position.y) > 20) {
+                        gameState.bullets.splice(gameState.bullets.indexOf(bullet), 1);
+                    }
+                    setGameState({...gameState});
+                },
+                (entity, gameState) => {
+                    gameState.bullets.splice(gameState.bullets.indexOf(entity), 1);
+                    setGameState({...gameState});
+                },
+                {x: -.01, y: -.01},
+            )
+        ],
     });
     const gameStateRef = useRef(gameState);
 
@@ -85,6 +122,7 @@ const Survive = () => {
     /*  Handle Key Presses  */
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            if (preventDefaultKeys.includes(e.key)) e.preventDefault();
             isKeyPressed.current[e.key] = true;
         }
         const handleKeyUp = (e: KeyboardEvent) => {
@@ -96,7 +134,7 @@ const Survive = () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         };
-    }, []);
+    }, [preventDefaultKeys]);
 
 
     /*  Handle Movement and Render Frame  */
@@ -107,6 +145,10 @@ const Survive = () => {
 
         if (gameStateRef.current.player.current.iFramesLeft > 0) gameStateRef.current.player.current.iFramesLeft -= delta * fps.current / 1000;
         if (gameStateRef.current.player.current.iFramesLeft < 0) gameStateRef.current.player.current.iFramesLeft = 0;
+        gameStateRef.current.enemies.forEach(enemy => {
+            if (enemy.iFramesLeft > 0) enemy.iFramesLeft -= delta * fps.current / 1000;
+            if (enemy.iFramesLeft < 0) enemy.iFramesLeft = 0;
+        });
 
         if (!isPaused.current) {
             gameStateRef.current.player.current.onTick(gameStateRef.current.player.current, gameStateRef.current, delta);
@@ -195,8 +237,17 @@ const Survive = () => {
                 if (!screenSize) return null;
                 return (<div
                     key={`enemy_${i}`}
-                    className='enemy'
+                    className={`enemy${enemy.iFramesLeft ? ' damaged' : ''}`}
                     style={{left: enemy.position.x * scale.current + screenSize.width / 2, top: enemy.position.y * scale.current + screenSize.height / 2}}
+                />)
+            })}
+            {gameState.bullets.map((bullet, i) => {
+                const screenSize = gameWindow.current?.getBoundingClientRect();
+                if (!screenSize) return null;
+                return (<div
+                    key={`bullet_${i}`}
+                    className='bullet'
+                    style={{left: bullet.position.x * scale.current + screenSize.width / 2, top: bullet.position.y * scale.current + screenSize.height / 2}}
                 />)
             })}
             <div className={`player${gameState.player.current.iFramesLeft ? ' damaged' : ''}`} />
