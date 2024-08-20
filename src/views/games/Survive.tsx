@@ -3,7 +3,7 @@ import './Survive.scss';
 import ArrowsFullscreenIcon from '../../icons/arrows-fullscreen';
 import PauseIcon from '../../icons/pause';
 import PlayIcon from '../../icons/play';
-import { GameState, Entity } from './survive/SurviveTypes';
+import { GameState, Entity, Bullet } from './survive/SurviveTypes';
 import { damageEntity, getBaseStats, getStatTotal } from './survive/Utils';
 
 const Survive = () => {
@@ -14,10 +14,11 @@ const Survive = () => {
     const initialPinchDistance = useRef(0);
     const isFullscreen = useRef(false);
     const fps = useRef(60);
-    const isPaused = useRef(false);
+    const isPaused = useRef(true);
     const scale = useRef(12);
     const isKeyPressed = useRef<{[key: string]: boolean}>({});
     const playerMoveDirection = useRef({x: 0, y: 0});
+    const mousePosition = useRef({x: 0, y: 0});
     const lastTimestamp = useRef<number>(performance.now());
     const [, forceUpdate] = useState({});
     const preventDefaultKeys = useMemo(() => ['w', 'a', 's', 'd', ' '], []);
@@ -28,9 +29,51 @@ const Survive = () => {
             health: 100,
             speed: .02,
             autoDamage: 2,
+            autoSpeed: 1,
             iFrames: 20,
         }),
-        (player, _, delta) => {
+        (player, gameState, delta) => {
+            // console.log(player.autoCooldownTicks);
+            if (player.autoCooldownTicks > 0) player.autoCooldownTicks -= delta * fps.current / 1000;
+            if (player.autoCooldownTicks <= 0) {
+                console.log('fire');
+                const scaledMousePosition = {
+                    x: mousePosition.current.x / scale.current,
+                    y: mousePosition.current.y / scale.current,
+                };
+                const mouseVectorLength = Math.sqrt(scaledMousePosition.x ** 2 + scaledMousePosition.y ** 2);
+                if (mouseVectorLength !== 0) {
+                    gameState.bullets.push(new Bullet(
+                        {x: player.position.x, y: player.position.y, r: .2},
+                        {
+                            x: (scaledMousePosition.x / mouseVectorLength) * delta * 0.001,
+                            y: (scaledMousePosition.y / mouseVectorLength) * delta * 0.001,
+                        },
+                        10,
+                        100,
+                        (bullet, gameState, delta) => {
+                            bullet.position = {
+                                x: bullet.position.x + bullet.motion.x * delta,
+                                y: bullet.position.y + bullet.motion.y * delta,
+                                r: bullet.position.r,
+                            };
+                            // implement friction if one generalizes this to more than one bullet
+                            gameState.enemies.forEach(enemy => {
+                                if (Math.sqrt((bullet.position.x - enemy.position.x) ** 2 + (bullet.position.y - enemy.position.y) ** 2) < bullet.position.r + enemy.position.r) {
+                                    damageEntity(enemy, bullet.damage, gameState);
+                                }
+                            });
+                            bullet.ticksAlive -= delta * fps.current / 1000;
+                            if (bullet.ticksAlive <= 0) {
+                                gameState.bullets.splice(gameState.bullets.indexOf(bullet), 1);
+                            }
+                        },
+                    ));
+                    player.autoCooldownTicks = fps.current / getStatTotal(player.stats.autoSpeed);
+                }
+            }
+
+
             if (!isUsingJoystick.current) {
                 playerMoveDirection.current = {x: 0, y: 0};
                 if (isKeyPressed.current['w']) playerMoveDirection.current.y++;
@@ -69,7 +112,6 @@ const Survive = () => {
                     const entitySpeed = Math.sqrt(entityVector.x ** 2 + entityVector.y ** 2);
                     if (Math.abs(entitySpeed) < (entity.position.r + gameState.player.current.position.r)) {
                         damageEntity(gameState.player.current, getStatTotal(entity.stats.autoDamage), gameState);
-                        setGameState({...gameState});
                         return;
                     };
                     entity.position = {
@@ -77,20 +119,18 @@ const Survive = () => {
                         y: entity.position.y - (entityVector.y / entitySpeed) * delta * getStatTotal(entity.stats.speed),
                         r: entity.position.r,
                     };
-                    setGameState({...gameState});
                 },
                 (entity, gameState) => {
-                    gameState.enemies.splice(gameState.bullets.indexOf(entity), 1);
-                    setGameState({...gameState});
+                    gameState.enemies.splice(gameState.enemies.indexOf(entity), 1);
                 },
             ),
         ],
         bullets: [
-            new Entity(
+            new Bullet(
                 {x: 0, y: 0, r: .2},
-                getBaseStats({
-                    autoDamage: 10,
-                }),
+                {x: -.02, y: -.02},
+                10,
+                100,
                 (bullet, gameState, delta) => {
                     bullet.position = {
                         x: bullet.position.x + bullet.motion.x * delta,
@@ -100,19 +140,14 @@ const Survive = () => {
                     // implement friction if one generalizes this to more than one bullet
                     gameState.enemies.forEach(enemy => {
                         if (Math.sqrt((bullet.position.x - enemy.position.x) ** 2 + (bullet.position.y - enemy.position.y) ** 2) < bullet.position.r + enemy.position.r) {
-                            damageEntity(enemy, getStatTotal(bullet.stats.autoDamage), gameState);
+                            damageEntity(enemy, bullet.damage, gameState);
                         }
                     });
-                    if (Math.abs(bullet.position.x) > 20 || Math.abs(bullet.position.y) > 20) {
+                    bullet.ticksAlive -= delta * fps.current / 1000;
+                    if (bullet.ticksAlive <= 0) {
                         gameState.bullets.splice(gameState.bullets.indexOf(bullet), 1);
                     }
-                    setGameState({...gameState});
                 },
-                (entity, gameState) => {
-                    gameState.bullets.splice(gameState.bullets.indexOf(entity), 1);
-                    setGameState({...gameState});
-                },
-                {x: -.01, y: -.01},
             )
         ],
     });
@@ -136,6 +171,18 @@ const Survive = () => {
         };
     }, [preventDefaultKeys]);
 
+    /*  Handle Mouse Movement  */
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            // get mouse position centered on gameWindow center
+            mousePosition.current = {
+                x: e.clientX - gameWindow.current!.getBoundingClientRect().left - gameWindow.current!.clientWidth / 2,
+                y: e.clientY - gameWindow.current!.getBoundingClientRect().top - gameWindow.current!.clientHeight / 2,
+            };
+        }
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
 
     /*  Handle Movement and Render Frame  */
     const gameLoop = useCallback(() => {
@@ -143,18 +190,19 @@ const Survive = () => {
         const delta = Math.abs(lastTimestamp.current - timestamp);
         lastTimestamp.current = timestamp;
 
-        if (gameStateRef.current.player.current.iFramesLeft > 0) gameStateRef.current.player.current.iFramesLeft -= delta * fps.current / 1000;
-        if (gameStateRef.current.player.current.iFramesLeft < 0) gameStateRef.current.player.current.iFramesLeft = 0;
-        gameStateRef.current.enemies.forEach(enemy => {
-            if (enemy.iFramesLeft > 0) enemy.iFramesLeft -= delta * fps.current / 1000;
-            if (enemy.iFramesLeft < 0) enemy.iFramesLeft = 0;
-        });
-
         if (!isPaused.current) {
+            if (gameStateRef.current.player.current.iFramesLeft > 0) gameStateRef.current.player.current.iFramesLeft -= delta * fps.current / 1000;
+            if (gameStateRef.current.player.current.iFramesLeft < 0) gameStateRef.current.player.current.iFramesLeft = 0;
+            gameStateRef.current.enemies.forEach(enemy => {
+                if (enemy.iFramesLeft > 0) enemy.iFramesLeft -= delta * fps.current / 1000;
+                if (enemy.iFramesLeft < 0) enemy.iFramesLeft = 0;
+            });
+
             gameStateRef.current.player.current.onTick(gameStateRef.current.player.current, gameStateRef.current, delta);
             gameStateRef.current.enemies.forEach(enemy => enemy.onTick(enemy, gameStateRef.current, delta));
             gameStateRef.current.bullets.forEach(bullet => bullet.onTick(bullet, gameStateRef.current, delta));
         }
+        setGameState({...gameStateRef.current});
 
         setTimeout(gameLoop, 1000 / fps.current);
     }, []);
@@ -165,7 +213,7 @@ const Survive = () => {
         document.documentElement.style.setProperty('--scale', `${scale.current}`);
     }, [])
 
-    useEffect(() => { // set up game stuff
+    useEffect(() => { // start game loop
         lastTimestamp.current = performance.now();
         setTimeout(gameLoop, 1000 / fps.current);
     }, [gameLoop]);
@@ -175,11 +223,11 @@ const Survive = () => {
     useEffect(() => {
         const handleScroll = (event: WheelEvent) => {
             if (!gameWindow.current || event.deltaY === 0) return;
-                scale.current += (event.deltaY > 0 ? -.4 : .4);
-                if (scale.current < 4) scale.current = 4;
-                if (scale.current > 17) scale.current = 17;
-                document.documentElement.style.setProperty('--scale', `${scale.current}`);
-                forceUpdate({});
+            scale.current += (event.deltaY > 0 ? -.4 : .4);
+            if (scale.current < 4) scale.current = 4;
+            if (scale.current > 17) scale.current = 17;
+            document.documentElement.style.setProperty('--scale', `${scale.current}`);
+            forceUpdate({});
         }
         const currentGameWindow = gameWindow.current;
         if (!currentGameWindow) return;
