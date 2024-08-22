@@ -46,10 +46,10 @@ main {
             transform: translate(-50%, -50%);
             width: calc(var(--scale) * .3rem);
             height: calc(var(--scale) * .3rem);
-            overflow: hidden;
-            background: rgb(18, 255, 77);
+            background: var(--primary-color);
             border-radius: 50%;
-            filter: drop-shadow(.25rem .25rem 5px rgba(0, 0, 0, 0.2));
+            z-index: 1;
+            box-shadow: calc(var(--scale) * .3rem * .1) calc(var(--scale) * .3rem * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
 
             &.damaged {
                 opacity: .5;
@@ -63,7 +63,7 @@ main {
             height: calc(var(--scale) * .05rem);
             background: var(--secondary-color);
             border-radius: 50%;
-            filter: drop-shadow(.25rem .25rem 5px rgba(0, 0, 0, 0.2));
+            box-shadow: calc(var(--scale) * .05rem * .1) calc(var(--scale) * .05rem * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
         }
 
         .enemy {
@@ -73,7 +73,7 @@ main {
             height: calc(var(--scale) * .2rem);
             background: red;
             border-radius: 50%;
-            filter: drop-shadow(.25rem .25rem 5px rgba(0, 0, 0, 0.2));
+            box-shadow: calc(var(--scale) * .2rem * .1) calc(var(--scale) * .2rem * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
 
             &.damaged {
                 opacity: .5;
@@ -87,7 +87,16 @@ main {
             height: calc(var(--scale) * .025rem);
             background: red;
             border-radius: 50%;
-            filter: drop-shadow(.25rem .25rem 5px rgba(0, 0, 0, 0.2));
+            box-shadow: calc(var(--scale) * .025rem * .1) calc(var(--scale) * .025rem * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
+        }
+
+        .cursor {
+            position: absolute;
+            transform: translate(calc(-50% - var(--player-x) * var(--scale)), calc(-50% - var(--player-y) * var(--scale)));
+            width: calc(var(--scale) * .05rem);
+            height: calc(var(--scale) * .05rem);
+            border: 1px solid white;
+            border-radius: 50%;
         }
 
         .buttons {
@@ -121,12 +130,12 @@ main {
             }
         }
 
-        .health_bar {
+        .bars {
             position: absolute;
             display: flex;
             flex-direction: column;
             gap: .5rem;
-            bottom: .5rem;
+            top: .5rem;
             left: .5rem;
             background: var(--section-color);
             border-radius: .25rem;
@@ -140,7 +149,7 @@ main {
                 width: 100%;
                 background: var(--background-color);
 
-                .health {
+                .health_bar {
                     position: absolute;
                     height: 1rem;
                     background: var(--primary-color);

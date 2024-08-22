@@ -20,6 +20,7 @@ const Survive = () => {
     const playerMoveDirection = useRef({x: 0, y: 0});
     const mousePosition = useRef({x: 0, y: 0});
     const lastTimestamp = useRef<number>(performance.now());
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
     const [, forceUpdate] = useState({});
     const preventDefaultKeys = useMemo(() => ['w', 'a', 's', 'd', ' '], []);
     const spawnEnemyCooldown = useRef(0);
@@ -38,17 +39,13 @@ const Survive = () => {
             // console.log(player.autoCooldownTicks);
             if (player.autoCooldownTicks > 0) player.autoCooldownTicks -= delta * fps.current / 1000;
             if (player.autoCooldownTicks <= 0) {
-                const scaledMousePosition = {
-                    x: mousePosition.current.x / scale.current,
-                    y: mousePosition.current.y / scale.current,
-                };
-                const mouseVectorLength = Math.sqrt(scaledMousePosition.x ** 2 + scaledMousePosition.y ** 2);
+                const mouseVectorLength = Math.sqrt(mousePosition.current.x ** 2 + mousePosition.current.y ** 2);
                 if (mouseVectorLength !== 0) {
                     gameState.bullets.push(new Bullet(
                         {x: player.position.x, y: player.position.y, r: .2},
                         {
-                            x: (scaledMousePosition.x / mouseVectorLength) * delta * 0.001,
-                            y: (scaledMousePosition.y / mouseVectorLength) * delta * 0.001,
+                            x: (mousePosition.current.x / mouseVectorLength) * 0.05,
+                            y: (mousePosition.current.y / mouseVectorLength) * 0.05,
                         },
                         10,
                         100,
@@ -154,59 +151,8 @@ const Survive = () => {
     ));
     const [gameState, setGameState] = useState<GameState>({
         player: player,
-        enemies: [
-            new Entity(
-                {x: -18, y: -18, r: 1.6},
-                getBaseStats({
-                    health: 20,
-                    speed: .01,
-                    autoDamage: 2,
-                    iFrames: 20,
-                }),
-                (entity, gameState, delta) => {
-                    const entityVector = {x: entity.position.x - gameState.player.current.position.x, y: entity.position.y - gameState.player.current.position.y};
-                    const entitySpeed = Math.sqrt(entityVector.x ** 2 + entityVector.y ** 2);
-                    if (Math.abs(entitySpeed) < (entity.position.r + gameState.player.current.position.r)) {
-                        damageEntity(gameState.player.current, getStatTotal(entity.stats.autoDamage), gameState);
-                        return;
-                    };
-                    entity.position = {
-                        x: entity.position.x - (entityVector.x / entitySpeed) * delta * getStatTotal(entity.stats.speed),
-                        y: entity.position.y - (entityVector.y / entitySpeed) * delta * getStatTotal(entity.stats.speed),
-                        r: entity.position.r,
-                    };
-                },
-                (entity, gameState) => {
-                    gameState.enemies.splice(gameState.enemies.indexOf(entity), 1);
-                },
-            ),
-        ],
-        bullets: [
-            new Bullet(
-                {x: 0, y: 0, r: .2},
-                {x: -.02, y: -.02},
-                10,
-                100,
-                (entity, gameState, delta) => {
-                    const bullet = entity as Bullet;
-                    bullet.position = {
-                        x: bullet.position.x + bullet.motion.x * delta,
-                        y: bullet.position.y + bullet.motion.y * delta,
-                        r: bullet.position.r,
-                    };
-                    // implement friction if one generalizes this to more than one bullet
-                    gameState.enemies.forEach(enemy => {
-                        if (Math.sqrt((bullet.position.x - enemy.position.x) ** 2 + (bullet.position.y - enemy.position.y) ** 2) < bullet.position.r + enemy.position.r) {
-                            damageEntity(enemy, bullet.damage, gameState);
-                        }
-                    });
-                    bullet.ticksAlive -= delta * fps.current / 1000;
-                    if (bullet.ticksAlive <= 0) {
-                        gameState.bullets.splice(gameState.bullets.indexOf(bullet), 1);
-                    }
-                },
-            )
-        ],
+        enemies: [],
+        bullets: [],
         xpOrbs: [],
     });
     const gameStateRef = useRef(gameState);
@@ -234,12 +180,21 @@ const Survive = () => {
         const handleMouseMove = (e: MouseEvent) => {
             // get mouse position centered on gameWindow center
             mousePosition.current = {
-                x: e.clientX - gameWindow.current!.getBoundingClientRect().left - gameWindow.current!.clientWidth / 2,
-                y: e.clientY - gameWindow.current!.getBoundingClientRect().top - gameWindow.current!.clientHeight / 2,
+                x: (e.clientX - gameWindow.current!.getBoundingClientRect().left - gameWindow.current!.clientWidth / 2) / scale.current,
+                y: (e.clientY - gameWindow.current!.getBoundingClientRect().top - gameWindow.current!.clientHeight / 2) / scale.current,
             };
         }
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
+    /*  Detect Touch Device  */
+    useEffect(() => {
+        const handleTouchStart = () => {
+            setIsTouchDevice(true);
+        }
+        window.addEventListener('touchstart', handleTouchStart);
+        return () => window.removeEventListener('touchstart', handleTouchStart);
     }, []);
 
     /*  Handle Movement and Render Frame  */
@@ -276,7 +231,6 @@ const Survive = () => {
         setTimeout(gameLoop, 1000 / fps.current);
     }, [gameLoop]);
 
-
     /*  Handle Zoom  */
     useEffect(() => {
         const handleScroll = (event: WheelEvent) => {
@@ -293,6 +247,8 @@ const Survive = () => {
         return () => currentGameWindow.removeEventListener('wheel', handleScroll);
     }, []);
 
+    const screenSize = gameWindow.current?.getBoundingClientRect();
+
     return (<main>
         <h1>Survive!</h1>
         <div
@@ -307,7 +263,14 @@ const Survive = () => {
                 }
             }}
             onTouchMove={e => {
-                if (e.touches.length === 2 && !isUsingJoystick.current) {
+                if (e.touches.length === 1 || (e.touches.length === 2 && isUsingJoystick.current)) {
+                    const currentTouch = isUsingJoystick ? Array.from(e.touches).find(touch => touch.identifier !== joystickTouchIndex.current) : e.touches[0];
+                    if (!currentTouch) return;
+                    mousePosition.current = {
+                        x: (currentTouch.clientX - gameWindow.current!.getBoundingClientRect().left - gameWindow.current!.clientWidth / 2) / scale.current,
+                        y: (currentTouch.clientY - gameWindow.current!.getBoundingClientRect().top - gameWindow.current!.clientHeight / 2) / scale.current,
+                    };
+                } else if (e.touches.length === 2 && !isUsingJoystick.current) {
                     const currentPinchDistance = Math.sqrt(
                         (e.touches[0].clientX - e.touches[1].clientX) ** 2 +
                         (e.touches[0].clientY - e.touches[1].clientY) ** 2
@@ -338,44 +301,44 @@ const Survive = () => {
                 </button>
             </div>
             <img src={require('../../assets/survive/background.png')} alt='background' className='background' />
-            {gameState.xpOrbs.map((orb, i) => {
-                const screenSize = gameWindow.current?.getBoundingClientRect();
-                if (!screenSize) return null;
+            {screenSize && gameState.xpOrbs.map((orb, i) => {
                 return (<div
                     key={`xp_${i}`}
                     className='xp'
                     style={{left: orb.position.x * scale.current + screenSize.width / 2, top: orb.position.y * scale.current + screenSize.height / 2}}
                 />)
             })}
-            {gameState.enemies.map((enemy, i) => {
-                const screenSize = gameWindow.current?.getBoundingClientRect();
-                if (!screenSize) return null;
+            {screenSize && gameState.enemies.map((enemy, i) => {
                 return (<div
                     key={`enemy_${i}`}
                     className={`enemy${enemy.iFramesLeft ? ' damaged' : ''}`}
                     style={{left: enemy.position.x * scale.current + screenSize.width / 2, top: enemy.position.y * scale.current + screenSize.height / 2}}
                 />)
             })}
-            {gameState.bullets.map((bullet, i) => {
-                const screenSize = gameWindow.current?.getBoundingClientRect();
-                if (!screenSize) return null;
+            {screenSize && gameState.bullets.map((bullet, i) => {
                 return (<div
                     key={`bullet_${i}`}
                     className='bullet'
                     style={{left: bullet.position.x * scale.current + screenSize.width / 2, top: bullet.position.y * scale.current + screenSize.height / 2}}
                 />)
             })}
-            <div className={`player${gameState.player.current.iFramesLeft ? ' damaged' : ''}`} />
-            <div className='health_bar'>
+            {screenSize && <div className='cursor' style={{
+                left: (mousePosition.current.x + gameState.player.current.position.x) * scale.current + screenSize.width / 2,
+                top: (mousePosition.current.y + gameState.player.current.position.y) * scale.current + screenSize.height / 2,
+            }} />}
+            <div className={`player${gameState.player.current.iFramesLeft ? ' damaged' : ''}`}>
+                <div className='shadow' />
+            </div>
+            <div className='bars'>
                 <span>Health: {gameState.player.current.health} | Level: {gameState.player.current.level}</span>
                 <div className='health_background' style={{width: getStatTotal(gameState.player.current.stats.health)}}>
-                    <div className='health' style={{width: `${100 * gameState.player.current.health / getStatTotal(gameState.player.current.stats.health)}%`}} />
+                    <div className='health_bar' style={{width: `${100 * gameState.player.current.health / getStatTotal(gameState.player.current.stats.health)}%`}} />
                 </div>
                 <div className='xp_background' style={{width: gameState.player.current.xpToNextLevel}}>
                     <div className='xp_bar' style={{width: `${100 * gameState.player.current.xp / gameState.player.current.xpToNextLevel}%`}} />
                 </div>
             </div>
-            <div className='joystick' ref={joystick}
+            {isTouchDevice && <div className='joystick' ref={joystick}
                 onTouchMove={e => {
                     const currentJoystick = joystick.current;
                     if (!currentJoystick) return;
@@ -401,7 +364,7 @@ const Survive = () => {
                     playerMoveDirection.current = {x: 0, y: 0};
                     isUsingJoystick.current = false;
                 }}
-            />
+            />}
         </div>
     </main>);
 }
