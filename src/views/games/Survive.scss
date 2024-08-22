@@ -56,6 +56,16 @@ main {
             }
         }
 
+        .xp {
+            position: absolute;
+            transform: translate(calc(-50% - var(--player-x) * var(--scale)), calc(-50% - var(--player-y) * var(--scale)));
+            width: calc(var(--scale) * .05rem);
+            height: calc(var(--scale) * .05rem);
+            background: var(--secondary-color);
+            border-radius: 50%;
+            filter: drop-shadow(.25rem .25rem 5px rgba(0, 0, 0, 0.2));
+        }
+
         .enemy {
             position: absolute;
             transform: translate(calc(-50% - var(--player-x) * var(--scale)), calc(-50% - var(--player-y) * var(--scale)));
@@ -134,6 +144,19 @@ main {
                     position: absolute;
                     height: 1rem;
                     background: var(--primary-color);
+                }
+            }
+
+            .xp_background {
+                position: relative;
+                height: .5rem;
+                width: 100%;
+                background: var(--background-color);
+
+                .xp_bar {
+                    position: absolute;
+                    height: .5rem;
+                    background: var(--secondary-color);
                 }
             }
         }

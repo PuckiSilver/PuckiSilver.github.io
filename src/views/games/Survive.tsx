@@ -3,7 +3,7 @@ import './Survive.scss';
 import ArrowsFullscreenIcon from '../../icons/arrows-fullscreen';
 import PauseIcon from '../../icons/pause';
 import PlayIcon from '../../icons/play';
-import { GameState, Entity, Bullet } from './survive/SurviveTypes';
+import { GameState, Entity, Bullet, XPOrb, Player } from './survive/SurviveTypes';
 import { damageEntity, getBaseStats, getStatTotal } from './survive/Utils';
 
 const Survive = () => {
@@ -22,8 +22,9 @@ const Survive = () => {
     const lastTimestamp = useRef<number>(performance.now());
     const [, forceUpdate] = useState({});
     const preventDefaultKeys = useMemo(() => ['w', 'a', 's', 'd', ' '], []);
+    const spawnEnemyCooldown = useRef(0);
 
-    const player = useRef<Entity>(new Entity(
+    const player = useRef<Player>(new Player(
         {x: 0, y: 0, r: 2.4},
         getBaseStats({
             health: 100,
@@ -32,11 +33,11 @@ const Survive = () => {
             autoSpeed: 1,
             iFrames: 20,
         }),
-        (player, gameState, delta) => {
+        (entity, gameState, delta) => {
+            const player = entity as Player;
             // console.log(player.autoCooldownTicks);
             if (player.autoCooldownTicks > 0) player.autoCooldownTicks -= delta * fps.current / 1000;
             if (player.autoCooldownTicks <= 0) {
-                console.log('fire');
                 const scaledMousePosition = {
                     x: mousePosition.current.x / scale.current,
                     y: mousePosition.current.y / scale.current,
@@ -83,16 +84,71 @@ const Survive = () => {
             }
             // normalize vector
             const currentPlayerSpeed = Math.sqrt(playerMoveDirection.current.x ** 2 + playerMoveDirection.current.y ** 2);
-            if (currentPlayerSpeed === 0) {
-                return;
+            if (currentPlayerSpeed !== 0) {
+                player.position = {
+                    x: player.position.x - (playerMoveDirection.current.x / currentPlayerSpeed) * delta * getStatTotal(player.stats.speed),
+                    y: player.position.y - (playerMoveDirection.current.y / currentPlayerSpeed) * delta * getStatTotal(player.stats.speed),
+                    r: player.position.r
+                };
+                document.documentElement.style.setProperty('--player-x', `${player.position.x}px`);
+                document.documentElement.style.setProperty('--player-y', `${player.position.y}px`);
             }
-            player.position = {
-                x: player.position.x - (playerMoveDirection.current.x / currentPlayerSpeed) * delta * getStatTotal(player.stats.speed),
-                y: player.position.y - (playerMoveDirection.current.y / currentPlayerSpeed) * delta * getStatTotal(player.stats.speed),
-                r: player.position.r
-            };
-            document.documentElement.style.setProperty('--player-x', `${player.position.x}px`);
-            document.documentElement.style.setProperty('--player-y', `${player.position.y}px`);
+
+            if (spawnEnemyCooldown.current > 0) spawnEnemyCooldown.current -= delta * fps.current / 1000;
+            if (spawnEnemyCooldown.current <= 0) {
+                spawnEnemyCooldown.current = 120;
+                const randomAngle = Math.PI * (Math.random() + (Math.random() > .5 ? -1 : 1));
+                gameState.enemies.push(new Entity(
+                    {
+                        x: player.position.x + 50 * Math.cos(randomAngle),
+                        y: player.position.y + 50 * Math.sin(randomAngle),
+                        r: 1.6,
+                    },
+                    getBaseStats({
+                        health: 20,
+                        speed: .01,
+                        autoDamage: 2,
+                        iFrames: 20,
+                    }),
+                    (entity, gameState, delta) => {
+                        const entityVector = {x: entity.position.x - gameState.player.current.position.x, y: entity.position.y - gameState.player.current.position.y};
+                        const entitySpeed = Math.sqrt(entityVector.x ** 2 + entityVector.y ** 2);
+                        if (Math.abs(entitySpeed) < (entity.position.r + gameState.player.current.position.r)) {
+                            damageEntity(gameState.player.current, getStatTotal(entity.stats.autoDamage), gameState);
+                            return;
+                        };
+                        entity.position = {
+                            x: entity.position.x - (entityVector.x / entitySpeed) * delta * getStatTotal(entity.stats.speed),
+                            y: entity.position.y - (entityVector.y / entitySpeed) * delta * getStatTotal(entity.stats.speed),
+                            r: entity.position.r,
+                        };
+                    },
+                    (entity, gameState) => {
+                        gameState.xpOrbs.push(new XPOrb(
+                            {
+                                x: entity.position.x,
+                                y: entity.position.y,
+                                r: .4,
+                            },
+                            10,
+                        ));
+                        gameState.enemies.splice(gameState.enemies.indexOf(entity), 1);
+                    },
+                ));
+            }
+
+            gameState.xpOrbs.forEach((orb) => {
+                const distanceToPlayer = Math.sqrt((player.position.x - orb.position.x) ** 2 + (player.position.y - orb.position.y) ** 2);
+                if (distanceToPlayer < player.position.r + orb.position.r) {
+                    player.xp += orb.xp;
+                    gameState.xpOrbs.splice(gameState.xpOrbs.indexOf(orb), 1);
+                }
+            });
+            while (player.xp >= player.xpToNextLevel) {
+                player.xp -= player.xpToNextLevel;
+                player.level++;
+                player.xpToNextLevel *= 2;
+            }
         },
         () => {},
     ));
@@ -131,7 +187,8 @@ const Survive = () => {
                 {x: -.02, y: -.02},
                 10,
                 100,
-                (bullet, gameState, delta) => {
+                (entity, gameState, delta) => {
+                    const bullet = entity as Bullet;
                     bullet.position = {
                         x: bullet.position.x + bullet.motion.x * delta,
                         y: bullet.position.y + bullet.motion.y * delta,
@@ -150,6 +207,7 @@ const Survive = () => {
                 },
             )
         ],
+        xpOrbs: [],
     });
     const gameStateRef = useRef(gameState);
 
@@ -280,6 +338,15 @@ const Survive = () => {
                 </button>
             </div>
             <img src={require('../../assets/survive/background.png')} alt='background' className='background' />
+            {gameState.xpOrbs.map((orb, i) => {
+                const screenSize = gameWindow.current?.getBoundingClientRect();
+                if (!screenSize) return null;
+                return (<div
+                    key={`xp_${i}`}
+                    className='xp'
+                    style={{left: orb.position.x * scale.current + screenSize.width / 2, top: orb.position.y * scale.current + screenSize.height / 2}}
+                />)
+            })}
             {gameState.enemies.map((enemy, i) => {
                 const screenSize = gameWindow.current?.getBoundingClientRect();
                 if (!screenSize) return null;
@@ -300,9 +367,12 @@ const Survive = () => {
             })}
             <div className={`player${gameState.player.current.iFramesLeft ? ' damaged' : ''}`} />
             <div className='health_bar'>
-                <span>Health: {gameState.player.current.health}</span>
+                <span>Health: {gameState.player.current.health} | Level: {gameState.player.current.level}</span>
                 <div className='health_background' style={{width: getStatTotal(gameState.player.current.stats.health)}}>
                     <div className='health' style={{width: `${100 * gameState.player.current.health / getStatTotal(gameState.player.current.stats.health)}%`}} />
+                </div>
+                <div className='xp_background' style={{width: gameState.player.current.xpToNextLevel}}>
+                    <div className='xp_bar' style={{width: `${100 * gameState.player.current.xp / gameState.player.current.xpToNextLevel}%`}} />
                 </div>
             </div>
             <div className='joystick' ref={joystick}

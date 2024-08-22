@@ -25,9 +25,10 @@ export type Stats = {
 }
 
 export type GameState = {
-    player: React.MutableRefObject<Entity>;
+    player: React.MutableRefObject<Player>;
     enemies: Entity[];
     bullets: Bullet[];
+    xpOrbs: XPOrb[];
 }
 
 export class Entity {
@@ -52,6 +53,12 @@ export class Entity {
     }
 }
 
+export class Player extends Entity {
+    xp: number = 0;
+    level: number = 0;
+    xpToNextLevel: number = 12;
+}
+
 export class Bullet {
     position: Position;
     damage: number;
@@ -71,5 +78,15 @@ export class Bullet {
         this.damage = damage;
         this.ticksAlive = ticksAlive;
         this.onTick = onTick;
+    }
+}
+
+export class XPOrb {
+    position: Position;
+    xp: number;
+
+    constructor(position: Position, xp: number) {
+        this.position = position;
+        this.xp = xp;
     }
 }
