@@ -3,6 +3,7 @@ import './Survive.scss';
 import ArrowsFullscreenIcon from '../../icons/arrows-fullscreen';
 import PauseIcon from '../../icons/pause';
 import PlayIcon from '../../icons/play';
+import ChevronLeftIcon from '../../icons/chevron-left';
 import { GameState, Entity, Bullet, XPOrb, Player } from './survive/SurviveTypes';
 import { damageEntity, getBaseStats, getStatTotal } from './survive/Utils';
 
@@ -21,6 +22,7 @@ const Survive = () => {
     const mousePosition = useRef({x: 0, y: 0});
     const lastTimestamp = useRef<number>(performance.now());
     const [isTouchDevice, setIsTouchDevice] = useState(false);
+    const [isJoystickLeft, setIsJoystickLeft] = useState(false);
     const [, forceUpdate] = useState({});
     const preventDefaultKeys = useMemo(() => ['w', 'a', 's', 'd', ' '], []);
     const spawnEnemyCooldown = useRef(0);
@@ -338,7 +340,7 @@ const Survive = () => {
                     <div className='xp_bar' style={{width: `${100 * gameState.player.current.xp / gameState.player.current.xpToNextLevel}%`}} />
                 </div>
             </div>
-            {isTouchDevice && <div className='joystick' ref={joystick}
+            {isTouchDevice && <div className={`joystick${isJoystickLeft ? ' joystick_left' : ''}`} ref={joystick}
                 onTouchMove={e => {
                     const currentJoystick = joystick.current;
                     if (!currentJoystick) return;
@@ -364,7 +366,9 @@ const Survive = () => {
                     playerMoveDirection.current = {x: 0, y: 0};
                     isUsingJoystick.current = false;
                 }}
-            />}
+            >
+                <ChevronLeftIcon className='joystick_button' onTouchStart={() => setIsJoystickLeft(l => !l)} />
+            </div>}
         </div>
     </main>);
 }

@@ -1,0 +1,2 @@
+// eslint-disable-next-line import/no-anonymous-default-export
+export default ({className, onTouchStart}: {className?: string, onTouchStart?: () => void}) => <svg className={className} onTouchStart={onTouchStart} xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="-8 -5 24 24"><path fill="currentColor" d="m2.757 7l4.95 4.95a1 1 0 1 1-1.414 1.414L.636 7.707a1 1 0 0 1 0-1.414L6.293.636A1 1 0 0 1 7.707 2.05z"/></svg>

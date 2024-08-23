@@ -179,6 +179,31 @@ main {
             width: 8rem;
             height: 8rem;
             touch-action: none;
+            z-index: 2;
+
+            &.joystick_left {
+                left: .5rem;
+                right: auto;
+
+                .joystick_button {
+                    left: 0;
+                    right: auto;
+                    border-radius: .25rem .25rem .25rem 100%;
+                    rotate: 180deg;
+                }
+            }
+
+            .joystick_button {
+                border: none;
+                background: var(--background-color);
+                width: 2rem;
+                height: 2rem;
+                border-radius: 100% .25rem .25rem .25rem;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                z-index: 1;
+            }
         }
     }
 }
