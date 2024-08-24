@@ -257,6 +257,7 @@ const Survive = () => {
         <div
             className={`game_window${isFullscreen.current ? ' fullscreen' : ''}${isPaused.current ? ' paused' : ''}`}
             ref={gameWindow}
+            onContextMenu={e => e.preventDefault()}
             onTouchStart={e => {
                 if (e.touches.length === 2 && !isUsingJoystick.current) {
                     initialPinchDistance.current = Math.sqrt(
