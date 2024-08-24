@@ -237,6 +237,7 @@ const Survive = () => {
     useEffect(() => {
         const handleScroll = (event: WheelEvent) => {
             if (!gameWindow.current || event.deltaY === 0) return;
+            event.preventDefault();
             scale.current += (event.deltaY > 0 ? -.4 : .4);
             if (scale.current < 4) scale.current = 4;
             if (scale.current > 17) scale.current = 17;
@@ -251,7 +252,7 @@ const Survive = () => {
 
     const screenSize = gameWindow.current?.getBoundingClientRect();
 
-    return (<main>
+    return (<main className='survive'>
         <h1>Survive!</h1>
         <div
             className={`game_window${isFullscreen.current ? ' fullscreen' : ''}${isPaused.current ? ' paused' : ''}`}

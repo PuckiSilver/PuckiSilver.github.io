@@ -216,5 +216,17 @@ div.layout {
         @media (max-width: 80rem) {
             width: 100%;
         }
+
+        footer {
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            margin-top: 1rem;
+            color: var(--hover-color);
+
+            a {
+                color: var(--hover-color);
+            }
+        }
     }
 }

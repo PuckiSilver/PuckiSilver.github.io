@@ -111,6 +111,9 @@ const App = () => {
             <Route path="/g/survive" element={<Survive />} />
           </Routes>
         </BrowserRouter>
+        <footer>
+          <span>Licensed under <a href='https://github.com/PuckiSilver/PuckiSilver.github.io/blob/main/LICENSE' target='_blank'>MIT</a></span>
+        </footer>
       </div>
     </div>
   );
