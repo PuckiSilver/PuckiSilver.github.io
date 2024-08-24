@@ -112,7 +112,7 @@ const App = () => {
           </Routes>
         </BrowserRouter>
         <footer>
-          <span>Licensed under <a href='https://github.com/PuckiSilver/PuckiSilver.github.io/blob/main/LICENSE' target='_blank'>MIT</a></span>
+          <a href='https://github.com/PuckiSilver/PuckiSilver.github.io/blob/main/LICENSE' target='_blank'>Licensed under MIT</a>
         </footer>
       </div>
     </div>

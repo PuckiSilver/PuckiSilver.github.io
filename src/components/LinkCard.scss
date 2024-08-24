@@ -12,6 +12,10 @@ a.link_card {
     color: var(--text-color);
     text-decoration: none;
 
+    h3 {
+        margin: 0;
+    }
+
     &:hover {
         background-color: var(--hover-color);
         color: var(--text-color);
