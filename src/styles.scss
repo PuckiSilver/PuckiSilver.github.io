@@ -4,6 +4,7 @@
     --border-color: #00753c;
     --section-color: #262b2b;
     --background-color: #131616;
+    --hover-color: #505755;
     --text-color: #FFFFFF;
 }
 
@@ -26,8 +27,8 @@ h3 {
 }
 
 div.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 18rem);
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem;
 }
