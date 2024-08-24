@@ -14,8 +14,10 @@ import OpenglIcon from '../icons/opengl'
 import ReactIcon from '../icons/react'
 import VisualStudioIcon from '../icons/visual-studio'
 import IntelliJIcon from '../icons/intellij'
-import BrushIcon from '../icons/brush'
 import UnrealScriptIcon from '../icons/unrealscript'
+import BeetIcon from '../icons/beet'
+import PaintDotNetIcon from '../icons/paintdotnet'
+import SpringBootIcon from '../icons/spring-boot'
 
 export default function Home() {
     const [starCount, setStarCount] = React.useState<number|null>(null);
@@ -77,10 +79,6 @@ export default function Home() {
                 </div>
                 <h3>Frameworks and Tools</h3>
                 <div className='skill_container'>
-                    <a className='skill' style={{color: '#5ED3F3'}} href='https://react.dev' target='_blank'>
-                        <ReactIcon/>
-                        React
-                    </a>
                     <a className='skill' style={{color: '#22A7F2'}} href='https://code.visualstudio.com' target='_blank'>
                         <VisualStudioIcon/>
                         VSCode
@@ -89,13 +87,25 @@ export default function Home() {
                         <IntelliJIcon/>
                         IntelliJ IDEA
                     </a>
-                    <a className='skill' style={{color: '#2E5DAE'}} href='https://www.getpaint.net' target='_blank'>
-                        <BrushIcon/>
+                    <a className='skill' style={{color: '#5ED3F3'}} href='https://react.dev' target='_blank'>
+                        <ReactIcon/>
+                        React
+                    </a>
+                    <a className='skill' style={{color: '#77BC1F'}} href='https://spring.io/projects/spring-boot' target='_blank'>
+                        <SpringBootIcon/>
+                        Spring Boot
+                    </a>
+                    <a className='skill' style={{color: '#6991D2'}} href='https://www.getpaint.net' target='_blank'>
+                        <PaintDotNetIcon/>
                         Paint.NET
                     </a>
                     <a className='skill' style={{color: '#F7F7F7'}} href='https://www.unrealengine.com' target='_blank'>
                         <UnrealScriptIcon/>
                         Unreal Engine
+                    </a>
+                    <a className='skill' style={{color: '#B50E38'}} href='https://mcbeet.dev' target='_blank'>
+                        <BeetIcon/>
+                        Beet
                     </a>
                 </div>
             </div>
