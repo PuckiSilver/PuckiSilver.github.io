@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import './LinkCard.scss'
 import ArrowUpRightIcon from '../icons/arrow-up-right';
 
-const LinkCard = ({ title, description, link, icon }: { title:string, description:string, link:string, icon?:any }) => {
+const LinkCard = ({ title, description, link, icon }: { title:string, description:string|ReactElement, link:string, icon?:any }) => {
     const isExternal: boolean = link.startsWith('http');
     return (
         <a

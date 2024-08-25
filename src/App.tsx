@@ -3,7 +3,7 @@ import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './views/Home';
 import Faq from './views/Faq';
-import Socials from './views/Socials';
+import Contact from './views/Contact';
 import Tools from './views/Tools';
 import Velvet from './views/tools/Velvet';
 import Cardboard from './views/tools/Cardboard';
@@ -88,7 +88,7 @@ const App = () => {
             getNavItem('/', 'Home', <HomeIcon/>),
             getNavItem('/faq', 'Faq', <InfoIcon/>),
             getNavItem('/tools', 'Tools', <HammerIcon/>),
-            getNavItem('/socials', 'Socials', <MessageIcon/>),
+            getNavItem('/contact', 'Contact', <MessageIcon/>),
           ]}
         </div>
         <div className='navbar_section'>
@@ -101,7 +101,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />}  />
-            <Route path="/socials" element={<Socials />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/tools" element={<Tools />} />
 

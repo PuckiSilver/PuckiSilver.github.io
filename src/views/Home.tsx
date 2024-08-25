@@ -128,12 +128,6 @@ export default function Home() {
                 <h2>Explore the Website</h2>
                 <div className='grid'>
                     <LinkCard
-                        title='Socials'
-                        description='Find me on various platforms'
-                        link='/socials'
-                        icon={<MessageIcon/>}
-                    />
-                    <LinkCard
                         title='FAQ'
                         description='Answers to the most frequently asked questions'
                         link='/faq'
@@ -144,6 +138,12 @@ export default function Home() {
                         description='Tools and resources for Minecraft Data Pack development'
                         link='/tools'
                         icon={<HammerIcon/>}
+                    />
+                    <LinkCard
+                        title='Contact'
+                        description='Find out how to contact or support me'
+                        link='/contact'
+                        icon={<MessageIcon/>}
                     />
                 </div>
             </div>
