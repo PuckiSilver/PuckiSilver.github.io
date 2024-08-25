@@ -114,15 +114,15 @@ export default function Home() {
                 <h2>Highlighted Projects</h2>
                 <div className='project_stats'>
                     <StarIcon style={{color: '#ffdd00'}}/>
-                    <span className='project_line'><a href='https://github.com/PuckiSilver/NoShadow' target='_blank'>NoShadow</a> with <span className='stat' style={{color: '#ffdd00', minWidth: '1rem'}}>{starCount ?? <Spinner/>}</span> Stars on GitHub</span>
+                    <span><a href='https://github.com/PuckiSilver/NoShadow' target='_blank'>NoShadow</a> with <span className='stat' style={{color: '#ffdd00', minWidth: '1rem'}}>{starCount ?? <Spinner/>}</span> Stars on GitHub</span>
                 </div>
                 <div className='project_stats'>
                     <DownloadIcon style={{color: '#1cdf8b'}}/>
-                    <span className='project_line'><a href='https://modrinth.com/project/mob-captains' target='_blank'>Mob Captains</a> with <span className='stat' style={{color: '#1cdf8b', minWidth: '3rem'}}>{mobCapDownloadCount ? formatNumber(mobCapDownloadCount) : <Spinner/>}</span> Downloads on Modrinth and</span>
+                    <span><a href='https://modrinth.com/project/mob-captains' target='_blank'>Mob Captains</a> with <span className='stat' style={{color: '#1cdf8b', minWidth: '3rem'}}>{mobCapDownloadCount ? formatNumber(mobCapDownloadCount) : <Spinner/>}</span> Downloads on Modrinth and</span>
                 </div>
                 <div className='project_stats'>
                     <DownloadIcon style={{color: '#1cdf8b'}}/>
-                    <span className='project_line'><a href='https://modrinth.com/project/keep-some-inventory' target='_blank'>Keep Some Inventory</a> with <span className='stat' style={{color: '#1cdf8b', minWidth: '3rem'}}>{keepDownloadCount ? formatNumber(keepDownloadCount) : <Spinner/>}</span> Downloads on Modrinth</span>
+                    <span><a href='https://modrinth.com/project/keep-some-inventory' target='_blank'>Keep Some Inventory</a> with <span className='stat' style={{color: '#1cdf8b', minWidth: '3rem'}}>{keepDownloadCount ? formatNumber(keepDownloadCount) : <Spinner/>}</span> Downloads on Modrinth</span>
                 </div>
             </div>
             <div className='section'>
