@@ -31,7 +31,7 @@ const Survive = () => {
         {x: 0, y: 0, r: 2.4},
         getBaseStats({
             health: 100,
-            speed: .02,
+            speed: .08,
             autoDamage: 2,
             autoSpeed: 1,
             iFrames: 20,
@@ -91,6 +91,8 @@ const Survive = () => {
                 };
                 document.documentElement.style.setProperty('--player-x', `${player.position.x}px`);
                 document.documentElement.style.setProperty('--player-y', `${player.position.y}px`);
+                document.documentElement.style.setProperty('--player-x-mod', `${player.position.x % 16}px`);
+                document.documentElement.style.setProperty('--player-y-mod', `${player.position.y % 16}px`);
             }
 
             if (spawnEnemyCooldown.current > 0) spawnEnemyCooldown.current -= delta * fps.current / 1000;
@@ -225,6 +227,8 @@ const Survive = () => {
     useEffect(() => {
         document.documentElement.style.setProperty('--player-x', '0px');
         document.documentElement.style.setProperty('--player-y', '0px');
+        document.documentElement.style.setProperty('--player-x-mod', '0px');
+        document.documentElement.style.setProperty('--player-y-mod', '0px');
         document.documentElement.style.setProperty('--scale', `${scale.current}`);
     }, [])
 
@@ -259,6 +263,7 @@ const Survive = () => {
             ref={gameWindow}
             onContextMenu={e => e.preventDefault()}
             onTouchStart={e => {
+                window.getSelection()?.removeAllRanges();
                 if (e.touches.length === 2 && !isUsingJoystick.current) {
                     initialPinchDistance.current = Math.sqrt(
                         (e.touches[0].clientX - e.touches[1].clientX) ** 2 +
@@ -288,6 +293,9 @@ const Survive = () => {
                     initialPinchDistance.current = currentPinchDistance;
                 }
             }}
+            onTouchEnd={() => {
+                window.getSelection()?.removeAllRanges();
+            }}
         >
             <div className='buttons'>
                 <button onClick={() => {
@@ -304,7 +312,7 @@ const Survive = () => {
                     {isPaused.current ? <PlayIcon /> : <PauseIcon />}
                 </button>
             </div>
-            <img src={require('../../assets/survive/background.png')} alt='background' className='background' />
+            <div className='background' />
             {screenSize && gameState.xpOrbs.map((orb, i) => {
                 return (<div
                     key={`xp_${i}`}
@@ -354,6 +362,7 @@ const Survive = () => {
                     };
                 }}
                 onTouchStart={e => {
+                    window.getSelection()?.removeAllRanges();
                     const currentJoystick = joystick.current;
                     if (!currentJoystick) return;
                     const joystickTouch = e.touches[e.touches.length - 1];
@@ -365,6 +374,7 @@ const Survive = () => {
                     };
                 }}
                 onTouchEnd={() => {
+                    window.getSelection()?.removeAllRanges();
                     playerMoveDirection.current = {x: 0, y: 0};
                     isUsingJoystick.current = false;
                 }}
