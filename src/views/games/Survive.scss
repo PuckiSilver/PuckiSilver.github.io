@@ -19,6 +19,14 @@ main.survive {
             .game_elements {
                 filter: brightness(.5);
             }
+
+            .hud {
+                .joystick {
+                    .joystick_button {
+                        display: inherit;
+                    }
+                }
+            }
         }
 
         &.fullscreen {
@@ -104,73 +112,76 @@ main.survive {
             top: 0;
             left: 0;
 
-            .buttons {
-                position: absolute;
-                top: .5rem;
-                right: .5rem;
-                z-index: 1;
+            .hud_top {
+                position: relative;
                 display: flex;
-                flex-direction: column;
+                justify-content: space-between;
+                margin: .5rem;
                 gap: .5rem;
-                align-items: end;
-    
-                button {
-                    padding: .25rem;
-                    border-radius: .25rem;
-                    width: 2rem;
-                    height: 2rem;
-                    background: var(--section-color);
-                    border: 0;
-                    cursor: pointer;
-                    color: white;
-    
-                    &:hover {
-                        background-color: var(--background-color);
-                    }
-    
-                    svg {
-                        width: 1.5rem;
-                        height: 1.5rem;
-                    }
-                }
-            }
 
-            .bars {
-                position: absolute;
-                display: flex;
-                flex-direction: column;
-                gap: .5rem;
-                top: .5rem;
-                left: .5rem;
-                background: var(--section-color);
-                border-radius: .25rem;
-                overflow: hidden;
-                padding: 0.5rem;
-                font-weight: bold;
-    
-                .health_background {
-                    position: relative;
-                    height: 1rem;
-                    width: 100%;
-                    background: var(--background-color);
-    
-                    .health_bar {
-                        position: absolute;
+                .bars {
+                    position: inherit;
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5rem;
+                    background: var(--section-color);
+                    border-radius: .25rem;
+                    overflow: hidden;
+                    padding: 0.5rem;
+                    font-weight: bold;
+                    box-shadow: 0 0 10px color-mix(in srgb, var(--background-color) 90%, transparent 10%);
+        
+                    .health_background {
+                        position: relative;
                         height: 1rem;
-                        background: var(--primary-color);
+                        width: 100%;
+                        background: var(--background-color);
+        
+                        .health_bar {
+                            position: absolute;
+                            height: 1rem;
+                            background: var(--primary-color);
+                        }
+                    }
+        
+                    .xp_background {
+                        position: relative;
+                        height: .5rem;
+                        width: 100%;
+                        background: var(--background-color);
+        
+                        .xp_bar {
+                            position: absolute;
+                            height: .5rem;
+                            background: var(--secondary-color);
+                        }
                     }
                 }
-    
-                .xp_background {
-                    position: relative;
-                    height: .5rem;
-                    width: 100%;
-                    background: var(--background-color);
-    
-                    .xp_bar {
-                        position: absolute;
-                        height: .5rem;
-                        background: var(--secondary-color);
+
+                .buttons {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5rem;
+                    align-items: end;
+        
+                    button {
+                        padding: .25rem;
+                        border-radius: .25rem;
+                        width: 2rem;
+                        height: 2rem;
+                        background: var(--section-color);
+                        border: 0;
+                        cursor: pointer;
+                        color: white;
+        
+                        &:hover {
+                            background-color: var(--background-color);
+                        }
+        
+                        svg {
+                            width: 1.5rem;
+                            height: 1.5rem;
+                        }
                     }
                 }
             }
@@ -181,20 +192,21 @@ main.survive {
                 position: absolute;
                 bottom: .5rem;
                 right: .5rem;
+                left: auto;
                 width: 8rem;
                 height: 8rem;
                 touch-action: none;
                 z-index: 2;
                 border: .25rem solid var(--background-color);
+                display: flex;
+                justify-content: center;
+                align-items: center;
     
                 &.joystick_left {
                     left: .5rem;
                     right: auto;
     
                     .joystick_button {
-                        left: 0;
-                        right: auto;
-                        border-radius: .25rem .25rem .25rem 100%;
                         rotate: 180deg;
                     }
                 }
@@ -204,16 +216,14 @@ main.survive {
                     background: var(--background-color);
                     width: 2rem;
                     height: 2rem;
-                    border-radius: 100% .25rem .25rem .25rem;
-                    position: absolute;
-                    bottom: 0;
-                    right: 0;
-                    z-index: 1;
+                    border-radius: .25rem;
                     touch-action: auto;
+                    display: none;
                 }
             }
     
             .cursor {
+                pointer-events: none;
                 position: absolute;
                 transform: translate(calc(-50% - var(--player-x) * var(--scale)), calc(-50% - var(--player-y) * var(--scale)));
                 width: calc(var(--scale) * .8px);

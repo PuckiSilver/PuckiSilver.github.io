@@ -323,34 +323,36 @@ const Survive = () => {
                 <div className={`player${gameState.player.current.iFramesLeft ? ' damaged' : ''}`} />
             </div>
             <div className='hud'>
-                <div className='buttons'>
-                    <button onClick={() => {
-                        isFullscreen.current = !isFullscreen.current;
-                        setTimeout(() => setGameState(gs => ({...gs})), 1); // timeout of 1 to wait for fullscreen to take effect
-                        forceUpdate({});
-                    }}>
-                        <ArrowsFullscreenIcon />
-                    </button>
-                    <button onClick={() => {
-                        isPaused.current = !isPaused.current;
-                        forceUpdate({});
-                    }}>
-                        {isPaused.current ? <PlayIcon /> : <PauseIcon />}
-                    </button>
-                </div>
-                <div className='bars'>
-                    <span>Health: {gameState.player.current.health} | Level: {gameState.player.current.level}</span>
-                    <div className='health_background' style={{width: getStatTotal(gameState.player.current.stats.health)}}>
-                        <div className='health_bar' style={{width: `${100 * gameState.player.current.health / getStatTotal(gameState.player.current.stats.health)}%`}} />
-                    </div>
-                    <div className='xp_background' style={{width: gameState.player.current.xpToNextLevel}}>
-                        <div className='xp_bar' style={{width: `${100 * gameState.player.current.xp / gameState.player.current.xpToNextLevel}%`}} />
-                    </div>
-                </div>
                 {screenSize && <div className='cursor' style={{
                     left: (mousePosition.current.x + gameState.player.current.position.x) * scale.current + screenSize.width / 2,
                     top: (mousePosition.current.y + gameState.player.current.position.y) * scale.current + screenSize.height / 2,
                 }} />}
+                <div className='hud_top'>
+                    <div className='bars'>
+                        <span>Health: {gameState.player.current.health} | Level: {gameState.player.current.level}</span>
+                        <div className='health_background' style={{width: getStatTotal(gameState.player.current.stats.health)}}>
+                            <div className='health_bar' style={{width: `${100 * gameState.player.current.health / getStatTotal(gameState.player.current.stats.health)}%`}} />
+                        </div>
+                        <div className='xp_background' style={{width: gameState.player.current.xpToNextLevel}}>
+                            <div className='xp_bar' style={{width: `${100 * gameState.player.current.xp / gameState.player.current.xpToNextLevel}%`}} />
+                        </div>
+                    </div>
+                    <div className='buttons'>
+                        <button onClick={() => {
+                                isPaused.current = !isPaused.current;
+                                forceUpdate({});
+                            }}>
+                            {isPaused.current ? <PlayIcon /> : <PauseIcon />}
+                        </button>
+                        {isPaused.current && <button onClick={() => {
+                            isFullscreen.current = !isFullscreen.current;
+                            setTimeout(() => setGameState(gs => ({...gs})), 1); // timeout of 1 to wait for fullscreen to take effect
+                            forceUpdate({});
+                        }}>
+                            <ArrowsFullscreenIcon />
+                        </button>}
+                    </div>
+                </div>
                 {isTouchDevice && <div className={`joystick${isJoystickLeft ? ' joystick_left' : ''}`} ref={joystick}
                     onTouchMove={e => {
                         const currentJoystick = joystick.current;
