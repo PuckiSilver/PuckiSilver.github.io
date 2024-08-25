@@ -1,4 +1,4 @@
 
-# [pucksilver.github.io](https://puckisilver.github.io)
+# [pucki.zip](https://pucki.zip)
 
-Most icons are from https://icones.js.org
+Most icons are from [Icônes](https://icones.js.org)
