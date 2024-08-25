@@ -12,10 +12,24 @@ main.home {
             max-width: 1.5rem;
         }
 
-        .stat {
-            background-color: var(--background-color);
-            padding: .125rem .25rem;
-            border-radius: .25rem;
+        .project_line {
+            display: flex;
+            gap: .25rem;
+
+            .stat {
+                background-color: var(--background-color);
+                padding: .125rem .25rem;
+                border-radius: .25rem;
+                display: flex;
+                justify-content: center;
+                width: fit-content;
+
+                svg {
+                    max-height: 1rem;
+                    max-width: 1rem;
+                    padding: 0 .125;
+                }
+            }
         }
     }
 

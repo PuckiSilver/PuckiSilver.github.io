@@ -64,3 +64,12 @@ code {
     border-radius: .25rem;
     padding: .125rem .25rem;
 }
+
+.spinner_5nOS{
+    transform-origin: center;
+    animation: spinner_sEAn .75s infinite linear;
+}
+
+@keyframes spinner_sEAn {
+    100% { transform: rotate(360deg) }
+}
