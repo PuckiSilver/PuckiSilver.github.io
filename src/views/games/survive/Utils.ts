@@ -1,7 +1,60 @@
-import { Entity, GameState, Stat, StatNames, Stats } from "./SurviveTypes";
+import { Entity, GameState, Stat, StatNames, Stats, Upgrade } from "./SurviveTypes";
+import FastForwardIcon from "../../../icons/fast-forward";
+import ShieldIcon from "../../../icons/shield";
+import StarIcon from "../../../icons/star";
 
-export const getStatTotal = (stat: Stat): number => {
-    return (stat.base + stat.flat) * stat.mult.reduce((acc, val) => acc * val, 1);
+const statToStatName = (stat: keyof Stats): string => {
+    switch (stat) {
+        case StatNames.health:
+            return 'Health';
+        case StatNames.speed:
+            return 'Movement Speed';
+        case StatNames.autoDamage:
+            return 'Attack Damage';
+        case StatNames.autoSpeed:
+            return 'Attack Speed';
+        case StatNames.iFrames:
+            return 'Invincibility Frames';
+    }
+    return '';
+}
+
+const statToIcon = (stat: keyof Stats): JSX.Element => {
+    switch (stat) {
+        // case StatNames.health:
+        // case StatNames.speed:
+        // case StatNames.autoDamage:
+        case StatNames.autoSpeed:
+            return FastForwardIcon();
+        case StatNames.iFrames:
+            return ShieldIcon();
+    }
+    return StarIcon({});
+}
+
+export const getRandomUpgrade = (): Upgrade => {
+    const stat = Object.values(StatNames)[Math.floor(Math.random() * Object.values(StatNames).length)];
+    const increase = Math.random() * 5;
+    const type = Math.random() > 0.5 ? 'flat' : 'mult';
+    const rarityRng = Math.random();
+    const rarity = rarityRng > 0.9 ? 2 : rarityRng > 0.7 ? 1 : 0;
+    const rarityBonus = rarity === 2 ? 5 : rarity === 1 ? 2 : 0;
+    return {
+        stat,
+        increase: increase + rarityBonus,
+        type,
+        icon: statToIcon(stat),
+        stat_name: statToStatName(stat),
+        rarity: rarity,
+    };
+}
+
+export const roundWithPrecision = (num: number, precision: number): number => {
+    return Math.round(num * precision) / precision;
+}
+
+export const getStatTotal = (stat: Stat, flat_increase: number = 0, mult_increase: number = 1): number => {
+    return (stat.base + stat.flat + flat_increase) * [...stat.mult, mult_increase].reduce((acc, val) => acc * val, 1);
 }
 
 export const getBaseStats = (partialStats: {[key in keyof Stats]?: number}): Stats => {

@@ -1,3 +1,4 @@
+import { ReactSVG } from "react";
 import { getStatTotal } from "./Utils";
 
 export type Position = {
@@ -24,6 +25,15 @@ export type Stats = {
     [key in keyof typeof StatNames]: Stat;
 }
 
+export type Upgrade = {
+    stat: keyof typeof StatNames;
+    increase: number;
+    type: 'flat' | 'mult';
+    icon: JSX.Element;
+    stat_name: string;
+    rarity: number;
+}
+
 export type GameState = {
     player: React.MutableRefObject<Player>;
     enemies: Entity[];
@@ -46,7 +56,7 @@ export class Entity {
         this.stats = stats;
         this.onTick = onTick;
         this.onDeath = onDeath;
-        this.health = getStatTotal(stats.health);
+        this.health = getStatTotal(stats.health) * 10;
         if (motion) {
             this.motion = motion;
         }
@@ -56,7 +66,7 @@ export class Entity {
 export class Player extends Entity {
     xp: number = 0;
     level: number = 0;
-    xpToNextLevel: number = 12;
+    xpToNextLevel: number = 10 + (1 * 2) ** 1.2;
 }
 
 export class Bullet {

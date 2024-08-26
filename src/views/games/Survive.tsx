@@ -4,8 +4,9 @@ import ArrowsFullscreenIcon from '../../icons/arrows-fullscreen';
 import PauseIcon from '../../icons/pause';
 import PlayIcon from '../../icons/play';
 import ChevronLeftIcon from '../../icons/chevron-left';
-import { GameState, Entity, Bullet, XPOrb, Player } from './survive/SurviveTypes';
-import { damageEntity, getBaseStats, getStatTotal } from './survive/Utils';
+import FastForwardIcon from '../../icons/fast-forward';
+import { GameState, Entity, Bullet, XPOrb, Player, Upgrade } from './survive/SurviveTypes';
+import { damageEntity, getBaseStats, getRandomUpgrade, getStatTotal, roundWithPrecision } from './survive/Utils';
 
 const Survive = () => {
     const gameWindow = useRef<HTMLDivElement>(null);
@@ -23,6 +24,8 @@ const Survive = () => {
     const lastTimestamp = useRef<number>(performance.now());
     const [isTouchDevice, setIsTouchDevice] = useState(false);
     const [isJoystickLeft, setIsJoystickLeft] = useState(false);
+    const [checkedUpgrade, setCheckedUpgrade] = useState<number | null>(null);
+    const [availableUpgrades, setAvailableUpgrades] = useState<Upgrade[]>([]);
     const [, forceUpdate] = useState({});
     const preventDefaultKeys = useMemo(() => ['w', 'a', 's', 'd', ' '], []);
     const spawnEnemyCooldown = useRef(0);
@@ -30,11 +33,11 @@ const Survive = () => {
     const player = useRef<Player>(new Player(
         {x: 0, y: 0, r: 2.4},
         getBaseStats({
-            health: 100,
-            speed: .02,
-            autoDamage: 2,
-            autoSpeed: 1,
-            iFrames: 20,
+            health: 10,
+            speed: 10,
+            autoDamage: 10,
+            autoSpeed: 10,
+            iFrames: 10,
         }),
         (entity, gameState, delta) => {
             const player = entity as Player;
@@ -49,7 +52,7 @@ const Survive = () => {
                             x: (mousePosition.current.x / mouseVectorLength) * 0.05,
                             y: (mousePosition.current.y / mouseVectorLength) * 0.05,
                         },
-                        10,
+                        getStatTotal(entity.stats.autoDamage) / 5,
                         100,
                         (bullet, gameState, delta) => {
                             bullet.position = {
@@ -69,7 +72,7 @@ const Survive = () => {
                             }
                         },
                     ));
-                    player.autoCooldownTicks = fps.current / getStatTotal(player.stats.autoSpeed);
+                    player.autoCooldownTicks = fps.current / (getStatTotal(player.stats.autoSpeed) / 15);
                 }
             }
 
@@ -85,8 +88,8 @@ const Survive = () => {
             const currentPlayerSpeed = Math.sqrt(playerMoveDirection.current.x ** 2 + playerMoveDirection.current.y ** 2);
             if (currentPlayerSpeed !== 0) {
                 player.position = {
-                    x: player.position.x - (playerMoveDirection.current.x / currentPlayerSpeed) * delta * getStatTotal(player.stats.speed),
-                    y: player.position.y - (playerMoveDirection.current.y / currentPlayerSpeed) * delta * getStatTotal(player.stats.speed),
+                    x: player.position.x - (playerMoveDirection.current.x / currentPlayerSpeed) * delta * (getStatTotal(player.stats.speed) / 1000),
+                    y: player.position.y - (playerMoveDirection.current.y / currentPlayerSpeed) * delta * (getStatTotal(player.stats.speed) / 1000),
                     r: player.position.r
                 };
                 document.documentElement.style.setProperty('--player-x', `${player.position.x}px`);
@@ -106,21 +109,21 @@ const Survive = () => {
                         r: 1.6,
                     },
                     getBaseStats({
-                        health: 20,
-                        speed: .01,
-                        autoDamage: 2,
+                        health: 0.4,
+                        speed: 8,
+                        autoDamage: 10,
                         iFrames: 20,
                     }),
                     (entity, gameState, delta) => {
                         const entityVector = {x: entity.position.x - gameState.player.current.position.x, y: entity.position.y - gameState.player.current.position.y};
                         const entitySpeed = Math.sqrt(entityVector.x ** 2 + entityVector.y ** 2);
                         if (Math.abs(entitySpeed) < (entity.position.r + gameState.player.current.position.r)) {
-                            damageEntity(gameState.player.current, getStatTotal(entity.stats.autoDamage), gameState);
+                            damageEntity(gameState.player.current, getStatTotal(entity.stats.autoDamage) / 5, gameState);
                             return;
                         };
                         entity.position = {
-                            x: entity.position.x - (entityVector.x / entitySpeed) * delta * getStatTotal(entity.stats.speed),
-                            y: entity.position.y - (entityVector.y / entitySpeed) * delta * getStatTotal(entity.stats.speed),
+                            x: entity.position.x - (entityVector.x / entitySpeed) * delta * (getStatTotal(entity.stats.speed) / 1000),
+                            y: entity.position.y - (entityVector.y / entitySpeed) * delta * (getStatTotal(entity.stats.speed) / 1000),
                             r: entity.position.r,
                         };
                     },
@@ -148,7 +151,13 @@ const Survive = () => {
             while (player.xp >= player.xpToNextLevel) {
                 player.xp -= player.xpToNextLevel;
                 player.level++;
-                player.xpToNextLevel *= 2;
+                player.xpToNextLevel = 10 + ((player.level + 1) * 2) ** 1.2;
+                setAvailableUpgrades([
+                    getRandomUpgrade(),
+                    getRandomUpgrade(),
+                    getRandomUpgrade(),
+                ]);
+                isPaused.current = true;
             }
         },
         () => {},
@@ -336,9 +345,9 @@ const Survive = () => {
                 }} />}
                 <div className='hud_top'>
                     <div className='bars'>
-                        <span>Health: {gameState.player.current.health} | Level: {gameState.player.current.level}</span>
-                        <div className='health_background' style={{width: getStatTotal(gameState.player.current.stats.health)}}>
-                            <div className='health_bar' style={{width: `${100 * gameState.player.current.health / getStatTotal(gameState.player.current.stats.health)}%`}} />
+                        <span>Health: {roundWithPrecision(gameState.player.current.health, 100)} | Level: {gameState.player.current.level}</span>
+                        <div className='health_background' style={{width: `${getStatTotal(gameState.player.current.stats.health) * 10}px`}}>
+                            <div className='health_bar' style={{width: `${100 * gameState.player.current.health / (getStatTotal(gameState.player.current.stats.health) * 10)}%`}} />
                         </div>
                         <div className='xp_background' style={{width: gameState.player.current.xpToNextLevel}}>
                             <div className='xp_bar' style={{width: `${100 * gameState.player.current.xp / gameState.player.current.xpToNextLevel}%`}} />
@@ -392,6 +401,46 @@ const Survive = () => {
                     <ChevronLeftIcon className='joystick_button' onTouchStart={() => setIsJoystickLeft(l => !l)} />
                 </div>}
             </div>
+            {availableUpgrades.length && <div className='upgrade_menu'>
+                <div className='upgrade_cards'>
+                    {availableUpgrades.map((upgrade, i) => (
+                        <label className={`upgrade_card ${['common', 'rare', 'epic'][upgrade.rarity]}`} key={`upgrade_${i}`} htmlFor={`upgrade_${i}`}>
+                            {upgrade.icon}
+                            <h3>{upgrade.stat_name}</h3>
+                            <p>+ {roundWithPrecision(upgrade.increase, 100)}{upgrade.type === 'mult' ? '%' : ''}</p>
+                            <p>{roundWithPrecision(getStatTotal(gameState.player.current.stats[upgrade.stat]), 100)} &gt; <span className='to_stat'>{upgrade.type === 'flat' ? roundWithPrecision(getStatTotal(gameState.player.current.stats[upgrade.stat], upgrade.increase), 100) : roundWithPrecision(getStatTotal(gameState.player.current.stats[upgrade.stat], 0, (1 + upgrade.increase / 100)), 100)}</span></p>
+                            <input
+                                type='checkbox'
+                                id={`upgrade_${i}`}
+                                checked={checkedUpgrade === i}
+                                onChange={() => setCheckedUpgrade(checkedUpgrade === i ? null : i)}
+                            />
+                        </label>
+                    ))}
+                </div>
+                <button
+                    className='upgrade_button'
+                    onClick={() => {
+                        if (checkedUpgrade === null) return;
+                        console.log(availableUpgrades[checkedUpgrade]);
+                        const upgrade = availableUpgrades[checkedUpgrade];
+                        const previousPlayerHealthStat = getStatTotal(gameState.player.current.stats.health);
+                        if (upgrade.type === 'flat') {
+                            gameState.player.current.stats[upgrade.stat][upgrade.type] += upgrade.increase;
+                        } else {
+                            gameState.player.current.stats[upgrade.stat][upgrade.type].push(1 + upgrade.increase / 100);
+                        }
+                        if (upgrade.stat === 'health') {
+                            gameState.player.current.health += (getStatTotal(gameState.player.current.stats.health) - previousPlayerHealthStat) * 10;
+                        }
+                        setCheckedUpgrade(null);
+                        setAvailableUpgrades([]);
+                        isPaused.current = false;
+                    }}
+                >
+                    Upgrade!
+                </button>
+            </div>}
         </div>
     </main>);
 }
