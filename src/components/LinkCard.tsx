@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import './LinkCard.scss'
 import ArrowUpRightIcon from '../icons/arrow-up-right';
 
-const LinkCard = ({ title, description, link, icon }: { title:string, description:string|ReactElement, link:string, icon?:any }) => {
+const LinkCard = ({ title, description, link, icon, flag, flagStyle }: { title:string, description:string|ReactElement, link:string, icon?:any, flag?:string, flagStyle?:object }) => {
     const isExternal: boolean = link.startsWith('http');
     return (
         <a
@@ -11,6 +11,7 @@ const LinkCard = ({ title, description, link, icon }: { title:string, descriptio
             target={isExternal ? '_blank' : undefined}
             rel={isExternal ? 'noreferrer' : undefined}
         >
+            {flag && <div className='flag' style={flagStyle}>{flag}</div>}
             <div className='link_card_title'>
                 {icon}
                 <h3>{title}</h3>

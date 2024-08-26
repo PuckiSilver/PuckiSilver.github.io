@@ -11,6 +11,7 @@ a.link_card {
     padding: .5rem;
     color: var(--text-color);
     text-decoration: none;
+    position: relative;
 
     h3 {
         margin: 0;
@@ -19,6 +20,19 @@ a.link_card {
     &:hover {
         background-color: var(--hover-color);
         color: var(--text-color);
+    }
+
+    .flag {
+        position: absolute;
+        right: .5rem;
+        background-color: var(--primary-color);
+        color: var(--background-color);
+        padding: .25rem;
+        border-radius: .25rem;
+        font-size: .75rem;
+        line-height: .75rem;
+        font-weight: 700;
+        justify-self: flex-end;
     }
 
     .link_card_title {

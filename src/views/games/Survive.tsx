@@ -31,7 +31,7 @@ const Survive = () => {
         {x: 0, y: 0, r: 2.4},
         getBaseStats({
             health: 100,
-            speed: .08,
+            speed: .02,
             autoDamage: 2,
             autoSpeed: 1,
             iFrames: 20,
@@ -258,6 +258,13 @@ const Survive = () => {
 
     return (<main className='survive'>
         <h1>Survive!</h1>
+        <div className='section'>
+            <h2>How to play</h2>
+            <p>
+                Use the <b>WASD</b> keys to move around and the <b>mouse</b> to aim your shot.
+                If you are on a <b>touch device</b>, you can use the <b>joystick</b> at the bottom of the screen to move around.
+            </p>
+        </div>
         <div
             className={`game_window${isFullscreen.current ? ' fullscreen' : ''}${isPaused.current ? ' paused' : ''}`}
             ref={gameWindow}

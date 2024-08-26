@@ -1,5 +1,4 @@
 import React from 'react'
-import './Contact.scss'
 import LinkCard from '../components/LinkCard'
 import GitHubLogo from '../icons/github'
 import ModrinthLogo from '../icons/modrinth'

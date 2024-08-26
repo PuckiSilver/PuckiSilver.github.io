@@ -17,6 +17,8 @@ import InfoIcon from './icons/info';
 import MessageIcon from './icons/message';
 import ArrowUpRightIcon from './icons/arrow-up-right';
 import Survive from './views/games/Survive';
+import Games from './views/Games';
+import GamepadIcon from './icons/gamepad';
 
 const App = () => {
   const [navActive, setNavActive] = React.useState(() => {
@@ -88,6 +90,7 @@ const App = () => {
             getNavItem('/', 'Home', <HomeIcon/>),
             getNavItem('/faq', 'Faq', <InfoIcon/>),
             getNavItem('/tools', 'Tools', <HammerIcon/>),
+            getNavItem('/games', 'Games', <GamepadIcon/>),
             getNavItem('/contact', 'Contact', <MessageIcon/>),
           ]}
         </div>
@@ -104,6 +107,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/tools" element={<Tools />} />
+            <Route path="/games" element={<Games />} />
 
             <Route path="/tools/velvet" element={<Velvet />} />
             <Route path="/tools/cardboard" element={<Cardboard />} />

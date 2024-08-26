@@ -1,5 +1,4 @@
 import React from 'react'
-import './Tools.scss'
 import LinkCard from '../components/LinkCard'
 import BoxIcon from '../icons/box'
 import ShieldIcon from '../icons/shield'

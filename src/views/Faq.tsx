@@ -1,5 +1,4 @@
 import React from 'react'
-import './Faq.scss'
 
 export default function Links() {
     return (

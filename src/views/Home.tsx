@@ -19,6 +19,7 @@ import BeetIcon from '../icons/beet'
 import PaintDotNetIcon from '../icons/paintdotnet'
 import SpringBootIcon from '../icons/spring-boot'
 import Spinner from '../icons/spinner-270-ring-with-bg'
+import GamepadIcon from '../icons/gamepad'
 
 export default function Home() {
     const [starCount, setStarCount] = React.useState<number|null>(null);
@@ -139,6 +140,12 @@ export default function Home() {
                         description='Tools and resources for Minecraft Data Pack development'
                         link='/tools'
                         icon={<HammerIcon/>}
+                    />
+                    <LinkCard
+                        title='Games'
+                        description='Games that I made or am working on'
+                        link='/games'
+                        icon={<GamepadIcon/>}
                     />
                     <LinkCard
                         title='Contact'
