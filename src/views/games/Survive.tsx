@@ -52,7 +52,7 @@ const Survive = () => {
                             y: (mousePosition.current.y / mouseVectorLength) * 0.05,
                         },
                         getStatTotal(entity.stats.autoDamage),
-                        100,
+                        200,
                         (bullet, gameState, delta) => {
                             bullet.position = {
                                 x: bullet.position.x + bullet.motion.x * delta,
@@ -107,11 +107,11 @@ const Survive = () => {
             if (spawnEnemyCooldown.current > 0) spawnEnemyCooldown.current -= delta * fps.current / 1000;
             if (spawnEnemyCooldown.current <= 0) {
                 spawnEnemyCooldown.current = 120;
-                const randomAngle = Math.PI * (Math.random() + (Math.random() > .5 ? -1 : 1));
+                const randomAngle = Math.PI * Math.random() * 2;
                 gameState.enemies.push(new Entity(
                     {
-                        x: player.position.x + 50 * Math.cos(randomAngle),
-                        y: player.position.y + 50 * Math.sin(randomAngle),
+                        x: player.position.x + 80 * Math.cos(randomAngle),
+                        y: player.position.y + 80 * Math.sin(randomAngle),
                         r: 1.6,
                     },
                     getBaseStats({
