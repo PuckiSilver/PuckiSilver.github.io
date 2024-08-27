@@ -36,21 +36,39 @@ const statToIcon = (stat: keyof Stats): JSX.Element => {
 }
 
 export const getRandomUpgrade = (): Upgrade => {
-    const stat = Object.values(StatNames)[Math.floor(Math.random() * Object.values(StatNames).length)];
-    const increase = Math.random() * 5;
-    const type = Math.random() > 0.5 ? 'flat' : 'mult';
-    const rarityRng = Math.random();
-    const rarity = rarityRng > 0.9 ? 2 : rarityRng > 0.7 ? 1 : 0;
-    const rarityBonus = rarity === 2 ? 5 : rarity === 1 ? 2 : 0;
+    const flatStatBounds = {
+        [StatNames.health]:     [1, 30],
+        [StatNames.speed]:      [1, 6],
+        [StatNames.autoDamage]: [1, 5],
+        [StatNames.autoSpeed]:  [1, 8],
+        [StatNames.iFrames]:    [1, 10],
+        [StatNames.piercing]:   [1, 3],
+    };
+    const multStatBounds = {
+        [StatNames.health]:     [0.3, 2],
+        [StatNames.speed]:      [0.3, 2],
+        [StatNames.autoDamage]: [0.3, 2],
+        [StatNames.autoSpeed]:  [0.3, 2],
+        [StatNames.iFrames]:    [0.3, 2],
+    };
+    const isFlat = Math.random() < 0.7; // 70% chance of being flat
+    const availableStats = isFlat ? Object.keys(flatStatBounds) : Object.keys(multStatBounds);
+    const stat = availableStats[Math.floor(Math.random() * availableStats.length)];
+    const weightedRandom = Math.random() ** 3; // weighted -- lower values are more likely
+    const rarity = weightedRandom > 0.667 ? 2 : weightedRandom > 0.333 ? 1 : 0;
+
+    const increaseArray = isFlat ? flatStatBounds[stat as keyof typeof flatStatBounds] : multStatBounds[stat as keyof typeof multStatBounds];
+    const increase = increaseArray[0] + weightedRandom * (increaseArray[1] - increaseArray[0]);
+
     return {
-        stat,
-        increase: increase + rarityBonus,
-        type,
-        icon: statToIcon(stat),
-        stat_name: statToStatName(stat),
+        stat: stat as keyof typeof StatNames,
+        increase: increase,
+        type: isFlat ? 'flat' : 'mult',
+        icon: statToIcon(stat as keyof Stats),
+        stat_name: statToStatName(stat as keyof Stats),
         rarity: rarity,
     };
-}
+};
 
 export const roundWithPrecision = (num: number, precision: number): number => {
     return Math.round(num * precision) / precision;
@@ -85,7 +103,6 @@ export const damageEntity = (entity: Entity, damage: number, gameState: GameStat
         return false;
     }
     entity.health -= damage;
-    console.log(entity.health);
     if (entity.health <= 0) {
         entity.onDeath(entity, gameState);
     }

@@ -31,7 +31,7 @@ export type Upgrade = {
     type: 'flat' | 'mult';
     icon: JSX.Element;
     stat_name: string;
-    rarity: number;
+    rarity: 0 | 1 | 2;
 }
 
 export type GameState = {

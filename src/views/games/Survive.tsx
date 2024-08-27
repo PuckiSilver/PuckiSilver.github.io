@@ -41,7 +41,6 @@ const Survive = () => {
         }),
         (entity, gameState, delta) => {
             const player = entity as Player;
-            // console.log(player.autoCooldownTicks);
             if (player.autoCooldownTicks > 0) player.autoCooldownTicks -= delta * fps.current / 1000;
             if (player.autoCooldownTicks <= 0) {
                 const mouseVectorLength = Math.sqrt(mousePosition.current.x ** 2 + mousePosition.current.y ** 2);
@@ -52,7 +51,7 @@ const Survive = () => {
                             x: (mousePosition.current.x / mouseVectorLength) * 0.05,
                             y: (mousePosition.current.y / mouseVectorLength) * 0.05,
                         },
-                        getStatTotal(entity.stats.autoDamage) / 5,
+                        getStatTotal(entity.stats.autoDamage),
                         100,
                         (bullet, gameState, delta) => {
                             bullet.position = {
@@ -116,16 +115,16 @@ const Survive = () => {
                         r: 1.6,
                     },
                     getBaseStats({
-                        health: 4,
+                        health: 15,
                         speed: 8,
-                        autoDamage: 10,
+                        autoDamage: 2,
                         iFrames: 20,
                     }),
                     (entity, gameState, delta) => {
                         const entityVector = {x: entity.position.x - gameState.player.current.position.x, y: entity.position.y - gameState.player.current.position.y};
                         const entitySpeed = Math.sqrt(entityVector.x ** 2 + entityVector.y ** 2);
                         if (Math.abs(entitySpeed) < (entity.position.r + gameState.player.current.position.r)) {
-                            damageEntity(gameState.player.current, getStatTotal(entity.stats.autoDamage) / 5, gameState);
+                            damageEntity(gameState.player.current, getStatTotal(entity.stats.autoDamage), gameState);
                             return;
                         };
                         entity.position = {
