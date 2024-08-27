@@ -203,6 +203,7 @@ main.survive {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                box-shadow: 0 0 10px color-mix(in srgb, var(--background-color) 90%, transparent 10%);
 
                 &.joystick_left {
                     left: .5rem;
