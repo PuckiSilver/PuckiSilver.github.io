@@ -4,7 +4,6 @@ import ArrowsFullscreenIcon from '../../icons/arrows-fullscreen';
 import PauseIcon from '../../icons/pause';
 import PlayIcon from '../../icons/play';
 import ChevronLeftIcon from '../../icons/chevron-left';
-import FastForwardIcon from '../../icons/fast-forward';
 import { GameState, Entity, Bullet, XPOrb, Player, Upgrade } from './survive/SurviveTypes';
 import { damageEntity, getBaseStats, getRandomUpgrade, getStatTotal, roundWithPrecision } from './survive/Utils';
 
@@ -33,11 +32,12 @@ const Survive = () => {
     const player = useRef<Player>(new Player(
         {x: 0, y: 0, r: 2.4},
         getBaseStats({
-            health: 10,
+            health: 100,
             speed: 10,
             autoDamage: 10,
             autoSpeed: 10,
             iFrames: 10,
+            piercing: 0,
         }),
         (entity, gameState, delta) => {
             const player = entity as Player;
@@ -63,7 +63,13 @@ const Survive = () => {
                             // implement friction if one generalizes this to more than one bullet
                             gameState.enemies.forEach(enemy => {
                                 if (Math.sqrt((bullet.position.x - enemy.position.x) ** 2 + (bullet.position.y - enemy.position.y) ** 2) < bullet.position.r + enemy.position.r) {
-                                    damageEntity(enemy, bullet.damage, gameState);
+                                    if (damageEntity(enemy, bullet.damage, gameState)) {
+                                        bullet.piercing--;
+                                        if (bullet.piercing < 0) {
+                                            gameState.bullets.splice(gameState.bullets.indexOf(bullet), 1);
+                                            return;
+                                        }
+                                    }
                                 }
                             });
                             bullet.ticksAlive -= delta * fps.current / 1000;
@@ -71,6 +77,7 @@ const Survive = () => {
                                 gameState.bullets.splice(gameState.bullets.indexOf(bullet), 1);
                             }
                         },
+                        Math.floor(getStatTotal(player.stats.piercing)),
                     ));
                     player.autoCooldownTicks = fps.current / (getStatTotal(player.stats.autoSpeed) / 15);
                 }
@@ -109,7 +116,7 @@ const Survive = () => {
                         r: 1.6,
                     },
                     getBaseStats({
-                        health: 0.4,
+                        health: 4,
                         speed: 8,
                         autoDamage: 10,
                         iFrames: 20,
@@ -346,8 +353,8 @@ const Survive = () => {
                 <div className='hud_top'>
                     <div className='bars'>
                         <span>Health: {roundWithPrecision(gameState.player.current.health, 100)} | Level: {gameState.player.current.level}</span>
-                        <div className='health_background' style={{width: `${getStatTotal(gameState.player.current.stats.health) * 10}px`}}>
-                            <div className='health_bar' style={{width: `${100 * gameState.player.current.health / (getStatTotal(gameState.player.current.stats.health) * 10)}%`}} />
+                        <div className='health_background' style={{width: `${getStatTotal(gameState.player.current.stats.health)}px`}}>
+                            <div className='health_bar' style={{width: `${100 * gameState.player.current.health / getStatTotal(gameState.player.current.stats.health)}%`}} />
                         </div>
                         <div className='xp_background' style={{width: gameState.player.current.xpToNextLevel}}>
                             <div className='xp_bar' style={{width: `${100 * gameState.player.current.xp / gameState.player.current.xpToNextLevel}%`}} />
@@ -431,7 +438,7 @@ const Survive = () => {
                             gameState.player.current.stats[upgrade.stat][upgrade.type].push(1 + upgrade.increase / 100);
                         }
                         if (upgrade.stat === 'health') {
-                            gameState.player.current.health += (getStatTotal(gameState.player.current.stats.health) - previousPlayerHealthStat) * 10;
+                            gameState.player.current.health += (getStatTotal(gameState.player.current.stats.health) - previousPlayerHealthStat);
                         }
                         setCheckedUpgrade(null);
                         setAvailableUpgrades([]);

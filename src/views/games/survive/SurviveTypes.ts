@@ -1,4 +1,3 @@
-import { ReactSVG } from "react";
 import { getStatTotal } from "./Utils";
 
 export type Position = {
@@ -19,6 +18,7 @@ export enum StatNames {
     autoDamage = "autoDamage",
     autoSpeed = "autoSpeed",
     iFrames = "iFrames",
+    piercing = "piercing",
 }
 
 export type Stats = {
@@ -56,7 +56,7 @@ export class Entity {
         this.stats = stats;
         this.onTick = onTick;
         this.onDeath = onDeath;
-        this.health = getStatTotal(stats.health) * 10;
+        this.health = getStatTotal(stats.health);
         if (motion) {
             this.motion = motion;
         }
@@ -75,6 +75,7 @@ export class Bullet {
     motion: {x: number, y: number};
     ticksAlive: number;
     onTick: (entity: Bullet, gameState: GameState, delta: number) => void;
+    piercing: number;
 
     constructor(
         position: Position,
@@ -82,12 +83,14 @@ export class Bullet {
         damage: number,
         ticksAlive: number,
         onTick: (entity: Bullet, gameState: GameState, delta: number) => void,
+        piercing: number,
     ) {
         this.position = position;
         this.motion = motion;
         this.damage = damage;
         this.ticksAlive = ticksAlive;
         this.onTick = onTick;
+        this.piercing = piercing;
     }
 }
 

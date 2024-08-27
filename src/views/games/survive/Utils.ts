@@ -15,6 +15,8 @@ const statToStatName = (stat: keyof Stats): string => {
             return 'Attack Speed';
         case StatNames.iFrames:
             return 'Invincibility Frames';
+        case StatNames.piercing:
+            return 'Piercing';
     }
     return '';
 }
@@ -28,6 +30,7 @@ const statToIcon = (stat: keyof Stats): JSX.Element => {
             return FastForwardIcon();
         case StatNames.iFrames:
             return ShieldIcon();
+        // case StatNames.piercing:
     }
     return StarIcon({});
 }
@@ -77,9 +80,9 @@ export const getBaseStats = (partialStats: {[key in keyof Stats]?: number}): Sta
     return stats as Stats;
 }
 
-export const damageEntity = (entity: Entity, damage: number, gameState: GameState): void => {
+export const damageEntity = (entity: Entity, damage: number, gameState: GameState): boolean => {
     if (entity.iFramesLeft > 0) {
-        return;
+        return false;
     }
     entity.health -= damage;
     console.log(entity.health);
@@ -87,4 +90,5 @@ export const damageEntity = (entity: Entity, damage: number, gameState: GameStat
         entity.onDeath(entity, gameState);
     }
     entity.iFramesLeft = getStatTotal(entity.stats.iFrames);
+    return true;
 }
