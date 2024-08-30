@@ -43,6 +43,7 @@ main.survive {
 
             .background {
                 position: absolute;
+                z-index: -10;
                 top: 50%;
                 left: 50%;
                 width: 100%;
@@ -71,9 +72,10 @@ main.survive {
                 }
             }
 
-            .xp {
+            .xp_orb {
+                z-index: -1;
                 position: absolute;
-                transform: translate(calc(-50% - var(--player-x) * var(--scale)), calc(-50% - var(--player-y) * var(--scale)));
+                transform: translate(-50%, -50%);
                 width: calc(var(--scale) * .8px);
                 height: calc(var(--scale) * .8px);
                 background: var(--secondary-color);
@@ -83,7 +85,7 @@ main.survive {
 
             .enemy {
                 position: absolute;
-                transform: translate(calc(-50% - var(--player-x) * var(--scale)), calc(-50% - var(--player-y) * var(--scale)));
+                transform: translate(-50%, -50%);
                 width: calc(var(--scale) * 3.2px);
                 height: calc(var(--scale) * 3.2px);
                 background: red;
@@ -97,7 +99,7 @@ main.survive {
 
             .bullet {
                 position: absolute;
-                transform: translate(calc(-50% - var(--player-x) * var(--scale)), calc(-50% - var(--player-y) * var(--scale)));
+                transform: translate(-50%, -50%);
                 width: calc(var(--scale) * .4px);
                 height: calc(var(--scale) * .4px);
                 background: red;
@@ -228,7 +230,7 @@ main.survive {
             .cursor {
                 pointer-events: none;
                 position: absolute;
-                transform: translate(calc(-50% - var(--player-x) * var(--scale)), calc(-50% - var(--player-y) * var(--scale)));
+                transform: translate(-50%, -50%);
                 width: calc(var(--scale) * .8px);
                 height: calc(var(--scale) * .8px);
                 border: 1px solid white;

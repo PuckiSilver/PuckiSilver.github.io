@@ -1,4 +1,4 @@
-import { Entity, GameState, Stat, StatNames, Stats, Upgrade } from "./SurviveTypes";
+import { Damageable, Stat, StatNames, Stats, Tickable, Upgrade } from "./SurviveTypes";
 import FastForwardIcon from "../../../icons/fast-forward";
 import ShieldIcon from "../../../icons/shield";
 import StarIcon from "../../../icons/star";
@@ -98,14 +98,32 @@ export const getBaseStats = (partialStats: {[key in keyof Stats]?: number}): Sta
     return stats as Stats;
 }
 
-export const damageEntity = (entity: Entity, damage: number, gameState: GameState): boolean => {
-    if (entity.iFramesLeft > 0) {
-        return false;
+export const moveAlongVector = (vector: { x: number, y: number }, delta: number, speed: number, vectorLength?: number): { x: number, y: number } => {
+    if (vector.x === 0 && vector.y === 0) {
+        return {x:0, y:0};
     }
-    entity.health -= damage;
-    if (entity.health <= 0) {
-        entity.onDeath(entity, gameState);
+    if (vectorLength === undefined) {
+        vectorLength = Math.sqrt(vector.x ** 2 + vector.y ** 2);
     }
-    entity.iFramesLeft = getStatTotal(entity.stats.iFrames);
-    return true;
+    return {
+        x: (vector.x / vectorLength) * delta * speed,
+        y: (vector.y / vectorLength) * delta * speed,
+    }
 }
+
+export const moveTowardsPosition = (from: {x: number, y: number}, to: {x: number, y: number}, delta: number, speed: number, collisionRadius: number, onCollision: () => boolean): { x: number, y: number } => {
+    const movementVector = {x: from.x - to.x, y: from.y - to.y};
+    const vectorLength = Math.sqrt(movementVector.x ** 2 + movementVector.y ** 2);
+    if (vectorLength < collisionRadius && onCollision()) {
+        return {x: 0, y: 0};
+    };
+    return moveAlongVector(movementVector, delta, speed);
+}
+
+export const implementsDamageable = (obj: any): obj is Damageable => {
+    return obj.isDamageable === true;
+}
+
+export const implementsTickable = (obj: any): obj is Tickable => {
+    return obj.isTickable === true;
+};
