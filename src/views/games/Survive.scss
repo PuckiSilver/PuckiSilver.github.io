@@ -237,11 +237,45 @@ main.survive {
                 border-radius: 50%;
             }
 
+            button.stat_toggle {
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 2rem;
+                height: 2rem;
+                top: 50%;
+                left: 0;
+                transform: translate(0, -50%);
+                padding: .25rem;
+                border-radius: .25rem;
+                background-color: var(--section-color);
+                border: none;
+                color: var(--text-color);
+                cursor: pointer;
+                box-shadow: 0 0 10px color-mix(in srgb, var(--background-color) 90%, transparent 10%);
+
+                &:hover {
+                    background-color: var(--background-color);
+                }
+
+                svg {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+
+                &.stat_minimize_rotate {
+                    svg {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
             .stat_screen {
                 cursor: default;
-                -webkit-user-select: initial;
-                -moz-user-select: initial;
-                user-select: initial;
+                -webkit-user-select: text;
+                -moz-user-select: text;
+                user-select: text;
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -250,27 +284,63 @@ main.survive {
                 max-height: calc(100% - 2rem);
                 background: var(--section-color);
                 border-radius: .25rem;
-                padding: 1rem;
+                padding: .5rem;
                 box-shadow: 0 0 10px color-mix(in srgb, var(--background-color) 90%, transparent 10%);
                 display: flex;
                 flex-direction: column;
-                gap: .75rem;
-                z-index: 2;
+                gap: .25rem;
+                z-index: 3;
+
+                button.stat_minimize {
+                    position: absolute;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 2rem;
+                    height: 2rem;
+                    top: .25rem;
+                    right: .25rem;
+                    padding: .25rem;
+                    border-radius: .25rem;
+                    border: none;
+                    color: var(--text-color);
+                    background-color: transparent;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: var(--background-color);
+                    }
+
+                    svg {
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        transform: rotate(180deg);
+                    }
+                }
 
                 .stat {
                     display: flex;
-                    gap: 1rem;
+                    gap: .5rem;
                     align-items: center;
-                    justify-content: space-between;
+                    border-radius: .25rem;
+                    padding: .25rem .5rem;
+                    overflow-y: auto;
+
+                    &:hover {
+                        background-color: var(--hover-color);
+                    }
 
                     .stat_title {
-                        font-weight: 700;
+                        width: 10rem;
+                        min-width: 10rem;
+                        white-space: nowrap;
                     }
 
                     .stat_value {
                         display: flex;
                         gap: .25rem;
                         align-items: center;
+                        white-space: nowrap;
 
                         span {
                             color: var(--primary-color);
@@ -293,6 +363,7 @@ main.survive {
             height: 100%;
             justify-content: center;
             align-items: center;
+            pointer-events: none;
             z-index: 2;
 
             .upgrade_cards {
@@ -304,6 +375,7 @@ main.survive {
                 scroll-snap-type: x mandatory;
 
                 .upgrade_card {
+                    pointer-events: all;
                     scroll-snap-align: center;
                     width: 10rem;
                     min-width: 10rem;
@@ -372,6 +444,7 @@ main.survive {
             }
 
             button.upgrade_button {
+                pointer-events: all;
                 padding: .5rem 1rem;
                 border-radius: .25rem;
                 background-color: var(--section-color);

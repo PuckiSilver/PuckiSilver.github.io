@@ -3,7 +3,9 @@ import './Survive.scss';
 import ArrowsFullscreenIcon from '../../icons/arrows-fullscreen';
 import PauseIcon from '../../icons/pause';
 import PlayIcon from '../../icons/play';
+import ArrowRightIcon from '../../icons/arrow-right';
 import ChevronLeftIcon from '../../icons/chevron-left';
+import CloseIcon from '../../icons/close';
 import { GameState, Entity, Player, Upgrade, Tickable } from './survive/SurviveTypes';
 import { getAllStatsFormatted, getBaseStats, getRandomUpgrade, getStatTotal, implementsTickable, roundWithPrecision } from './survive/Utils';
 
@@ -25,8 +27,9 @@ const Survive = () => {
     const [isJoystickLeft, setIsJoystickLeft] = useState(false);
     const [checkedUpgrade, setCheckedUpgrade] = useState<number | null>(null);
     const [availableUpgrades, setAvailableUpgrades] = useState<Upgrade[]>([]);
+    const [statScreenMaximized, setStatScreenMaximized] = useState(false);
     const [, forceUpdate] = useState({});
-    const preventDefaultKeys = useMemo(() => ['w', 'a', 's', 'd', ' '], []);
+    const preventDefaultKeys = useMemo(() => ['w', 'a', 's', 'd', ' ', 'Tab'], []);
     const spawnEnemyCooldown = useRef(0);
 
     const [gameState, setGameState] = useState<GameState>({
@@ -277,16 +280,25 @@ const Survive = () => {
                 >
                     <ChevronLeftIcon className='joystick_button' onTouchStart={() => setIsJoystickLeft(l => !l)} />
                 </div>}
-                <div className='stat_screen'>
-                    {Object.entries(getAllStatsFormatted(gameState.player.current.stats)).map(([stat_name, stat], i) => (
-                        <div className='stat' key={`stat_${i}`}>
-                            <span className='stat_title'>{stat_name}</span>
-                            <div className='stat_value'>
-                                {stat.map((s, j) => <span key={`stat_${i}_${j}`}>{s}</span>)}
+                <button className={`stat_toggle${statScreenMaximized ? ' stat_minimize_rotate' : ''}`} onClick={() => setStatScreenMaximized(b => !b)}>
+                    <ArrowRightIcon />
+                </button>
+                {(statScreenMaximized || isKeyPressed.current['Tab']) && (
+                    <div className='stat_screen'>
+                        {statScreenMaximized && <button className='stat_minimize' onClick={() => setStatScreenMaximized(false)}>
+                            <CloseIcon />
+                        </button>}
+                        <h2>Stats</h2>
+                        {Object.entries(getAllStatsFormatted(gameState.player.current.stats)).map(([stat_name, stat], i) => (
+                            <div className='stat' key={`stat_${i}`}>
+                                <span className='stat_title'>{stat_name}</span>
+                                <div className='stat_value'>
+                                    {stat.map((s, j) => <span key={`stat_${i}_${j}`}>{s}</span>)}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </div>
             {availableUpgrades.length && <div className='upgrade_menu'>
                 <div className='upgrade_cards'>

@@ -124,7 +124,7 @@ export const getAllStatsFormatted = (stats: Stats): {[key: string]: string[]} =>
     const formattedStats: {[key: string]: string[]} = {};
     for (const [stat_name, stat] of Object.entries(stats)) {
         const readable_stat_name = statToStatName(stat_name);
-        formattedStats[readable_stat_name] = [`${getStatTotal(stat)}`];
+        formattedStats[readable_stat_name] = [`${roundWithPrecision(getStatTotal(stat), 100)}`];
         switch (stat_name) {
             case StatNames.autoSpeed:
                 formattedStats[readable_stat_name].push(`(${roundWithPrecision(getStatTotal(stat) / 15, 100)} a/s)`);
@@ -134,7 +134,7 @@ export const getAllStatsFormatted = (stats: Stats): {[key: string]: string[]} =>
                 break;
             case StatNames.piercing:
                 const roundedStat = roundWithPrecision(getStatTotal(stat), 100);
-                formattedStats[readable_stat_name].push(`(${Math.round(roundedStat)} + ${(roundedStat - Math.round(roundedStat)) * 100} %)`);
+                formattedStats[readable_stat_name].push(`(${Math.floor(roundedStat)} + ${Math.round((roundedStat % 1) * 100)} %)`);
                 break;
         }
     }
