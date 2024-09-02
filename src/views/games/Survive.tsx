@@ -5,7 +5,7 @@ import PauseIcon from '../../icons/pause';
 import PlayIcon from '../../icons/play';
 import ChevronLeftIcon from '../../icons/chevron-left';
 import { GameState, Entity, Player, Upgrade, Tickable } from './survive/SurviveTypes';
-import { getBaseStats, getRandomUpgrade, getStatTotal, implementsTickable, roundWithPrecision } from './survive/Utils';
+import { getAllStatsFormatted, getBaseStats, getRandomUpgrade, getStatTotal, implementsTickable, roundWithPrecision } from './survive/Utils';
 
 const Survive = () => {
     const gameWindow = useRef<HTMLDivElement>(null);
@@ -277,6 +277,16 @@ const Survive = () => {
                 >
                     <ChevronLeftIcon className='joystick_button' onTouchStart={() => setIsJoystickLeft(l => !l)} />
                 </div>}
+                <div className='stat_screen'>
+                    {Object.entries(getAllStatsFormatted(gameState.player.current.stats)).map(([stat_name, stat], i) => (
+                        <div className='stat' key={`stat_${i}`}>
+                            <span className='stat_title'>{stat_name}</span>
+                            <div className='stat_value'>
+                                {stat.map((s, j) => <span key={`stat_${i}_${j}`}>{s}</span>)}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
             {availableUpgrades.length && <div className='upgrade_menu'>
                 <div className='upgrade_cards'>

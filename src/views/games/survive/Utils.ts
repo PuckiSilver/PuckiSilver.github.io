@@ -3,7 +3,7 @@ import FastForwardIcon from "../../../icons/fast-forward";
 import ShieldIcon from "../../../icons/shield";
 import StarIcon from "../../../icons/star";
 
-const statToStatName = (stat: keyof Stats): string => {
+const statToStatName = (stat: string): string => {
     switch (stat) {
         case StatNames.health:
             return 'Health';
@@ -19,7 +19,7 @@ const statToStatName = (stat: keyof Stats): string => {
             return 'Piercing';
     }
     return '';
-}
+};
 
 const statToIcon = (stat: keyof Stats): JSX.Element => {
     switch (stat) {
@@ -33,7 +33,7 @@ const statToIcon = (stat: keyof Stats): JSX.Element => {
         // case StatNames.piercing:
     }
     return StarIcon({});
-}
+};
 
 export const getRandomUpgrade = (): Upgrade => {
     const flatStatBounds = {
@@ -72,11 +72,11 @@ export const getRandomUpgrade = (): Upgrade => {
 
 export const roundWithPrecision = (num: number, precision: number): number => {
     return Math.round(num * precision) / precision;
-}
+};
 
 export const getStatTotal = (stat: Stat, flat_increase: number = 0, mult_increase: number = 1): number => {
     return (stat.base + stat.flat + flat_increase) * [...stat.mult, mult_increase].reduce((acc, val) => acc * val, 1);
-}
+};
 
 export const getBaseStats = (partialStats: {[key in keyof Stats]?: number}): Stats => {
     const stats: { -readonly [key in keyof Stats]: Stats[key] } = {} as { -readonly [key in keyof Stats]: Stats[key] };
@@ -96,7 +96,7 @@ export const getBaseStats = (partialStats: {[key in keyof Stats]?: number}): Sta
     }
 
     return stats as Stats;
-}
+};
 
 export const moveAlongVector = (vector: { x: number, y: number }, delta: number, speed: number, vectorLength?: number): { x: number, y: number } => {
     if (vector.x === 0 && vector.y === 0) {
@@ -109,7 +109,7 @@ export const moveAlongVector = (vector: { x: number, y: number }, delta: number,
         x: (vector.x / vectorLength) * delta * speed,
         y: (vector.y / vectorLength) * delta * speed,
     }
-}
+};
 
 export const moveTowardsPosition = (from: {x: number, y: number}, to: {x: number, y: number}, delta: number, speed: number, collisionRadius: number, onCollision: () => boolean): { x: number, y: number } => {
     const movementVector = {x: from.x - to.x, y: from.y - to.y};
@@ -118,11 +118,32 @@ export const moveTowardsPosition = (from: {x: number, y: number}, to: {x: number
         return {x: 0, y: 0};
     };
     return moveAlongVector(movementVector, delta, speed);
+};
+
+export const getAllStatsFormatted = (stats: Stats): {[key: string]: string[]} => {
+    const formattedStats: {[key: string]: string[]} = {};
+    for (const [stat_name, stat] of Object.entries(stats)) {
+        const readable_stat_name = statToStatName(stat_name);
+        formattedStats[readable_stat_name] = [`${getStatTotal(stat)}`];
+        switch (stat_name) {
+            case StatNames.autoSpeed:
+                formattedStats[readable_stat_name].push(`(${roundWithPrecision(getStatTotal(stat) / 15, 100)} a/s)`);
+                break;
+            case StatNames.iFrames:
+                formattedStats[readable_stat_name].push(`(${roundWithPrecision(getStatTotal(stat) / 60, 100)} s)`);
+                break;
+            case StatNames.piercing:
+                const roundedStat = roundWithPrecision(getStatTotal(stat), 100);
+                formattedStats[readable_stat_name].push(`(${Math.round(roundedStat)} + ${(roundedStat - Math.round(roundedStat)) * 100} %)`);
+                break;
+        }
+    }
+    return formattedStats;
 }
 
 export const implementsDamageable = (obj: any): obj is Damageable => {
     return obj.isDamageable === true;
-}
+};
 
 export const implementsTickable = (obj: any): obj is Tickable => {
     return obj.isTickable === true;
