@@ -1,10 +1,40 @@
-:root {
+:root { // ps-dark | default
     --primary-color: #00ff6a;
     --secondary-color: #6affbf;
     --border-color: #00753c;
     --section-color: #262b2b;
     --background-color: #131616;
     --hover-color: #505755;
+    --text-color: #FFFFFF;
+}
+
+:root.ps-light {
+    --primary-color: #1DB65D;
+    --secondary-color: #22CA6C;
+    --border-color: #96D9B9;
+    --section-color: #D3E6E0;
+    --background-color: #F7FFFB;
+    --hover-color: #C6E1DA;
+    --text-color: #141916;
+}
+
+:root.trans {
+    --primary-color: #F5ABB9;
+    --secondary-color: #5BCFFB;
+    --border-color: #ce7b90;
+    --section-color: #d9f1ff;
+    --background-color: #ffffff;
+    --hover-color: #c4e5ff;
+    --text-color: #131616;
+}
+
+:root.enby {
+    --primary-color: #FCF434;
+    --secondary-color: #9C59D1;
+    --border-color: #c4c3b1;
+    --section-color: #2C2C2C;
+    --background-color: #1a1a1a;
+    --hover-color: #3b3b3b;
     --text-color: #FFFFFF;
 }
 

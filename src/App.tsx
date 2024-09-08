@@ -25,10 +25,28 @@ const App = () => {
     const navActive = localStorage.getItem('navActive');
     return navActive ? JSON.parse(navActive) : false;
   });
+  const [theme, setTheme] = React.useState(localStorage.getItem('theme') || 'ps-dark');
+  const [isSelectingTheme, setIsSelectingTheme] = React.useState(false);
+  const themeSelectRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     localStorage.setItem('navActive', navActive.toString());
   }, [navActive]);
+
+  useEffect(() => {
+    document.documentElement.className = theme;
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const handleClickOutsideThemeSelect = (e: MouseEvent) => {
+      if (themeSelectRef.current && !themeSelectRef.current.contains(e.target as Node)) {
+        setIsSelectingTheme(false);
+      }
+    };
+    window.addEventListener('mousedown', handleClickOutsideThemeSelect);
+    return () => window.removeEventListener('mousedown', handleClickOutsideThemeSelect);
+  }, []);
 
   useEffect(() => {
     if (window.innerWidth / 16 <= 80) {
@@ -82,6 +100,39 @@ const App = () => {
             <GithubLogo/>
             <span>GitHub</span>
           </a>
+          <div className={`theme_select${isSelectingTheme ? ' is_selecting_theme' : ''}`} ref={themeSelectRef}>
+            <button className='selected' onClick={() => setIsSelectingTheme(b => !b)}>
+              <div className={theme} />
+            </button>
+            {isSelectingTheme && (
+              <div className='theme_select_popup'>
+                {theme !== 'ps-dark' && <button onClick={() => {
+                  setTheme('ps-dark');
+                  setIsSelectingTheme(false);
+                }}>
+                  <div className='ps-dark' />
+                </button>}
+                {theme !== 'ps-light' && <button onClick={() => {
+                  setTheme('ps-light');
+                  setIsSelectingTheme(false);
+                }}>
+                  <div className='ps-light' />
+                </button>}
+                {theme !== 'trans' && <button onClick={() => {
+                  setTheme('trans');
+                  setIsSelectingTheme(false);
+                }}>
+                  <div className='trans' />
+                </button>}
+                {theme !== 'enby' && <button onClick={() => {
+                  setTheme('enby');
+                  setIsSelectingTheme(false);
+                }}>
+                  <div className='enby' />
+                </button>}
+              </div>
+            )}
+          </div>
         </div>
       </header>
       <nav className={navActive ? 'active' : undefined}>

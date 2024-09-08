@@ -175,7 +175,7 @@ main.survive {
                         background: var(--section-color);
                         border: 0;
                         cursor: pointer;
-                        color: white;
+                        color: var(--text-color);
                         box-shadow: 0 0 10px color-mix(in srgb, var(--background-color) 90%, transparent 10%);
 
                         &:hover {
@@ -233,7 +233,7 @@ main.survive {
                 transform: translate(-50%, -50%);
                 width: calc(var(--scale) * .8px);
                 height: calc(var(--scale) * .8px);
-                border: 1px solid white;
+                border: 1px solid var(--text-color);
                 border-radius: 50%;
             }
 

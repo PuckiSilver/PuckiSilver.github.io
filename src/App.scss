@@ -18,6 +18,7 @@ div.layout {
         padding: .25rem .5rem;
         box-sizing: border-box;
         justify-content: space-between;
+        align-items: center;
         border-bottom: .125rem solid var(--border-color);
 
         div.header_left {
@@ -107,6 +108,174 @@ div.layout {
                     background-color: var(--background-color);
                 }
             }
+
+            div.theme_select {
+                padding: .25rem;
+                border-radius: .25rem;
+                border: .125rem solid transparent;
+
+                &.is_selecting_theme {
+                    border: .125rem solid var(--border-color);
+                    background-color: var(--section-color);
+                }
+
+                button {
+                    border: none;
+                    background: transparent;
+                    padding: .25rem;
+                    border-radius: .25rem;
+                    width: fit-content;
+                    height: fit-content;
+
+                    &:hover {
+                        background-color: var(--background-color);
+                    }
+
+                    div.ps-dark {
+                        width: 2rem;
+                        height: 2rem;
+                        background-color: #00ff6a;
+                        border-radius: 50%;
+                        position: relative;
+
+                        &::before {
+                            content: '';
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            background-color: #6affbf;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+
+                        &::after {
+                            content: '';
+                            width: .75rem;
+                            height: .75rem;
+                            background-color: #131616;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+
+                    div.ps-light {
+                        width: 2rem;
+                        height: 2rem;
+                        background-color: #1DB65D;
+                        border-radius: 50%;
+                        position: relative;
+
+                        &::before {
+                            content: '';
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            background-color: #22CA6C;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+
+                        &::after {
+                            content: '';
+                            width: .75rem;
+                            height: .75rem;
+                            background-color: #F7FFFB;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+
+                    div.trans {
+                        width: 2rem;
+                        height: 2rem;
+                        background-color: #F5ABB9;
+                        border-radius: 50%;
+                        position: relative;
+
+                        &::before {
+                            content: '';
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            background-color: #5BCFFB;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+
+                        &::after {
+                            content: '';
+                            width: .75rem;
+                            height: .75rem;
+                            background-color: #ffffff;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+
+                    div.enby {
+                        width: 2rem;
+                        height: 2rem;
+                        background-color: #FCF434;
+                        border-radius: 50%;
+                        position: relative;
+
+                        &::before {
+                            content: '';
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            background-color: #9C59D1;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+
+                        &::after {
+                            content: '';
+                            width: .75rem;
+                            height: .75rem;
+                            background-color: #2C2C2C;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+                }
+
+                div.theme_select_popup {
+                    width: 2.5rem;
+                    padding: .25rem;
+                    position: absolute;
+                    z-index: 10000;
+                    top: 3rem;
+                    right: .5rem;
+                    background-color: var(--section-color);
+                    border: .125rem solid var(--border-color);
+                    border-top: none;
+                    border-radius: 0 0 .25rem .25rem;
+                    display: flex;
+                    flex-direction: column;
+                    gap: .25rem;
+                }
+            }
         }
     }
 
@@ -131,10 +300,10 @@ div.layout {
                 gap: .5rem;
                 padding: .125rem;
                 height: 2rem;
+                color: var(--text-color);
 
                 svg {
                     align-self: center;
-                    color: white;
                     height: 1.5rem;
                 }
 
