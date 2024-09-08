@@ -373,6 +373,7 @@ main.survive {
                 overflow-x: auto;
                 justify-content: safe center;
                 scroll-snap-type: x mandatory;
+                pointer-events: all;
 
                 .upgrade_card {
                     pointer-events: all;
