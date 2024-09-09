@@ -1,9 +1,13 @@
 import { Damageable, Stat, StatNames, Stats, Tickable, Upgrade } from "./SurviveTypes";
-import FastForwardIcon from "../../../icons/fast-forward";
+import ForwardIcon from "../../../icons/forward";
 import ShieldIcon from "../../../icons/shield";
 import StarIcon from "../../../icons/star";
+import HeartIcon from "../../../icons/heart";
+import ArrowRightIcon from "../../../icons/arrow-right";
+import HammerIcon from "../../../icons/hammer";
+import ThunderIcon from "../../../icons/thunder";
 
-const statToStatName = (stat: string): string => {
+export const statToStatName = (stat: string): string => {
     switch (stat) {
         case StatNames.health:
             return 'Health';
@@ -21,16 +25,20 @@ const statToStatName = (stat: string): string => {
     return '';
 };
 
-const statToIcon = (stat: keyof Stats): JSX.Element => {
+export const statToIcon = (stat: keyof Stats): JSX.Element => {
     switch (stat) {
-        // case StatNames.health:
-        // case StatNames.speed:
-        // case StatNames.autoDamage:
+        case StatNames.health:
+            return HeartIcon();
+        case StatNames.speed:
+            return ThunderIcon();
+        case StatNames.autoDamage:
+            return HammerIcon();
         case StatNames.autoSpeed:
-            return FastForwardIcon();
+            return ForwardIcon();
         case StatNames.iFrames:
             return ShieldIcon();
-        // case StatNames.piercing:
+        case StatNames.piercing:
+            return ArrowRightIcon();
     }
     return StarIcon({});
 };
@@ -120,25 +128,21 @@ export const moveTowardsPosition = (from: {x: number, y: number}, to: {x: number
     return moveAlongVector(movementVector, delta, speed);
 };
 
-export const getAllStatsFormatted = (stats: Stats): {[key: string]: string[]} => {
-    const formattedStats: {[key: string]: string[]} = {};
-    for (const [stat_name, stat] of Object.entries(stats)) {
-        const readable_stat_name = statToStatName(stat_name);
-        formattedStats[readable_stat_name] = [`${roundWithPrecision(getStatTotal(stat), 100)}`];
-        switch (stat_name) {
-            case StatNames.autoSpeed:
-                formattedStats[readable_stat_name].push(`(${roundWithPrecision(getStatTotal(stat) / 15, 100)} a/s)`);
-                break;
-            case StatNames.iFrames:
-                formattedStats[readable_stat_name].push(`(${roundWithPrecision(getStatTotal(stat) / 60, 100)} s)`);
-                break;
-            case StatNames.piercing:
-                const roundedStat = roundWithPrecision(getStatTotal(stat), 100);
-                formattedStats[readable_stat_name].push(`(${Math.floor(roundedStat)} + ${Math.round((roundedStat % 1) * 100)} %)`);
-                break;
-        }
+export const getStatFormatted = (stat_name: keyof Stats, stat: Stat): string[] => {
+    const formattedStat: string[] = [`Base: ${stat.base}`];
+    switch (stat_name) {
+        case StatNames.autoSpeed:
+            formattedStat.push(`(${roundWithPrecision(getStatTotal(stat) / 15, 100)} a/s)`);
+            break;
+        case StatNames.iFrames:
+            formattedStat.push(`(${roundWithPrecision(getStatTotal(stat) / 60, 100)} s)`);
+            break;
+        case StatNames.piercing:
+            const roundedStat = roundWithPrecision(getStatTotal(stat), 100);
+            formattedStat.push(`(${Math.floor(roundedStat)} + ${Math.round((roundedStat % 1) * 100)} %)`);
+            break;
     }
-    return formattedStats;
+    return formattedStat;
 }
 
 export const implementsDamageable = (obj: any): obj is Damageable => {

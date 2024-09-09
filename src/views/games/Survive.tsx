@@ -6,8 +6,8 @@ import PlayIcon from '../../icons/play';
 import ArrowRightIcon from '../../icons/arrow-right';
 import ChevronLeftIcon from '../../icons/chevron-left';
 import CloseIcon from '../../icons/close';
-import { GameState, Entity, Player, Upgrade, Tickable } from './survive/SurviveTypes';
-import { getAllStatsFormatted, getBaseStats, getRandomUpgrade, getStatTotal, implementsTickable, roundWithPrecision } from './survive/Utils';
+import { GameState, Entity, Player, Upgrade, Tickable, Stats } from './survive/SurviveTypes';
+import { getBaseStats, getRandomUpgrade, getStatFormatted, getStatTotal, implementsTickable, roundWithPrecision, statToIcon, statToStatName } from './survive/Utils';
 
 const Survive = () => {
     const gameWindow = useRef<HTMLDivElement>(null);
@@ -289,14 +289,19 @@ const Survive = () => {
                             <CloseIcon />
                         </button>}
                         <h2>Stats</h2>
-                        {Object.entries(getAllStatsFormatted(gameState.player.current.stats)).map(([stat_name, stat], i) => (
-                            <div className='stat' key={`stat_${i}`}>
-                                <span className='stat_title'>{stat_name}</span>
-                                <div className='stat_value'>
-                                    {stat.map((s, j) => <span key={`stat_${i}_${j}`}>{s}</span>)}
+                        {Object.entries(gameState.player.current.stats).map(([stat_name, stat], i) => {
+                            const readable_stat_name = statToStatName(stat_name as keyof Stats);
+                            const formatted_stat = getStatFormatted(stat_name as keyof Stats, stat);
+                            return (
+                                <div className='stat' key={`stat_${i}`}>
+                                    {statToIcon(stat_name as keyof Stats)}
+                                    <span className='stat_title'>{readable_stat_name}</span>
+                                    <div className='stat_value'>
+                                        {formatted_stat.map((s, j) => <span key={`stat_${i}_${j}`}>{s}</span>)}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 )}
             </div>
