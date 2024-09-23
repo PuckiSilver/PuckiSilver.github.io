@@ -1,4 +1,4 @@
-import { Damageable, Stat, StatNames, Stats, Tickable, Upgrade } from "./SurviveTypes";
+import { Damageable, Item, Player, Stat, StatNames, Stats, Tickable, Upgrade } from "./SurviveTypes";
 import ForwardIcon from "../../../icons/forward";
 import ShieldIcon from "../../../icons/shield";
 import StarIcon from "../../../icons/star";
@@ -78,6 +78,24 @@ export const getRandomUpgrade = (): Upgrade => {
     };
 };
 
+export const containsItem = (items: Item[], id: string): boolean => {
+    return items.some(item => item.id === id);
+}
+
+export const getAvailableItems = (player: Player): Item[] => {
+    const availableItems = [
+        new Item(
+            'aoe_damage',
+            'AoE Damage',
+            'Deals damage in a small area around the player',
+            'IMAGE',
+            () => {},
+            () => {},
+        )
+    ];
+    return availableItems
+}
+
 export const roundWithPrecision = (num: number, precision: number): number => {
     return Math.round(num * precision) / precision;
 };
@@ -129,7 +147,8 @@ export const moveTowardsPosition = (from: {x: number, y: number}, to: {x: number
 };
 
 export const getStatFormatted = (stat_name: keyof Stats, stat: Stat): string[] => {
-    const formattedStat: string[] = [`Base: ${stat.base}`];
+    // const formattedStat: string[] = [`Base: ${stat.base}`];
+    const formattedStat: string[] = [`${roundWithPrecision(getStatTotal(stat), 100)}`];
     switch (stat_name) {
         case StatNames.autoSpeed:
             formattedStat.push(`(${roundWithPrecision(getStatTotal(stat) / 15, 100)} a/s)`);

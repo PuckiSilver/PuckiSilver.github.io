@@ -6,7 +6,7 @@ import PlayIcon from '../../icons/play';
 import ArrowRightIcon from '../../icons/arrow-right';
 import ChevronLeftIcon from '../../icons/chevron-left';
 import CloseIcon from '../../icons/close';
-import { GameState, Entity, Player, Upgrade, Tickable, Stats } from './survive/SurviveTypes';
+import { GameState, Entity, Player, Upgrade, Tickable, Stats, Item, StatNames } from './survive/SurviveTypes';
 import { getBaseStats, getRandomUpgrade, getStatFormatted, getStatTotal, implementsTickable, roundWithPrecision, statToIcon, statToStatName } from './survive/Utils';
 
 const Survive = () => {
@@ -23,10 +23,44 @@ const Survive = () => {
     const playerMoveDirection = useRef({x: 0, y: 0});
     const mousePosition = useRef({x: 0, y: 0});
     const lastTimestamp = useRef<number>(performance.now());
+    const totalTimeElapsed = useRef(0);
     const [isTouchDevice, setIsTouchDevice] = useState(false);
     const [isJoystickLeft, setIsJoystickLeft] = useState(false);
     const [checkedUpgrade, setCheckedUpgrade] = useState<number | null>(null);
     const [availableUpgrades, setAvailableUpgrades] = useState<Upgrade[]>([]);
+    const [availableItems, setAvailableItems] = useState<Item[]>([
+        new Item(
+            'destiny_dice',
+            'Dice of Destiny',
+            'Permanently double a random stat, but halve another',
+            'https://raw.githubusercontent.com/ps-dps/MobArmory/refs/heads/main/src/assets/psmoba/textures/item/armor/wither_skeleton_chestplate.png',
+            (gs) => {
+                const statNames = Object.values(StatNames);
+                const doubleStatName = statNames[Math.floor(Math.random() * statNames.length)];
+                const halveStatName = statNames.filter(sn => sn !== doubleStatName)[Math.floor(Math.random() * (statNames.length - 1))];
+                gs.player.current.stats[doubleStatName].mult.push(2);
+                gs.player.current.stats[halveStatName].mult.push(.5);
+                if (doubleStatName === StatNames.health) {
+                    gs.player.current.health *= 2;
+                }
+                if (halveStatName === StatNames.health) {
+                    gs.player.current.health /= 2;
+                }
+            },
+            (gs, d, et) => {
+                if (et % 10 - d >= 0) return; // only run once every 10 seconds
+                console.log('10s');
+            },
+        ),
+        new Item(
+            'thorns',
+            'Thorns',
+            'Deal damage to enemies that hit you',
+            'https://raw.githubusercontent.com/ps-dps/MobArmory/refs/heads/main/src/assets/psmoba/textures/item/armor/wither_skeleton_leggings.png',
+            () => {},
+            () => {},
+        ),
+    ]);
     const [statScreenMaximized, setStatScreenMaximized] = useState(false);
     const [, forceUpdate] = useState({});
     const preventDefaultKeys = useMemo(() => ['w', 'a', 's', 'd', ' ', 'Tab'], []);
@@ -109,10 +143,11 @@ const Survive = () => {
         const timestamp = performance.now();
         const delta = Math.abs(lastTimestamp.current - timestamp) / 1000;
         lastTimestamp.current = timestamp;
+        totalTimeElapsed.current += delta;
 
         if (!isPaused.current) {
-            gameState.objects.filter(implementsTickable).map(o => o as any as Tickable).forEach(obj => obj.onTick(gameState, delta));
-            gameState.player.current.onTick(gameState, delta);
+            gameState.objects.filter(implementsTickable).map(o => o as any as Tickable).forEach(obj => obj.onTick(gameState, delta, totalTimeElapsed.current));
+            gameState.player.current.onTick(gameState, delta, totalTimeElapsed.current);
 
             if (spawnEnemyCooldown.current > 0) spawnEnemyCooldown.current -= delta;
             if (spawnEnemyCooldown.current <= 0) {
@@ -305,6 +340,25 @@ const Survive = () => {
                     </div>
                 )}
             </div>
+            {availableItems.length && <div className='item_menu'>
+                <div className='item_cards'>
+                    {availableItems.map((item, i) => (
+                        <div className='item_card' key={`item_${i}`}>
+                            <img alt={`${item.name} Icon`} src={item.icon}/>
+                            <h3>{item.name}</h3>
+                            <p>{item.description}</p>
+                            <button
+                                onClick={() => {
+                                    gameState.player.current.items.push(item);
+                                    item.onPickup(gameState);
+                                    setAvailableItems([]);
+                                    isPaused.current = false;
+                                }}
+                            >Get</button>
+                        </div>
+                    ))}
+                </div>
+            </div>}
             {availableUpgrades.length && <div className='upgrade_menu'>
                 <div className='upgrade_cards'>
                     {availableUpgrades.map((upgrade, i) => (
@@ -326,7 +380,6 @@ const Survive = () => {
                     className='upgrade_button'
                     onClick={() => {
                         if (checkedUpgrade === null) return;
-                        console.log(availableUpgrades[checkedUpgrade]);
                         const upgrade = availableUpgrades[checkedUpgrade];
                         const previousPlayerHealthStat = getStatTotal(gameState.player.current.stats.health);
                         if (upgrade.type === 'flat') {

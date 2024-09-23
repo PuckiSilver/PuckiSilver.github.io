@@ -1,4 +1,4 @@
-import { getStatTotal, implementsDamageable, moveAlongVector, moveTowardsPosition } from "./Utils";
+import { containsItem, getStatTotal, implementsDamageable, moveAlongVector, moveTowardsPosition } from "./Utils";
 
 export type Position = {
     x: number;
@@ -48,7 +48,7 @@ export interface Displayable {
 
 export interface Tickable {
     isTickable: true;
-    onTick: (gs: GameState, delta: number) => void;
+    onTick: (gs: GameState, delta: number, elapsedTime: number) => void;
 }
 
 export interface Damageable {
@@ -109,7 +109,7 @@ export class Entity extends DisplayableImpl implements Damageable, Tickable {
         return true;
     };
 
-    onTick(gs: GameState, delta: number) {
+    onTick(gs: GameState, delta: number, elapsedTime: number) {
         if (this.invulTimeLeft !== 0) {
             this.invulTimeLeft -= delta;
             if (this.invulTimeLeft <= 0) {
@@ -126,6 +126,9 @@ export class Entity extends DisplayableImpl implements Damageable, Tickable {
             this.position.r + gs.player.current.position.r,
             () => {
                 gs.player.current.damage(getStatTotal(this.stats.autoDamage), gs);
+                if (containsItem(gs.player.current.items, 'thorns')) {
+                    this.damage(getStatTotal(this.stats.autoDamage) / 2, gs);
+                }
                 return true;
             });
         this.position = {
@@ -136,11 +139,30 @@ export class Entity extends DisplayableImpl implements Damageable, Tickable {
     };
 }
 
+export class Item {
+    id: string;
+    name: string;
+    description: string;
+    icon: string;
+    onPickup: (gs: GameState) => void;
+    onTick: (gs: GameState, delta: number, elapsedTime: number) => void;
+
+    constructor(id: string, name: string, description: string, icon: string, onPickup: (gs: GameState) => void, onTick: (gs: GameState, delta: number, elapsedTime: number) => void) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.icon = icon;
+        this.onPickup = onPickup;
+        this.onTick = onTick;
+    }
+}
+
 export class Player extends Entity {
     xp: number = 0;
     level: number = 0;
     xpToNextLevel: number = 10 + (1 * 2) ** 1.2;
     isEnemy: boolean = false;
+    items: Item[] = [];
     levelUpCallback: () => void;
     getMousePosition: () => { x: number; y: number; };
     getPlayerMoveDirection: () => { x: number; y: number; };
@@ -158,7 +180,7 @@ export class Player extends Entity {
         this.getPlayerMoveDirection = getPlayerMoveDirection;
     }
 
-    onTick(gs: GameState, delta: number) {
+    onTick(gs: GameState, delta: number, elapsedTime: number) {
         if (this.invulTimeLeft !== 0) {
             // reduce iFrames
             this.invulTimeLeft -= delta;
@@ -195,6 +217,9 @@ export class Player extends Entity {
             x: this.position.x - movementVector.x,
             y: this.position.y - movementVector.y,
         };
+
+        // run item onTick
+        this.items.forEach(item => item.onTick(gs, delta, elapsedTime));
 
         // collect xp
         gs.objects.filter(o => o instanceof XPOrb).map(o => o as XPOrb).forEach((orb) => {
@@ -248,7 +273,7 @@ export class Bullet extends DisplayableImpl implements Tickable {
         this.piercing --;
     }
 
-    onTick(gs: GameState, delta: number) {
+    onTick(gs: GameState, delta: number, elapsedTime: number) {
         const movementVector = moveAlongVector(this.direction, delta, this.speed);
         this.position = {
             ...this.position,
