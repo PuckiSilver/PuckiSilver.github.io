@@ -1,4 +1,4 @@
-import { containsItem, getStatTotal, implementsDamageable, moveAlongVector, moveTowardsPosition } from "./Utils";
+import { containsItem, getStatTotal, implementsDamageable, moveAlongVector, moveTowardsPosition, setVectorLength } from "./Utils";
 
 export type Position = {
     x: number;
@@ -61,21 +61,32 @@ export abstract class DisplayableImpl implements Displayable {
     nameId: string;
     visualFlags: string[];
     position: Position;
+    isPositionRelativeToPlayer: boolean;
 
-    constructor(nameId: string, position: Position, visualFlags: string[]) {
+    constructor(nameId: string, position: Position, visualFlags: string[], isPositionRelativeToPlayer: boolean = false) {
         this.nameId = nameId;
         this.position = position;
+        this.isPositionRelativeToPlayer = isPositionRelativeToPlayer;
         this.visualFlags = visualFlags;
     }
 
     render(i: number, ppos: {x: number, y: number}, sc: number, sz: {height: number, width: number}): {key: string, className: string, style: React.CSSProperties} {
+        const style = this.isPositionRelativeToPlayer ? {
+            left: this.position.x * sc + sz.width,
+            top: this.position.y * sc + sz.height,
+            width: sc * this.position.r * 2,
+            height: sc * this.position.r * 2,
+        } : {
+            left: (this.position.x - ppos.x) * sc + sz.width,
+            top: (this.position.y - ppos.y) * sc + sz.height,
+            width: sc * this.position.r * 2,
+            height: sc * this.position.r * 2,
+        };
+
         return {
             key: `${this.nameId}_${i}`,
             className: [...this.visualFlags, this.nameId].join(' '),
-            style: {
-                left: (this.position.x - ppos.x) * sc + sz.width,
-                top: (this.position.y - ppos.y) * sc + sz.height,
-            }
+            style,
         };
     };
 }
@@ -196,13 +207,14 @@ export class Player extends Entity {
             const mousePosition = this.getMousePosition();
             const mouseVectorLength = Math.sqrt(mousePosition.x ** 2 + mousePosition.y ** 2);
             if (mouseVectorLength > 0) {
+                const movementDirection = setVectorLength(mousePosition, 32);
                 gs.objects.push(new Bullet(
                     {x: this.position.x, y: this.position.y, r: .2},
-                    {x: mousePosition.x, y: mousePosition.y},
-                    32,
+                    {x: movementDirection.x, y: movementDirection.y, r: 0},
                     getStatTotal(this.stats.autoDamage),
                     5,
                     getStatTotal(this.stats.piercing),
+                    false,
                     false,
                 ));
                 this.autoCooldown = 15 / getStatTotal(this.stats.autoSpeed);
@@ -242,24 +254,23 @@ export class Player extends Entity {
 export class Bullet extends DisplayableImpl implements Tickable {
     isTickable: true = true;
     damage: number;
-    direction: {x: number, y: number};
-    speed: number;
+    direction: Position;
     timeAlive: number;
     piercing: number;
     isEnemy: boolean;
 
     constructor(
         position: Position,
-        direction: {x: number, y: number},
-        speed: number,
+        direction: Position,
         damage: number,
         timeAlive: number,
         piercing: number,
         isEnemy: boolean,
+        isPositionRelativeToPlayer: boolean,
+        nameId: string = 'bullet',
     ) {
-        super('bullet', position, []);
+        super(nameId, position, isEnemy ? ['enemy'] : [], isPositionRelativeToPlayer);
         this.direction = direction;
-        this.speed = speed;
         this.damage = damage;
         this.timeAlive = timeAlive;
         this.piercing = piercing;
@@ -274,15 +285,16 @@ export class Bullet extends DisplayableImpl implements Tickable {
     }
 
     onTick(gs: GameState, delta: number, elapsedTime: number) {
-        const movementVector = moveAlongVector(this.direction, delta, this.speed);
         this.position = {
-            ...this.position,
-            x: this.position.x + movementVector.x,
-            y: this.position.y + movementVector.y,
+            x: this.position.x + this.direction.x * delta,
+            y: this.position.y + this.direction.y * delta,
+            r: this.position.r + this.direction.r * delta,
         };
 
         if (this.isEnemy) {
-            const distanceToPlayer = Math.sqrt((this.position.x - gs.player.current.position.x) ** 2 + (this.position.y - gs.player.current.position.y) ** 2);
+            const distanceToPlayer = this.isPositionRelativeToPlayer ?
+                Math.sqrt((this.position.x) ** 2 + (this.position.y) ** 2) :
+                Math.sqrt((this.position.x - gs.player.current.position.x) ** 2 + (this.position.y - gs.player.current.position.y) ** 2);
             if (distanceToPlayer < this.position.r + gs.player.current.position.r && gs.player.current.damage(this.damage, gs)) {
                 this.reducePiercing();
             }
@@ -291,7 +303,9 @@ export class Bullet extends DisplayableImpl implements Tickable {
                 .filter(e => implementsDamageable(e) && e.isEnemy)
                 .map(e => e as Displayable & Damageable)
                 .forEach(e => {
-                    const distanceToEntity = Math.sqrt((this.position.x - e.position.x) ** 2 + (this.position.y - e.position.y) ** 2);
+                    const distanceToEntity = this.isPositionRelativeToPlayer ?
+                    Math.sqrt((this.position.x + gs.player.current.position.x - e.position.x) ** 2 + (this.position.y + gs.player.current.position.y - e.position.y) ** 2) :
+                    Math.sqrt((this.position.x - e.position.x) ** 2 + (this.position.y - e.position.y) ** 2);
                     if (distanceToEntity < this.position.r + e.position.r && e.damage(this.damage, gs)) {
                         this.reducePiercing();
                     }

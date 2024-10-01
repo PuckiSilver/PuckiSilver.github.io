@@ -124,6 +124,14 @@ export const getBaseStats = (partialStats: {[key in keyof Stats]?: number}): Sta
     return stats as Stats;
 };
 
+export const setVectorLength = (vector: { x: number, y: number }, length: number): { x: number, y: number } => {
+    const vectorLength = Math.sqrt(vector.x ** 2 + vector.y ** 2);
+    return {
+        x: (vector.x / vectorLength) * length,
+        y: (vector.y / vectorLength) * length,
+    }
+}
+
 export const moveAlongVector = (vector: { x: number, y: number }, delta: number, speed: number, vectorLength?: number): { x: number, y: number } => {
     if (vector.x === 0 && vector.y === 0) {
         return {x:0, y:0};

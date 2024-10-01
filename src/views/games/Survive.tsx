@@ -6,7 +6,7 @@ import PlayIcon from '../../icons/play';
 import ArrowRightIcon from '../../icons/arrow-right';
 import ChevronLeftIcon from '../../icons/chevron-left';
 import CloseIcon from '../../icons/close';
-import { GameState, Entity, Player, Upgrade, Tickable, Stats, Item, StatNames } from './survive/SurviveTypes';
+import { GameState, Entity, Player, Upgrade, Tickable, Stats, Item, StatNames, Bullet } from './survive/SurviveTypes';
 import { getBaseStats, getRandomUpgrade, getStatFormatted, getStatTotal, implementsTickable, roundWithPrecision, statToIcon, statToStatName } from './survive/Utils';
 
 const Survive = () => {
@@ -47,10 +47,7 @@ const Survive = () => {
                     gs.player.current.health /= 2;
                 }
             },
-            (gs, d, et) => {
-                if (et % 10 - d >= 0) return; // only run once every 10 seconds
-                console.log('10s');
-            },
+            () => {},
         ),
         new Item(
             'thorns',
@@ -60,6 +57,26 @@ const Survive = () => {
             () => {},
             () => {},
         ),
+        new Item(
+            'shockarea',
+            'Shock Area',
+            'Damage nearby enemies every few seconds',
+            'https://raw.githubusercontent.com/ps-dps/MobArmory/refs/heads/main/src/assets/psmoba/textures/item/armor/wither_skeleton_boots.png',
+            () => {},
+            (gs, d, et) => {
+                if (et % 5 - d >= 0) return;
+                gs.objects.push(new Bullet(
+                    {x: 0, y: 0, r: 5},
+                    {x: 0, y: 0, r: 2.5},
+                    5,
+                    2,
+                    999,
+                    false,
+                    true,
+                    'shockarea',
+                ));
+            },
+        )
     ]);
     const [statScreenMaximized, setStatScreenMaximized] = useState(false);
     const [, forceUpdate] = useState({});
@@ -143,9 +160,10 @@ const Survive = () => {
         const timestamp = performance.now();
         const delta = Math.abs(lastTimestamp.current - timestamp) / 1000;
         lastTimestamp.current = timestamp;
-        totalTimeElapsed.current += delta;
 
         if (!isPaused.current) {
+            totalTimeElapsed.current += delta;
+
             gameState.objects.filter(implementsTickable).map(o => o as any as Tickable).forEach(obj => obj.onTick(gameState, delta, totalTimeElapsed.current));
             gameState.player.current.onTick(gameState, delta, totalTimeElapsed.current);
 

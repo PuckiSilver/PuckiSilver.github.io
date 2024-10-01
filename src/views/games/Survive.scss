@@ -76,8 +76,6 @@ main.survive {
                 z-index: -1;
                 position: absolute;
                 transform: translate(-50%, -50%);
-                width: calc(var(--scale) * .8px);
-                height: calc(var(--scale) * .8px);
                 background: var(--secondary-color);
                 border-radius: 50%;
                 box-shadow: calc(var(--scale) * .8px * .1) calc(var(--scale) * .8px * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
@@ -86,8 +84,6 @@ main.survive {
             .enemy {
                 position: absolute;
                 transform: translate(-50%, -50%);
-                width: calc(var(--scale) * 3.2px);
-                height: calc(var(--scale) * 3.2px);
                 background: red;
                 border-radius: 50%;
                 box-shadow: calc(var(--scale) * 3.2px * .1) calc(var(--scale) * 3.2px * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
@@ -100,11 +96,25 @@ main.survive {
             .bullet {
                 position: absolute;
                 transform: translate(-50%, -50%);
-                width: calc(var(--scale) * .4px);
-                height: calc(var(--scale) * .4px);
-                background: red;
+                background: aqua;
                 border-radius: 50%;
                 box-shadow: calc(var(--scale) * .4px * .1) calc(var(--scale) * .4px * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
+
+                &.enemy {
+                    background: red;
+                }
+            }
+
+            .shockarea {
+                position: absolute;
+                transform: translate(-50%, -50%);
+                background: #0ff5;
+                border-radius: 50%;
+                box-shadow: calc(var(--scale) * .4px * .1) calc(var(--scale) * .4px * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
+
+                &.enemy {
+                    background: #f005;
+                }
             }
         }
 
