@@ -78,7 +78,7 @@ main.survive {
                 transform: translate(-50%, -50%);
                 background: var(--secondary-color);
                 border-radius: 50%;
-                box-shadow: calc(var(--scale) * .8px * .1) calc(var(--scale) * .8px * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
+                box-shadow: calc(var(--scale) * .2px) calc(var(--scale) * .2px) calc(var(--scale) * .5px) color-mix(in srgb, var(--background-color) 30%, transparent 70%);
             }
 
             .enemy {
@@ -86,7 +86,7 @@ main.survive {
                 transform: translate(-50%, -50%);
                 background: red;
                 border-radius: 50%;
-                box-shadow: calc(var(--scale) * 3.2px * .1) calc(var(--scale) * 3.2px * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
+                box-shadow: calc(var(--scale) * .2px) calc(var(--scale) * .2px) calc(var(--scale) * .5px) color-mix(in srgb, var(--background-color) 30%, transparent 70%);
 
                 &.damaged {
                     opacity: .5;
@@ -98,7 +98,7 @@ main.survive {
                 transform: translate(-50%, -50%);
                 background: aqua;
                 border-radius: 50%;
-                box-shadow: calc(var(--scale) * .4px * .1) calc(var(--scale) * .4px * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
+                box-shadow: calc(var(--scale) * .2px) calc(var(--scale) * .2px) calc(var(--scale) * .5px) color-mix(in srgb, var(--background-color) 30%, transparent 70%);
 
                 &.enemy {
                     background: red;
@@ -110,7 +110,7 @@ main.survive {
                 transform: translate(-50%, -50%);
                 background: #0ff5;
                 border-radius: 50%;
-                box-shadow: calc(var(--scale) * .4px * .1) calc(var(--scale) * .4px * .1) 10px color-mix(in srgb, var(--background-color) 30%, transparent 70%);
+                box-shadow: calc(var(--scale) * .2px) calc(var(--scale) * .2px) calc(var(--scale) * .5px) color-mix(in srgb, var(--background-color) 30%, transparent 70%);
 
                 &.enemy {
                     background: #f005;
