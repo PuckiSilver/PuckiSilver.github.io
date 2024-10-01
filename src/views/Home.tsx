@@ -58,54 +58,54 @@ export default function Home() {
                 <p>I'm a professional full-stack web developer with a high interest in modding- and creating games in my free time</p>
                 <h3>Fluent Programming Languages</h3>
                 <div className='skill_container'>
-                    <a className='skill' style={{color: '#3178C6'}} href='https://www.typescriptlang.org' target='_blank'>
+                    <a className='skill' style={{color: '#3178C6'}} href='https://www.typescriptlang.org' target='_blank' rel='noreferrer'>
                         <TypescripIcon/>
                         Typescript
                     </a>
-                    <a className='skill' style={{color: '#FFE263'}} href='https://www.python.org' target='_blank'>
+                    <a className='skill' style={{color: '#FFE263'}} href='https://www.python.org' target='_blank' rel='noreferrer'>
                         <PythonIcon/>
                         Python
                     </a>
-                    <a className='skill' style={{color: '#52A535'}} href='https://datapack.wiki' target='_blank'>
+                    <a className='skill' style={{color: '#52A535'}} href='https://datapack.wiki' target='_blank' rel='noreferrer'>
                         <MinecraftIcon/>
                         MCFunction
                     </a>
-                    <a className='skill' style={{color: '#F8981D'}} href='https://www.java.com' target='_blank'>
+                    <a className='skill' style={{color: '#F8981D'}} href='https://www.java.com' target='_blank' rel='noreferrer'>
                         <JavaIcon/>
                         Java
                     </a>
-                    <a className='skill' style={{color: '#5586A4'}} href='https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)' target='_blank'>
+                    <a className='skill' style={{color: '#5586A4'}} href='https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)' target='_blank' rel='noreferrer'>
                         <OpenglIcon/>
                         GLSL
                     </a>
                 </div>
                 <h3>Frameworks and Tools</h3>
                 <div className='skill_container'>
-                    <a className='skill' style={{color: '#22A7F2'}} href='https://code.visualstudio.com' target='_blank'>
+                    <a className='skill' style={{color: '#22A7F2'}} href='https://code.visualstudio.com' target='_blank' rel='noreferrer'>
                         <VisualStudioIcon/>
                         VSCode
                     </a>
-                    <a className='skill' style={{color: '#E83464'}} href='https://www.jetbrains.com/idea/' target='_blank'>
+                    <a className='skill' style={{color: '#E83464'}} href='https://www.jetbrains.com/idea/' target='_blank' rel='noreferrer'>
                         <IntelliJIcon/>
                         IntelliJ IDEA
                     </a>
-                    <a className='skill' style={{color: '#5ED3F3'}} href='https://react.dev' target='_blank'>
+                    <a className='skill' style={{color: '#5ED3F3'}} href='https://react.dev' target='_blank' rel='noreferrer'>
                         <ReactIcon/>
                         React
                     </a>
-                    <a className='skill' style={{color: '#77BC1F'}} href='https://spring.io/projects/spring-boot' target='_blank'>
+                    <a className='skill' style={{color: '#77BC1F'}} href='https://spring.io/projects/spring-boot' target='_blank' rel='noreferrer'>
                         <SpringBootIcon/>
                         Spring Boot
                     </a>
-                    <a className='skill' style={{color: '#6991D2'}} href='https://www.getpaint.net' target='_blank'>
+                    <a className='skill' style={{color: '#6991D2'}} href='https://www.getpaint.net' target='_blank' rel='noreferrer'>
                         <PaintDotNetIcon/>
                         Paint.NET
                     </a>
-                    <a className='skill' style={{color: '#F7F7F7'}} href='https://www.unrealengine.com' target='_blank'>
+                    <a className='skill' style={{color: '#F7F7F7'}} href='https://www.unrealengine.com' target='_blank' rel='noreferrer'>
                         <UnrealScriptIcon/>
                         Unreal Engine
                     </a>
-                    <a className='skill' style={{color: '#B50E38'}} href='https://mcbeet.dev' target='_blank'>
+                    <a className='skill' style={{color: '#B50E38'}} href='https://mcbeet.dev' target='_blank' rel='noreferrer'>
                         <BeetIcon/>
                         Beet
                     </a>
@@ -115,15 +115,15 @@ export default function Home() {
                 <h2>Highlighted Projects</h2>
                 <div className='project_stats'>
                     <StarIcon style={{color: '#ffdd00'}}/>
-                    <span><a href='https://github.com/PuckiSilver/NoShadow' target='_blank'>NoShadow</a> with <span className='stat' style={{color: '#ffdd00', minWidth: '1rem'}}>{starCount ?? <Spinner/>}</span> Stars on GitHub</span>
+                    <span><a href='https://github.com/PuckiSilver/NoShadow' target='_blank' rel="noreferrer">NoShadow</a> with <span className='stat' style={{color: '#ffdd00', minWidth: '1rem'}}>{starCount ?? <Spinner/>}</span> Stars on GitHub</span>
                 </div>
                 <div className='project_stats'>
                     <DownloadIcon style={{color: '#1cdf8b'}}/>
-                    <span><a href='https://modrinth.com/project/mob-captains' target='_blank'>Mob Captains</a> with <span className='stat' style={{color: '#1cdf8b', minWidth: '3rem'}}>{mobCapDownloadCount ? formatNumber(mobCapDownloadCount) : <Spinner/>}</span> Downloads on Modrinth and</span>
+                    <span><a href='https://modrinth.com/project/mob-captains' target='_blank' rel="noreferrer">Mob Captains</a> with <span className='stat' style={{color: '#1cdf8b', minWidth: '3rem'}}>{mobCapDownloadCount ? formatNumber(mobCapDownloadCount) : <Spinner/>}</span> Downloads on Modrinth and</span>
                 </div>
                 <div className='project_stats'>
                     <DownloadIcon style={{color: '#1cdf8b'}}/>
-                    <span><a href='https://modrinth.com/project/keep-some-inventory' target='_blank'>Keep Some Inventory</a> with <span className='stat' style={{color: '#1cdf8b', minWidth: '3rem'}}>{keepDownloadCount ? formatNumber(keepDownloadCount) : <Spinner/>}</span> Downloads on Modrinth</span>
+                    <span><a href='https://modrinth.com/project/keep-some-inventory' target='_blank' rel="noreferrer">Keep Some Inventory</a> with <span className='stat' style={{color: '#1cdf8b', minWidth: '3rem'}}>{keepDownloadCount ? formatNumber(keepDownloadCount) : <Spinner/>}</span> Downloads on Modrinth</span>
                 </div>
             </div>
             <div className='section'>
