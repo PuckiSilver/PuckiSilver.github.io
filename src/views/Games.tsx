@@ -16,6 +16,13 @@ const Games = () => {
                         icon={<GamepadIcon />}
                         flag='in dev'
                     />
+                    <LinkCard
+                        title='Elden Ringdle'
+                        description='A wordle inspired game with Elden Ring Weapons'
+                        link='/g/eldenringdle'
+                        icon={<GamepadIcon />}
+                        flag='in dev'
+                    />
                 </div>
             </div>
         </main>

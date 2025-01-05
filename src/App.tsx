@@ -19,6 +19,7 @@ import ArrowUpRightIcon from './icons/arrow-up-right';
 import Survive from './views/games/Survive';
 import Games from './views/Games';
 import GamepadIcon from './icons/gamepad';
+import EldenRingdle from './views/games/EldenRingdle';
 
 const App = () => {
   const [navActive, setNavActive] = React.useState(() => {
@@ -164,6 +165,7 @@ const App = () => {
             <Route path="/tools/cardboard" element={<Cardboard />} />
 
             <Route path="/g/survive" element={<Survive />} />
+            <Route path="/g/eldenringdle" element={<EldenRingdle />} />
           </Routes>
         </BrowserRouter>
         <footer>
