@@ -1,4 +1,84 @@
 
+import GreatKatanaIcon from '../../../icons/eldenringitems/GreatKatana.png'
+import DragonHuntersGreatKatanaIcon from '../../../icons/eldenringitems/DragonHuntersGreatKatana.png'
+import RakshasasGreatKatanaIcon from '../../../icons/eldenringitems/RakshasasGreatKatana.png'
+import MiladyIcon from '../../../icons/eldenringitems/Milady.png'
+import LedasSwordIcon from '../../../icons/eldenringitems/LedasSword.png'
+import RellanasTwinBladesIcon from '../../../icons/eldenringitems/RellanasTwinBlades.png'
+import RedBearsClawIcon from '../../../icons/eldenringitems/RedBearsClaw.png'
+import BeastClawIcon from '../../../icons/eldenringitems/BeastClaw.png'
+import FiresparkPerfumeBottleIcon from '../../../icons/eldenringitems/FiresparkPerfumeBottle.png'
+import ChillingPerfumeBottleIcon from '../../../icons/eldenringitems/ChillingPerfumeBottle.png'
+import FrenzyflamePerfumeBottleIcon from '../../../icons/eldenringitems/FrenzyflamePerfumeBottle.png'
+import LightningPerfumeBottleIcon from '../../../icons/eldenringitems/LightningPerfumeBottle.png'
+import DeadlyPoisonPerfumeBottleIcon from '../../../icons/eldenringitems/DeadlyPoisonPerfumeBottle.png'
+import BackhandBladeIcon from '../../../icons/eldenringitems/BackhandBlade.png'
+import SmithscriptCirqueIcon from '../../../icons/eldenringitems/SmithscriptCirque.png'
+import CursebladesCirqueIcon from '../../../icons/eldenringitems/CursebladesCirque.png'
+import SmithscriptDaggerIcon from '../../../icons/eldenringitems/SmithscriptDagger.png'
+import DryleafArtsIcon from '../../../icons/eldenringitems/DryleafArts.png'
+import DanesFootworkIcon from '../../../icons/eldenringitems/DanesFootwork.png'
+import DuelingShieldIcon from '../../../icons/eldenringitems/DuelingShield.png'
+import CarianThrustingShieldIcon from '../../../icons/eldenringitems/CarianThrustingShield.png'
+import NanayasTorchIcon from '../../../icons/eldenringitems/NanayasTorch.png'
+import LamentingVisageIcon from '../../../icons/eldenringitems/LamentingVisage.png'
+import TorchIcon from '../../../icons/eldenringitems/Torch.png'
+import BeastRepellentTorchIcon from '../../../icons/eldenringitems/BeastRepellentTorch.png'
+import SteelWireTorchIcon from '../../../icons/eldenringitems/SteelWireTorch.png'
+import SentrysTorchIcon from '../../../icons/eldenringitems/SentrysTorch.png'
+import GhostflameTorchIcon from '../../../icons/eldenringitems/GhostflameTorch.png'
+import StTrinasTorchIcon from '../../../icons/eldenringitems/StTrinasTorch.png'
+import DryleafSealIcon from '../../../icons/eldenringitems/DryleafSeal.png'
+import FireKnightsSealIcon from '../../../icons/eldenringitems/FireKnightsSeal.png'
+import SpiraltreeSealIcon from '../../../icons/eldenringitems/SpiraltreeSeal.png'
+import FingerSealIcon from '../../../icons/eldenringitems/FingerSeal.png'
+import ErdtreeSealIcon from '../../../icons/eldenringitems/ErdtreeSeal.png'
+import GoldenOrderSealIcon from '../../../icons/eldenringitems/GoldenOrderSeal.png'
+import GravelStoneSealIcon from '../../../icons/eldenringitems/GravelStoneSeal.png'
+import GiantsSealIcon from '../../../icons/eldenringitems/GiantsSeal.png'
+import GodslayersSealIcon from '../../../icons/eldenringitems/GodslayersSeal.png'
+import ClawmarkSealIcon from '../../../icons/eldenringitems/ClawmarkSeal.png'
+import FrenziedFlameSealIcon from '../../../icons/eldenringitems/FrenziedFlameSeal.png'
+import DragonCommunionSealIcon from '../../../icons/eldenringitems/DragonCommunionSeal.png'
+import StaffOfTheGreatBeyondIcon from '../../../icons/eldenringitems/StaffOfTheGreatBeyond.png'
+import MaternalStaffIcon from '../../../icons/eldenringitems/MaternalStaff.png'
+import AstrologersStaffIcon from '../../../icons/eldenringitems/AstrologersStaff.png'
+import GlintstoneStaffIcon from '../../../icons/eldenringitems/GlintstoneStaff.png'
+import AcademyGlintstoneStaffIcon from '../../../icons/eldenringitems/AcademyGlintstoneStaff.png'
+import DiggersStaffIcon from '../../../icons/eldenringitems/DiggersStaff.png'
+import DemiHumanQueensStaffIcon from '../../../icons/eldenringitems/DemiHumanQueensStaff.png'
+import AzursGlintstoneStaffIcon from '../../../icons/eldenringitems/AzursGlintstoneStaff.png'
+import LusatsGlintstoneStaffIcon from '../../../icons/eldenringitems/LusatsGlintstoneStaff.png'
+import CarianGlintstoneStaffIcon from '../../../icons/eldenringitems/CarianGlintstoneStaff.png'
+import CarianGlintbladeStaffIcon from '../../../icons/eldenringitems/CarianGlintbladeStaff.png'
+import CarianRegalScepterIcon from '../../../icons/eldenringitems/CarianRegalScepter.png'
+import AlbinauricStaffIcon from '../../../icons/eldenringitems/AlbinauricStaff.png'
+import StaffOfLossIcon from '../../../icons/eldenringitems/StaffOfLoss.png'
+import GelmirGlintstoneStaffIcon from '../../../icons/eldenringitems/GelmirGlintstoneStaff.png'
+import CrystalStaffIcon from '../../../icons/eldenringitems/CrystalStaff.png'
+import RottenCrystalStaffIcon from '../../../icons/eldenringitems/RottenCrystalStaff.png'
+import MeteoriteStaffIcon from '../../../icons/eldenringitems/MeteoriteStaff.png'
+import StaffOfTheGuiltyIcon from '../../../icons/eldenringitems/StaffOfTheGuilty.png'
+import PrinceOfDeathsStaffIcon from '../../../icons/eldenringitems/PrinceOfDeathsStaff.png'
+import RabbathsCannonIcon from '../../../icons/eldenringitems/RabbathsCannon.png'
+import HandBallistaIcon from '../../../icons/eldenringitems/HandBallista.png'
+import JarCannonIcon from '../../../icons/eldenringitems/JarCannon.png'
+import RepeatingCrossbowIcon from '../../../icons/eldenringitems/RepeatingCrossbow.png'
+import SpreadCrossbowIcon from '../../../icons/eldenringitems/SpreadCrossbow.png'
+import SoldiersCrossbowIcon from '../../../icons/eldenringitems/SoldiersCrossbow.png'
+import LightCrossbowIcon from '../../../icons/eldenringitems/LightCrossbow.png'
+import HeavyCrossbowIcon from '../../../icons/eldenringitems/HeavyCrossbow.png'
+import ArbalestIcon from '../../../icons/eldenringitems/Arbalest.png'
+import CrepussBlackKeyCrossbowIcon from '../../../icons/eldenringitems/CrepussBlackKeyCrossbow.png'
+import PulleyCrossbowIcon from '../../../icons/eldenringitems/PulleyCrossbow.png'
+import FullMoonCrossbowIcon from '../../../icons/eldenringitems/FullMoonCrossbow.png'
+import IgonsGreatbowIcon from '../../../icons/eldenringitems/IgonsGreatbow.png'
+import GreatbowIcon from '../../../icons/eldenringitems/Greatbow.png'
+import GolemGreatbowIcon from '../../../icons/eldenringitems/GolemGreatbow.png'
+import ErdtreeGreatbowIcon from '../../../icons/eldenringitems/ErdtreeGreatbow.png'
+import LionGreatbowIcon from '../../../icons/eldenringitems/LionGreatbow.png'
+import AnsbachsLongbowIcon from '../../../icons/eldenringitems/AnsbachsLongbow.png'
+
 export type ERItem = {
     icon: string
     name: string
@@ -150,7 +230,7 @@ enum DamageType {
 
 export const AllEldenRingItems: ERItem[] = [
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/great_katana_great_katana_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: GreatKatanaIcon,
         name: "Great Katana",
         weapon_type: WeaponType.GreatKatana,
         scaling: [Stat.Str, Stat.Dex],
@@ -162,7 +242,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/dragon-hunters_great_katana_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: DragonHuntersGreatKatanaIcon,
         name: "Dragon-Hunter's Great Katana",
         weapon_type: WeaponType.GreatKatana,
         scaling: [Stat.Str, Stat.Dex],
@@ -174,7 +254,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/rakshasas_great_katana_great_katana_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: RakshasasGreatKatanaIcon,
         name: "Rakshasa's Great Katana",
         weapon_type: WeaponType.GreatKatana,
         scaling: [Stat.Str, Stat.Dex],
@@ -186,7 +266,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/milady_light_greatswords_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: MiladyIcon,
         name: "Milady",
         weapon_type: WeaponType.LightGreatsword,
         scaling: [Stat.Str, Stat.Dex],
@@ -198,7 +278,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/ledas_sword_light_greatswords_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: LedasSwordIcon,
         name: "Leda's Sword",
         weapon_type: WeaponType.LightGreatsword,
         scaling: [Stat.Str, Stat.Dex, Stat.Fai],
@@ -210,7 +290,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.EnirIlim],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/rellanas_twinblade_light_greatswords_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: RellanasTwinBladesIcon,
         name: "Rellana's Twin Blades",
         weapon_type: WeaponType.LightGreatsword,
         scaling: [Stat.Str, Stat.Dex, Stat.Int, Stat.Fai],
@@ -222,7 +302,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/red_bears_claw_beast_claws_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: RedBearsClawIcon,
         name: "Red Bear's Claw",
         weapon_type: WeaponType.BeastClaw,
         scaling: [Stat.Str, Stat.Dex],
@@ -234,7 +314,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/beast_claw_beast_claws_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: BeastClawIcon,
         name: "Beast Claw",
         weapon_type: WeaponType.BeastClaw,
         scaling: [Stat.Str, Stat.Dex],
@@ -246,7 +326,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/firespark_perfume_bottle_perfume_bottles_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: FiresparkPerfumeBottleIcon,
         name: "Firespark Perfume Bottle",
         weapon_type: WeaponType.PerfumeBottle,
         scaling: [Stat.Dex],
@@ -258,7 +338,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/chilling_perfume_bottle_perfume_bottles_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: ChillingPerfumeBottleIcon,
         name: "Chilling Perfume Bottle",
         weapon_type: WeaponType.PerfumeBottle,
         scaling: [Stat.Dex, Stat.Int],
@@ -270,7 +350,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.CharosHiddenGrave],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/frenzyflame_perfume_bottle_perfume_bottles_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: FrenzyflamePerfumeBottleIcon,
         name: "Frenzyflame Perfume Bottle",
         weapon_type: WeaponType.PerfumeBottle,
         scaling: [Stat.Str, Stat.Dex, Stat.Int, Stat.Fai],
@@ -282,7 +362,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.AbyssalWoods],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/lightning_perfume_bottle_perfume_bottles_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: LightningPerfumeBottleIcon,
         name: "Lightning Perfume Bottle",
         weapon_type: WeaponType.PerfumeBottle,
         scaling: [Stat.Dex, Stat.Fai],
@@ -294,7 +374,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.CeruleanCoast],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/deadly_poison_perfume_bottle_perfume_bottles_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: DeadlyPoisonPerfumeBottleIcon,
         name: "Deadly Poison Perfume Bottle",
         weapon_type: WeaponType.PerfumeBottle,
         scaling: [Stat.Dex, Stat.Arc],
@@ -306,7 +386,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/backhand_blade_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: BackhandBladeIcon,
         name: "Backhand Blade",
         weapon_type: WeaponType.BackhandBlade,
         scaling: [Stat.Str, Stat.Dex],
@@ -318,7 +398,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/smithscript_cirque_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: SmithscriptCirqueIcon,
         name: "Smithscript Cirque",
         weapon_type: WeaponType.BackhandBlade,
         scaling: [Stat.Str, Stat.Dex, Stat.Int, Stat.Fai],
@@ -330,7 +410,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/curseblades_cirque_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: CursebladesCirqueIcon,
         name: "Curseblade's Cirque",
         weapon_type: WeaponType.BackhandBlade,
         scaling: [Stat.Str, Stat.Dex],
@@ -342,7 +422,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain, Location.EnirIlim, Location.ScaduAltus, Location.AbyssalWoods, Location.CharosHiddenGrave, Location.CeruleanCoast, Location.AncientRuinsOfRauh],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/smithscript_dagger_throwing_blade_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: SmithscriptDaggerIcon,
         name: "Smithscript Dagger",
         weapon_type: WeaponType.ThrowingBlade,
         scaling: [Stat.Str, Stat.Dex, Stat.Int, Stat.Fai],
@@ -354,7 +434,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/dryleaf_arts_hand-to-hand_arts_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: DryleafArtsIcon,
         name: "Dryleaf Arts",
         weapon_type: WeaponType.HandToHandArt,
         scaling: [Stat.Str, Stat.Dex],
@@ -366,7 +446,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/danes_footwork_hand-to-hand_arts_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: DanesFootworkIcon,
         name: "Dane's Footwork",
         weapon_type: WeaponType.HandToHandArt,
         scaling: [Stat.Str, Stat.Dex],
@@ -378,7 +458,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.EnirIlim],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/dueling_shield_thrusting_shields_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: DuelingShieldIcon,
         name: "Dueling Shield",
         weapon_type: WeaponType.ThrustingShield,
         scaling: [Stat.Str, Stat.Dex],
@@ -390,7 +470,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/carian_thrusting_shield_thrusting_shields_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: CarianThrustingShieldIcon,
         name: "Carian Thrusting Shield",
         weapon_type: WeaponType.ThrustingShield,
         scaling: [Stat.Str, Stat.Dex, Stat.Int],
@@ -402,7 +482,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/nanayas_torch_1_torches_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: NanayasTorchIcon,
         name: "Nanaya's Torch",
         weapon_type: WeaponType.Torch,
         scaling: [Stat.Str, Stat.Dex, Stat.Int, Stat.Fai],
@@ -414,7 +494,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.AbyssalWoods],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/lamenting_visage_torch_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: LamentingVisageIcon,
         name: "Lamenting Visage",
         weapon_type: WeaponType.Torch,
         scaling: [Stat.Str],
@@ -426,7 +506,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.CharosHiddenGrave],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/torch_weapon_elden_ring_wiki_guide_200px.png',
+        icon: TorchIcon,
         name: "Torch",
         weapon_type: WeaponType.Torch,
         scaling: [Stat.Str, Stat.Dex],
@@ -438,7 +518,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Limgrave, Location.RoundtableHold],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/beast-repellent_torch_weapon_elden_ring_wiki_guide_200px.png',
+        icon: BeastRepellentTorchIcon,
         name: "Beast-Repellent Torch",
         weapon_type: WeaponType.Torch,
         scaling: [Stat.Str, Stat.Dex],
@@ -450,7 +530,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Dragonbarrow],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/steel-wire_torch_weapon_elden_ring_wiki_guide_200px.png',
+        icon: SteelWireTorchIcon,
         name: "Steel-Wire Torch",
         weapon_type: WeaponType.Torch,
         scaling: [Stat.Str, Stat.Dex],
@@ -462,7 +542,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.WeepingPeninsula],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/sentrys_torch_weapon_elden_ring_wiki_guide_200px.png',
+        icon: SentrysTorchIcon,
         name: "Sentry's Torch",
         weapon_type: WeaponType.Torch,
         scaling: [Stat.Str, Stat.Dex, Stat.Fai],
@@ -474,7 +554,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.CapitalOutskirts],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/ghostflame_torch_weapon_elden_ring_wiki_guide_200px.png',
+        icon: GhostflameTorchIcon,
         name: "Ghostflame Torch",
         weapon_type: WeaponType.Torch,
         scaling: [Stat.Str, Stat.Dex, Stat.Int],
@@ -486,7 +566,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.SiofraRiver],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/st_trinas_torch_weapon_elden_ring_wiki_guide_200px.png',
+        icon: StTrinasTorchIcon,
         name: "St Trina's Torch",
         weapon_type: WeaponType.Torch,
         scaling: [Stat.Str, Stat.Dex, Stat.Fai],
@@ -498,7 +578,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ConsectratedSnowfield],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/dryleaf_seal_unique_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_75px.png',
+        icon: DryleafSealIcon,
         name: "Dryleaf Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Str, Stat.Fai],
@@ -510,7 +590,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/fire_knights_seal_unique_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: FireKnightsSealIcon,
         name: "Fire Knight's Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Str, Stat.Fai],
@@ -522,7 +602,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/spiraltree_seal_unique_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: SpiraltreeSealIcon,
         name: "Spiraltree Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Str, Stat.Fai],
@@ -534,7 +614,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/finger_seal_sacred_seal_weapon_elden_ring_wiki_guide_200px.png',
+        icon: FingerSealIcon,
         name: "Finger Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Str, Stat.Fai],
@@ -546,7 +626,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.RoundtableHold],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/erdtree_seal_sacred_seal_weapon_elden_ring_wiki_guide_200px.png',
+        icon: ErdtreeSealIcon,
         name: "Erdtree Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Fai],
@@ -558,7 +638,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.MtGelmir],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/golden_order_seal_sacred_seal_weapon_elden_ring_wiki_guide_200px.png',
+        icon: GoldenOrderSealIcon,
         name: "Golden Order Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Int, Stat.Fai],
@@ -570,7 +650,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.CapitalOutskirts],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/gravel_stone_seal_sacred_seal_weapon_elden_ring_wiki_guide_200px.png',
+        icon: GravelStoneSealIcon,
         name: "Gravel Stone Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Str, Stat.Fai],
@@ -582,7 +662,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Leyndell],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/giants_seal_sacred_seal_weapon_elden_ring_wiki_guide_200px.png',
+        icon: GiantsSealIcon,
         name: "Giant's Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Str, Stat.Fai],
@@ -594,7 +674,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.MountaintopsOfTheGiants],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/godslayers_seal_sacred_seal_weapon_elden_ring_wiki_guide_200px.png',
+        icon: GodslayersSealIcon,
         name: "Godslayer's Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Str, Stat.Fai],
@@ -602,11 +682,11 @@ export const AllEldenRingItems: ERItem[] = [
         weight: 1.5,
         ash_of_war: AshOfWar.NoSkill,
         damage: [DamageType.Strike],
-        optain: [WayToOptain.StoneswordKey],
+        optain: [WayToOptain.StoneswordKey, WayToOptain.FindInWorld],
         location: [Location.Limgrave],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/clawmark_seal_sacred_seal_weapon_elden_ring_wiki_guide_200px.png',
+        icon: ClawmarkSealIcon,
         name: "Clawmark Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Str, Stat.Fai],
@@ -618,7 +698,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Caelid],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/frenzied_flame_seal_sacred_seal_weapon_elden_ring_wiki_guide_200px.png',
+        icon: FrenziedFlameSealIcon,
         name: "Frenzied Flame Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Str, Stat.Dex, Stat.Int, Stat.Fai],
@@ -630,7 +710,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Leyndell],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/dragon_communion_seal_sacred_seal_weapon_elden_ring_wiki_guide_200px.png',
+        icon: DragonCommunionSealIcon,
         name: "Dragon Communion Seal",
         weapon_type: WeaponType.SacredSeal,
         scaling: [Stat.Fai, Stat.Arc],
@@ -642,7 +722,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Limgrave],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/staff_of_the_great_beyond_glintstone_staff_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: StaffOfTheGreatBeyondIcon,
         name: "Staff of the Great Beyond",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int, Stat.Fai],
@@ -654,7 +734,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/dryleaf_seal_glinstone_staff_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_75px.png',
+        icon: MaternalStaffIcon,
         name: "Maternal Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int, Stat.Arc],
@@ -666,7 +746,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/astrologers_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: AstrologersStaffIcon,
         name: "Astrologer's Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -678,7 +758,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.LiurniaOfTheLakes],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/glintstone_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: GlintstoneStaffIcon,
         name: "Glintstone Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -690,7 +770,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.LiurniaOfTheLakes, Location.Limgrave],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/academy_glintstone_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: AcademyGlintstoneStaffIcon,
         name: "Academy Glintstone Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -702,7 +782,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.LiurniaOfTheLakes],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/diggers_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: DiggersStaffIcon,
         name: "Digger's Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -714,7 +794,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Caelid, Location.LiurniaOfTheLakes, Location.AltusPlateau],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/demi-human_queens_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: DemiHumanQueensStaffIcon,
         name: "Demi-Human Queen's Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -726,7 +806,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.WeepingPeninsula],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/azurs_glintstone_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: AzursGlintstoneStaffIcon,
         name: "Azur's Glintstone Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -738,7 +818,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.LiurniaOfTheLakes],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/lusats_glintstone_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: LusatsGlintstoneStaffIcon,
         name: "Lusat's Glintstone Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -750,7 +830,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Caelid],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/carian_glintstone_staff_glintstone_staffs-elden-ring-wiki-guide-200.png',
+        icon: CarianGlintstoneStaffIcon,
         name: "Carian Glintstone Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -762,7 +842,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.LiurniaOfTheLakes],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/carian_glintblade_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: CarianGlintbladeStaffIcon,
         name: "Carian Glintblade Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Dex, Stat.Int],
@@ -774,7 +854,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.LiurniaOfTheLakes],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/carian_regal_scepter_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: CarianRegalScepterIcon,
         name: "Carian Regal Scepter",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Dex, Stat.Int],
@@ -786,8 +866,8 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.LiurniaOfTheLakes],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/albinauric_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
-        name: "Albanauric Staff",
+        icon: AlbinauricStaffIcon,
+        name: "Albinauric Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int, Stat.Arc],
         guard_boost: 14,
@@ -798,8 +878,8 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.MtGelmir],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/staff_of_loss_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
-        name: "Staff of  Loss",
+        icon: StaffOfLossIcon,
+        name: "Staff of Loss",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Dex, Stat.Int],
         guard_boost: 14,
@@ -810,7 +890,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Caelid],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/gelmir_glintstone_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: GelmirGlintstoneStaffIcon,
         name: "Gelmir Glintstone Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int, Stat.Fai],
@@ -822,7 +902,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.MtGelmir],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/crystal_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: CrystalStaffIcon,
         name: "Crystal Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -834,7 +914,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.LiurniaOfTheLakes],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/rotten_crystal_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: RottenCrystalStaffIcon,
         name: "Rotten Crystal Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -846,7 +926,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.MiquellasHailigtree],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/meteorite_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: MeteoriteStaffIcon,
         name: "Meteorite Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int],
@@ -858,7 +938,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Caelid],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/staff_of_the_guilty_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: StaffOfTheGuiltyIcon,
         name: "Staff of the Guilty",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Fai],
@@ -870,7 +950,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.MountaintopsOfTheGiants, Location.LiurniaOfTheLakes, Location.MtGelmir],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/prince_of_deaths_staff_glintstonestaff_weapon_elden_ring_wiki_guide_200px.png',
+        icon: PrinceOfDeathsStaffIcon,
         name: "Prince of Death's Staff",
         weapon_type: WeaponType.GlintstoneStaff,
         scaling: [Stat.Str, Stat.Int, Stat.Fai],
@@ -882,7 +962,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.DeeprootDepths],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/rabbaths_cannon_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: RabbathsCannonIcon,
         name: "Rabbath's Cannon",
         weapon_type: WeaponType.Ballista,
         scaling: [],
@@ -894,7 +974,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/hand_ballista_ballista_weapon_elden_ring_wiki_guide_200px.png',
+        icon: HandBallistaIcon,
         name: "Hand Ballista",
         weapon_type: WeaponType.Ballista,
         scaling: [],
@@ -906,7 +986,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.WeepingPeninsula],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/jar_cannon_ballista_weapon_elden_ring_wiki_guide_200px.png',
+        icon: JarCannonIcon,
         name: "Jar Cannon",
         weapon_type: WeaponType.Ballista,
         scaling: [],
@@ -918,7 +998,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.MtGelmir],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/repeating_crossbow_crossbow_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: RepeatingCrossbowIcon,
         name: "Repeating Crossbow",
         weapon_type: WeaponType.Crossbow,
         scaling: [],
@@ -930,7 +1010,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/spread_crossbow_crossbow_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png',
+        icon: SpreadCrossbowIcon,
         name: "Spread Crossbow",
         weapon_type: WeaponType.Crossbow,
         scaling: [],
@@ -942,7 +1022,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.GravesitePlain],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/soldiers_crossbow_weapon_elden_ring_wiki_guide_200px.png',
+        icon: SoldiersCrossbowIcon,
         name: "Soldier's Crossbow",
         weapon_type: WeaponType.Crossbow,
         scaling: [],
@@ -954,7 +1034,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Limgrave, Location.LiurniaOfTheLakes, Location.Caelid, Location.AltusPlateau, Location.Leyndell, Location.MtGelmir, Location.ConsectratedSnowfield, Location.MiquellasHailigtree, Location.GravesitePlain, Location.ScaduAltus],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/light_crossbow_weapon_elden_ring_wiki_guide_200px.png',
+        icon: LightCrossbowIcon,
         name: "Light Crossbow",
         weapon_type: WeaponType.Crossbow,
         scaling: [],
@@ -966,7 +1046,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.WeepingPeninsula],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/heavy_crossbow_weapon_elden_ring_wiki_guide_200px.png',
+        icon: HeavyCrossbowIcon,
         name: "Heavy Crossbow",
         weapon_type: WeaponType.Crossbow,
         scaling: [],
@@ -978,7 +1058,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Limgrave, Location.LiurniaOfTheLakes, Location.Caelid, Location.WeepingPeninsula, Location.ConsectratedSnowfield, Location.DeeprootDepths, Location.Leyndell, Location.MiquellasHailigtree, Location.ScaduAltus, Location.RauhBase, Location.GravesitePlain, Location.AncientRuinsOfRauh, Location.CeruleanCoast, Location.CharosHiddenGrave, Location.AbyssalWoods],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/arbalest_weapon_elden_ring_wiki_guide_200px.png',
+        icon: ArbalestIcon,
         name: "Arbalest",
         weapon_type: WeaponType.Crossbow,
         scaling: [],
@@ -990,7 +1070,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.Limgrave],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/crepuss_black-key_crossbow_weapon_elden_ring_wiki_guide_200px.png',
+        icon: CrepussBlackKeyCrossbowIcon,
         name: "Crepus's Black-Key Crossbow",
         weapon_type: WeaponType.Crossbow,
         scaling: [],
@@ -998,11 +1078,11 @@ export const AllEldenRingItems: ERItem[] = [
         weight: 5,
         ash_of_war: AshOfWar.Heavy,
         damage: [DamageType.Pierce],
-        optain: [WayToOptain.StoneswordKey],
+        optain: [WayToOptain.StoneswordKey, WayToOptain.FindInWorld],
         location: [Location.RoundtableHold],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/pulley_crossbow_weapon_elden_ring_wiki_guide_200px.png',
+        icon: PulleyCrossbowIcon,
         name: "Pulley Crossbow",
         weapon_type: WeaponType.Crossbow,
         scaling: [],
@@ -1014,7 +1094,7 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.MtGelmir],
     },
     {
-        icon: 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/full_moon_crossbow_weapon_elden_ring_wiki_guide_200px.png',
+        icon: FullMoonCrossbowIcon,
         name: "Full Moon Crossbow",
         weapon_type: WeaponType.Crossbow,
         scaling: [],
@@ -1024,5 +1104,77 @@ export const AllEldenRingItems: ERItem[] = [
         damage: [DamageType.Pierce],
         optain: [WayToOptain.FindInWorld],
         location: [Location.LiurniaOfTheLakes],
+    },
+    {
+        icon: IgonsGreatbowIcon,
+        name: "Igon's Greatbow",
+        weapon_type: WeaponType.Greatbow,
+        scaling: [Stat.Str, Stat.Dex],
+        guard_boost: 0,
+        weight: 12.5,
+        ash_of_war: AshOfWar.Standard,
+        damage: [DamageType.Pierce],
+        optain: [WayToOptain.GuaranteedDrop, WayToOptain.QuestReward],
+        location: [Location.GravesitePlain, Location.JaggedPeak],
+    },
+    {
+        icon: GreatbowIcon,
+        name: "Greatbow",
+        weapon_type: WeaponType.Greatbow,
+        scaling: [Stat.Str, Stat.Dex],
+        guard_boost: 0,
+        weight: 10,
+        ash_of_war: AshOfWar.Standard,
+        damage: [DamageType.Pierce],
+        optain: [WayToOptain.FindInWorld, WayToOptain.RandomDrop],
+        location: [Location.AltusPlateau, Location.Caelid, Location.Leyndell, Location.ScaduAltus, Location.GravesitePlain, Location.RauhBase, Location.AbyssalWoods, Location.ConsectratedSnowfield, Location.DeeprootDepths],
+    },
+    {
+        icon: GolemGreatbowIcon,
+        name: "Golem Greatbow",
+        weapon_type: WeaponType.Greatbow,
+        scaling: [Stat.Str, Stat.Dex],
+        guard_boost: 0,
+        weight: 14.5,
+        ash_of_war: AshOfWar.Standard,
+        damage: [DamageType.Pierce],
+        optain: [WayToOptain.RandomDrop],
+        location: [Location.Limgrave, Location.Caelid, Location.AltusPlateau, Location.WeepingPeninsula, Location.MountaintopsOfTheGiants],
+    },
+    {
+        icon: ErdtreeGreatbowIcon,
+        name: "Erdtree Greatbow",
+        weapon_type: WeaponType.Greatbow,
+        scaling: [Stat.Str, Stat.Dex, Stat.Fai],
+        guard_boost: 0,
+        weight: 11,
+        ash_of_war: AshOfWar.Standard,
+        damage: [DamageType.Pierce],
+        optain: [WayToOptain.StoneswordKey, WayToOptain.GuaranteedDrop],
+        location: [Location.Limgrave],
+    },
+    {
+        icon: LionGreatbowIcon,
+        name: "Lion Greatbow",
+        weapon_type: WeaponType.Greatbow,
+        scaling: [Stat.Str, Stat.Dex],
+        guard_boost: 0,
+        weight: 9.5,
+        ash_of_war: AshOfWar.Unique,
+        damage: [DamageType.Pierce],
+        optain: [WayToOptain.Remembrance],
+        location: [Location.Caelid],
+    },
+    {
+        icon: AnsbachsLongbowIcon,
+        name: "Ansbach's Longbow",
+        weapon_type: WeaponType.Bow,
+        scaling: [Stat.Str, Stat.Dex],
+        guard_boost: 0,
+        weight: 4.5,
+        ash_of_war: AshOfWar.Unique,
+        damage: [DamageType.Pierce],
+        optain: [WayToOptain.Bossdrop, WayToOptain.QuestReward],
+        location: [Location.EnirIlim],
     },
 ]

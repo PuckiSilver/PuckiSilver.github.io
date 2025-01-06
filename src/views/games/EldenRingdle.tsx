@@ -20,7 +20,7 @@ const EldenRingdle = () => {
         }
         const shownItems = availableItems.filter(item => item.name.toLowerCase().includes(guess.toLowerCase()))
         setShownItems(shownItems)
-    }, [guess])
+    }, [guess, availableItems])
 
     const guessItem = (item: ERItem) => {
         setGuess('')
@@ -49,7 +49,7 @@ const EldenRingdle = () => {
     }
 
     const mapCorrectnessToColorStyle = (correctness: ParticalCorrectList | boolean) => {
-        if (correctness == true || correctness === 'y') return { backgroundColor: '#00ff0077' }
+        if (correctness === true || correctness === 'y') return { backgroundColor: '#00ff0077' }
         if (correctness === 'p') return { backgroundColor: '#ffff0077' }
         return { backgroundColor: '#ff000077' }
     }
@@ -74,7 +74,7 @@ const EldenRingdle = () => {
                     <div className='shownitems'>
                         {shownItems.map(item => (
                             <button key={item.name} className='item' onClick={_ => guessItem(item)}>
-                                <img src={item.icon} alt={item.name} />
+                                <img src={item.icon} />
                                 <p>{item.name}</p>
                             </button>
                         ))}
@@ -98,10 +98,10 @@ const EldenRingdle = () => {
                             <div className='cell'>
                                 <img src={item.icon} alt={item.name}/>
                             </div>
-                            <div className='cell' style={mapCorrectnessToColorStyle(item.name == correctItem.name)}>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.name === correctItem.name)}>
                                 <span>{item.name}</span>
                             </div>
-                            <div className='cell' style={mapCorrectnessToColorStyle(item.weapon_type == correctItem.weapon_type)}>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.weapon_type === correctItem.weapon_type)}>
                                 <span>{item.weapon_type}</span>
                             </div>
                             <div className='cell' style={mapCorrectnessToColorStyle(item.c_scaling)}>
@@ -110,14 +110,14 @@ const EldenRingdle = () => {
                             <div className='cell' style={mapCorrectnessToColorStyle(item.c_damage)}>
                                 <span>{item.damage.join('/')}</span>
                             </div>
-                            <div className='cell' style={mapCorrectnessToColorStyle(item.ash_of_war == correctItem.ash_of_war)}>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.ash_of_war === correctItem.ash_of_war)}>
                                 <span>{item.ash_of_war}</span>
                             </div>
-                            <div className='cell' style={mapCorrectnessToColorStyle(item.weight == correctItem.weight)}>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.weight === correctItem.weight)}>
                                 {getUpDownArrowFromComparison(item.weight, correctItem.weight)}
                                 <span>{item.weight}</span>
                             </div>
-                            <div className='cell' style={mapCorrectnessToColorStyle(item.guard_boost == correctItem.guard_boost)}>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.guard_boost === correctItem.guard_boost)}>
                                 {getUpDownArrowFromComparison(item.guard_boost, correctItem.guard_boost)}
                                 <span>{item.guard_boost}</span>
                             </div>
