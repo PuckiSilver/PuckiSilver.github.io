@@ -34,12 +34,18 @@ const EldenRingdle = () => {
         } else {
             setGuessedItems(gi => [{
                 ...item,
-                c_scaling: item.scaling.every(d => correctItem.scaling.includes(d)) && correctItem.scaling.every(d => item.scaling.includes(d)) ? 'y' : item.scaling.some(s => correctItem.scaling.includes(s)) ? 'p' : 'n',
-                c_damage: item.damage.every(d => correctItem.damage.includes(d)) && correctItem.damage.every(d => item.damage.includes(d)) ? 'y' : item.damage.some(d => correctItem.damage.includes(d)) ? 'p' : 'n',
-                c_optain: item.optain.every(o => correctItem.optain.includes(o)) ? 'y' : item.optain.some(o => correctItem.optain.includes(o)) ? 'p' : 'n',
-                c_location: item.location.every(o => correctItem.location.includes(o)) ? 'y' : item.location.some(o => correctItem.location.includes(o)) ? 'p' : 'n',
+                c_scaling: checkCorrectnessForList(item.scaling, correctItem.scaling),
+                c_damage: checkCorrectnessForList(item.damage, correctItem.damage),
+                c_optain: checkCorrectnessForList(item.optain, correctItem.optain),
+                c_location: checkCorrectnessForList(item.location, correctItem.location),
             }, ...gi])
         }
+    }
+
+    const checkCorrectnessForList = (list: string[], correctList: string[]): ParticalCorrectList => {
+        if (list.every(d => correctList.includes(d)) && correctList.every(d => list.includes(d))) return 'y'
+        if (list.some(d => correctList.includes(d))) return 'p'
+        return 'n'
     }
 
     const mapCorrectnessToColorStyle = (correctness: ParticalCorrectList | boolean) => {
@@ -78,7 +84,7 @@ const EldenRingdle = () => {
                         <span>Name</span>
                         <span>Weapon Type</span>
                         <span>Scaling</span>
-                        <span>Damage Type(s)</span>
+                        <span>Damage Type</span>
                         <span>Ash of War</span>
                         <span>Weight</span>
                         <span>Guard Boost</span>
@@ -87,16 +93,38 @@ const EldenRingdle = () => {
                     </div>
                     {guessedItems.map(item => (
                         <div key={item.name} className='item'>
-                            <img src={item.icon} alt={item.name} style={mapCorrectnessToColorStyle(item.icon == correctItem.icon)}/>
-                            <span style={mapCorrectnessToColorStyle(item.name == correctItem.name)}>{item.name}</span>
-                            <span style={mapCorrectnessToColorStyle(item.weapon_type == correctItem.weapon_type)}>{item.weapon_type}</span>
-                            <span style={mapCorrectnessToColorStyle(item.c_scaling)}>{item.scaling.join(', ')}</span>
-                            <span style={mapCorrectnessToColorStyle(item.c_damage)}>{item.damage.join('/')}</span>
-                            <span style={mapCorrectnessToColorStyle(item.ash_of_war == correctItem.ash_of_war)}>{item.ash_of_war}</span>
-                            <span style={mapCorrectnessToColorStyle(item.weight == correctItem.weight)}>{item.weight}{getUpDownArrowFromComparison(item.weight, correctItem.weight)}</span>
-                            <span style={mapCorrectnessToColorStyle(item.guard_boost == correctItem.guard_boost)}>{item.guard_boost}{getUpDownArrowFromComparison(item.guard_boost, correctItem.guard_boost)}</span>
-                            <span style={mapCorrectnessToColorStyle(item.c_optain)}>{item.optain.join(', ')}</span>
-                            <span style={mapCorrectnessToColorStyle(item.c_location)}>{item.location.join(', ')}</span>
+                            <div className='cell'>
+                                <img src={item.icon} alt={item.name}/>
+                            </div>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.name == correctItem.name)}>
+                                <span>{item.name}</span>
+                            </div>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.weapon_type == correctItem.weapon_type)}>
+                                <span>{item.weapon_type}</span>
+                            </div>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.c_scaling)}>
+                                <span>{item.scaling.join(', ')}</span>
+                            </div>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.c_damage)}>
+                                <span>{item.damage.join('/')}</span>
+                            </div>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.ash_of_war == correctItem.ash_of_war)}>
+                                <span>{item.ash_of_war}</span>
+                            </div>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.weight == correctItem.weight)}>
+                                {getUpDownArrowFromComparison(item.weight, correctItem.weight)}
+                                <span>{item.weight}</span>
+                            </div>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.guard_boost == correctItem.guard_boost)}>
+                                {getUpDownArrowFromComparison(item.guard_boost, correctItem.guard_boost)}
+                                <span>{item.guard_boost}</span>
+                            </div>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.c_optain)}>
+                                <span>{item.optain.join(', ')}</span>
+                            </div>
+                            <div className='cell' style={mapCorrectnessToColorStyle(item.c_location)}>
+                                <span>{item.location.join(', ')}</span>
+                            </div>
                         </div>
                     ))}
                 </div>
