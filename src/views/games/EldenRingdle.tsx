@@ -64,7 +64,9 @@ const EldenRingdle = () => {
             <h1>Elden Ringdle</h1>
             <div className='section'>
                 <h2>How to play</h2>
-                <p>If something is red, your guess is wrong, if it's green, this guess is correct. Yellow means it's partially correct.</p>
+                <p>Type the name of any Elden Ring weapon in the search bar and select one. Your guess will be scored on how close it is to the correct one.</p>
+                <p>If a cell is red, that value is wrong, if it's green, the value is correct. Yellow means it's partially correct. An up arrow means, the actual value is higher, a down arrow means it's lower.</p>
+                <p>Currently not all weapons are featured yet, the next ones will be added soon. Currently all progress resets if you reload the page and a new weapon will be selected. When this is finished it will feature a different weapon each day.</p>
             </div>
             <div className='section game'>
                 <div className='search'>
@@ -103,7 +105,7 @@ const EldenRingdle = () => {
                                 <span>{item.weapon_type}</span>
                             </div>
                             <div className='cell' style={mapCorrectnessToColorStyle(item.c_scaling)}>
-                                <span>{item.scaling.join(', ')}</span>
+                                <span>{item.scaling?.length ? item.scaling.join(', ') : '-'}</span>
                             </div>
                             <div className='cell' style={mapCorrectnessToColorStyle(item.c_damage)}>
                                 <span>{item.damage.join('/')}</span>
@@ -129,6 +131,10 @@ const EldenRingdle = () => {
                     ))}
                 </div>
             </div>
+            <span className='disclaimer'>
+                This is a fan made game and not affiliated with FromSoftware or Bandai Namco.
+                If you have any suggestions or found a bug, please <a href='/contact'>contact me</a>.
+            </span>
         </main>
     )
 }
