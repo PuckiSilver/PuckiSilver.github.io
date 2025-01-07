@@ -129,6 +129,42 @@ main.eldenringdle {
                 }
             }
         }
+
+        div.footer {
+            display: flex;
+            gap: .25rem;
+            margin: auto;
+            align-items: center;
+            color: var(--hover-color);
+
+            img {
+                height: 3rem;
+            }
+        }
+
+        div.correct {
+            display: flex;
+            gap: .5rem;
+            margin: auto;
+            flex-direction: column;
+            border: .125rem solid var(--border-color);
+            border-radius: .25rem;
+            padding: .5rem;
+            text-align: center;
+            width: 62rem;
+            max-width: calc(100% - 2rem);
+            background-color: var(--background-color);
+
+            div.item {
+                display: flex;
+                gap: .25rem;
+                margin: auto;
+
+                img {
+                    height: 5.125rem;
+                }
+            }
+        }
     }
 
     span.disclaimer {

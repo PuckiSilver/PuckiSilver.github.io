@@ -90,16 +90,8 @@ export type ERItem = {
     weight: number
     optain: WayToOptain[]
     location: Location[]
+    id: number
 }
-
-export type RatedERItem = ERItem & {
-    c_scaling: ParticalCorrectList,
-    c_damage: ParticalCorrectList,
-    c_optain: ParticalCorrectList,
-    c_location: ParticalCorrectList,
-}
-
-export type ParticalCorrectList = 'y' | 'n' | 'p'
 
 enum WayToOptain {
     Remembrance = 'Remembrance',
@@ -228,7 +220,7 @@ enum DamageType {
     Pierce = 'Pierce',
 }
 
-export const AllEldenRingItems: ERItem[] = [
+const allEldenRingItemsNoId: any[] = [
     {
         icon: GreatKatanaIcon,
         name: "Great Katana",
@@ -1178,3 +1170,5 @@ export const AllEldenRingItems: ERItem[] = [
         location: [Location.EnirIlim],
     },
 ]
+
+export const allEldenRingItems: ERItem[] = allEldenRingItemsNoId.map((item, index) => {return {...item, id: index}})
