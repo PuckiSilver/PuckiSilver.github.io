@@ -57,6 +57,7 @@ const EldenRingdle = () => {
     const [guess, setGuess] = React.useState('')
     const [shownItems, setShownItems] = React.useState<ERItem[]>([])
     const [activeSeed, setActiveSeed] = React.useState(getTodaysSeed())
+    const [yestedaysItem, setYesterdaysItem] = React.useState(allEldenRingItems[getRandomNumberWithSeed(getYesterdaysSeed())])
     const [guessedItemIds, setGuessedItemIds] = React.useState<number[]>(localStorage.getItem(`eldenringdle-guessed-${activeSeed}`)?.split(',').map(Number) || [])
     const [availableItems, setAvailableItems] = React.useState<ERItem[]>(allEldenRingItems.filter(item => !guessedItemIds.includes(item.id)))
     const [correctItem, setCorrectItem] = React.useState<ERItem>(allEldenRingItems[getRandomNumberWithSeed(activeSeed)])
@@ -92,7 +93,7 @@ const EldenRingdle = () => {
                 <h2>How to play</h2>
                 <p>Type the name of any Elden Ring weapon in the search bar and select one. Your guess will be scored on how close it is to the correct one.</p>
                 <p>If a cell is red, that value is wrong, if it's green, the value is correct. Yellow means it's partially correct. An up arrow means, the actual value is higher, a down arrow means it's lower.</p>
-                <p>Currently not all weapons are featured yet, the next ones will be added soon.</p>
+                <p>Currently not all weapons are featured yet, the missing ones will be added soon. When a new item is added, the correct item (and older correct items) will change.</p>
             </div>
             <div className='section game'>
                 {!guessedItemIds.includes(correctItem.id) ? <div className='search'>
@@ -169,8 +170,8 @@ const EldenRingdle = () => {
                 </div>
                 <div className='footer'>
                     <span>Yesterday's item was: </span>
-                    <img src={allEldenRingItems[getRandomNumberWithSeed(getYesterdaysSeed())].icon} />
-                    <span>{allEldenRingItems[getRandomNumberWithSeed(getYesterdaysSeed())].name}</span>
+                    <img src={yestedaysItem.icon} />
+                    <span>{yestedaysItem.name}</span>
                 </div>
             </div>
             <span className='disclaimer'>

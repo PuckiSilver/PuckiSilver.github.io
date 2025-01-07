@@ -134,8 +134,9 @@ main.eldenringdle {
             display: flex;
             gap: .25rem;
             margin: auto;
+            margin-top: 1rem;
             align-items: center;
-            color: var(--hover-color);
+            color: var(--text-color);
 
             img {
                 height: 3rem;
