@@ -59,3 +59,5 @@
  *
  * @license MIT
  */
+
+//! You need to optain Hailigtree Medalion Half, does that also count as a Quest?
