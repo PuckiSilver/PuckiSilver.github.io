@@ -95,6 +95,11 @@ const EldenRingdle = () => {
                 <p>If a cell is red, that value is wrong, if it's green, the value is correct. Yellow means it's partially correct. An up arrow means, the actual value is higher, a down arrow means it's lower.</p>
                 <p>Currently not all weapons are featured yet, the missing ones will be added soon. When a new item is added, the correct item (and older correct items) will change.</p>
             </div>
+            <div className='section'>
+                <h2>Column specification</h2>
+                <p>Caves and dungeons belong to the location where it's entrance is located.</p>
+                <p>A "Bossdrop" is an item that is dropped by an enemy with a bossbar or an invaider.</p>
+            </div>
             <div className='section game'>
                 {!guessedItemIds.includes(correctItem.id) ? <div className='search'>
                     <input type='text' value={guess} onChange={e => setGuess(e.target.value)} placeholder='Search Item...' />
