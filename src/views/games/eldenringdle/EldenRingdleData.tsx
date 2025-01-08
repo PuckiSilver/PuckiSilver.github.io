@@ -499,7 +499,7 @@ enum WayToOptain {
     Painting = 'Painting',
 }
 
-enum WeaponType {
+export enum WeaponType {
     Dagger = 'Dagger',
     StraightSword = 'Straight Sword',
     Greatsword = 'Greatsword',
@@ -612,6 +612,21 @@ enum DamageType {
     Slash = 'Slash',
     Pierce = 'Pierce',
 }
+
+export const similarWeaponTypes = [
+    [WeaponType.StraightSword, WeaponType.Greatsword, WeaponType.ColossalSword, WeaponType.LightGreatsword],
+    [WeaponType.ThrustingSword, WeaponType.HeavyThrustingSword],
+    [WeaponType.CurvedSword, WeaponType.CurvedGreatsword],
+    [WeaponType.Katana, WeaponType.GreatKatana],
+    [WeaponType.Axe, WeaponType.Greataxe],
+    [WeaponType.Hammer, WeaponType.GreatHammer],
+    [WeaponType.ColossalSword, WeaponType.ColossalWeapon],
+    [WeaponType.Spear, WeaponType.GreatSpear],
+    [WeaponType.Fist, WeaponType.HandToHandArt, WeaponType.Claw, WeaponType.BeastClaw],
+    [WeaponType.LightBow, WeaponType.Bow, WeaponType.Greatbow, WeaponType.Crossbow, WeaponType.Ballista],
+    [WeaponType.ThrustingShield, WeaponType.SmallShield, WeaponType.MediumShield, WeaponType.Greatshield],
+    [WeaponType.SacredSeal, WeaponType.GlintstoneStaff],
+]
 
 const allEldenRingItemsNoId: any[] = [
     {

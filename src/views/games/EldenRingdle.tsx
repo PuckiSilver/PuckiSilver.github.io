@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import './EldenRingdle.scss'
 import ArrowUpIcon from '../../icons/arrow-up';
 import ArrowDownIcon from '../../icons/arrow-down';
-import { allEldenRingItems, ERItem } from './eldenringdle/EldenRingdleData';
+import { allEldenRingItems, ERItem, WeaponType, similarWeaponTypes } from './eldenringdle/EldenRingdleData';
 
 const getRandomNumberWithSeed = (seed: string) => {
     let hash = 0;
@@ -38,6 +38,14 @@ const getColor = (correctness: boolean): object => {
 const compareListGetColor = (list: string[], correctList: string[]): object => {
     if (list.every(d => correctList.includes(d)) && correctList.every(d => list.includes(d))) return getColor(true)
     if (list.some(d => correctList.includes(d))) return { backgroundColor: '#ffff0077' }
+    return getColor(false)
+}
+
+const compareWeaponTypeGetColor = (type: WeaponType, correctType: WeaponType): object => {
+    if (type === correctType) return getColor(true)
+    for (const wts of similarWeaponTypes) {
+        if (wts.includes(type) && wts.includes(correctType)) return { backgroundColor: '#ffff0077' }
+    }
     return getColor(false)
 }
 
@@ -143,7 +151,7 @@ const EldenRingdle = () => {
                                 <div className='cell' style={getColor(item.name === correctItem.name)}>
                                     <span>{item.name}</span>
                                 </div>
-                                <div className='cell' style={getColor(item.weapon_type === correctItem.weapon_type)}>
+                                <div className='cell' style={compareWeaponTypeGetColor(item.weapon_type, correctItem.weapon_type)}>
                                     <span>{item.weapon_type}</span>
                                 </div>
                                 <div className='cell' style={compareListGetColor(item.scaling, correctItem.scaling)}>
