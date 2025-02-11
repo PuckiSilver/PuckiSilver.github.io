@@ -1,0 +1,143 @@
+@import '../../styles.scss';
+
+main.hud_generator {
+    div.editor {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        gap: 1rem;
+        width: 100%;
+        user-select: none;
+
+        div.canvas {
+            flex: 1;
+            border-radius: .25rem;
+            max-width: 100rem;
+            margin: 0 auto;
+
+            img {
+                background-color: var(--hover-color);
+                width: 100%;
+            }
+        }
+
+        div.assets {
+            background: var(--section-color);
+            border-radius: .25rem;
+            display: flex;
+            flex-direction: column;
+
+            div.asset_line {
+                height: 3rem;
+                display: flex;
+                gap: 1rem;
+                padding: .25rem;
+                align-items: center;
+                border-radius: .25rem;
+                cursor: grab;
+                position: relative;
+                
+                &:hover {
+                    background-color: var(--hover-color);
+
+                    div.action_elements {
+                        display: flex;
+
+                        button {
+                            background-color: var(--section-color);
+                        }
+                    }
+                }
+                
+                span {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    width: 14rem;
+
+                    @media (max-width: 66rem) {
+                        & {
+                            display: none;
+                        }
+                    }
+                }
+                
+                div.image_container {
+                    background: var(--background-color);
+                    border-radius: .25rem;
+                    width: 3rem;
+                    height: 3rem;
+                    display: flex;
+                    
+                    img {
+                        image-rendering: pixelated;
+                        transform: scale(4);
+                        max-width: 25%;
+                        max-height: 25%;
+                        margin: auto;
+                    }
+                }
+
+                div.action_elements {
+                    position: absolute;
+                    display: none;
+                    width: calc(100% - 1rem);
+                    height: calc(100% - 1rem);
+                    align-items: center;
+                    justify-content: end;
+                    padding: .5rem;
+
+                    button {
+                        width: 2.5rem;
+                        height: 2.5rem;
+                        background: var(--background-color);
+                        border-radius: .25rem;
+                        cursor: pointer;
+                        border: 0;
+                        padding: .125rem;
+
+                        svg {
+                            width: 2rem;
+                            height: 2rem;
+                            color: #DD1111;
+                        }
+                    }
+                }
+            }
+
+            label.add_line {
+                width: 18rem;
+                height: 3rem;
+                display: flex;
+                margin: .125rem;
+                border-radius: .25rem;
+                border: .125rem solid var(--hover-color);
+                cursor: pointer;
+
+                @media (max-width: 66rem) {
+                    & {
+                        width: 3rem;
+                    }
+                }
+                
+                &:hover {
+                    background-color: var(--background-color);
+                    border: .125rem solid var(--border-color);
+
+                    svg {
+                        color: var(--border-color);
+                    }
+                }
+
+                svg {
+                    margin: auto;
+                    color: var(--hover-color)
+                }
+
+                input {
+                    display: none;
+                }
+            }
+        }
+    }
+}

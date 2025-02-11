@@ -20,6 +20,7 @@ import Survive from './views/games/Survive';
 import Games from './views/Games';
 import GamepadIcon from './icons/gamepad';
 import EldenRingdle from './views/games/EldenRingdle';
+import HudGenerator from './views/tools/HudGenerator';
 
 const App = () => {
   const [navActive, setNavActive] = React.useState(() => {
@@ -58,7 +59,7 @@ const App = () => {
   const getNavItem = (link: string, name: string, icon: any) => {
     const isExternal: boolean = link.startsWith('http');
     return (
-      <a href={link} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noreferrer' : undefined}>
+      <a href={link} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noreferrer' : undefined} key={name}>
         {icon}
         <div className='info'>
           <span>{name}</span>
@@ -163,6 +164,7 @@ const App = () => {
 
             <Route path="/tools/velvet" element={<Velvet />} />
             <Route path="/tools/cardboard" element={<Cardboard />} />
+            <Route path="/t/hudgenerator" element={<HudGenerator />} />
 
             <Route path="/g/survive" element={<Survive />} />
             <Route path="/g/eldenringdle" element={<EldenRingdle />} />
