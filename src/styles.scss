@@ -38,6 +38,16 @@
     --text-color: #FFFFFF;
 }
 
+:root.dph {
+    --primary-color: #FF8904;
+    --secondary-color: #F2491A;
+    --border-color: #44403B;
+    --section-color: #292524;
+    --background-color: #1C1917;
+    --hover-color: #44403B;
+    --text-color: #E7E5E4;
+}
+
 main {
     display: flex;
     flex-direction: column;

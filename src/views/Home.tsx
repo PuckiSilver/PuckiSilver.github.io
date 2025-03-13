@@ -55,7 +55,7 @@ export default function Home() {
             </div>
             <div className='section'>
                 <h2>My Skills</h2>
-                <p>I'm a professional full-stack web developer with a high interest in modding- and creating games in my free time</p>
+                <p>I'm a professional full-stack developer with a high interest in modding- and creating games in my free time</p>
                 <h3>Fluent Programming Languages</h3>
                 <div className='skill_container'>
                     <a className='skill' style={{color: '#3178C6'}} href='https://www.typescriptlang.org' target='_blank' rel='noreferrer'>

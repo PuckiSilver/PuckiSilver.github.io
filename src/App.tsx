@@ -132,6 +132,12 @@ const App = () => {
                 }}>
                   <div className='enby' />
                 </button>}
+                {theme !== 'dph' && <button onClick={() => {
+                  setTheme('dph');
+                  setIsSelectingTheme(false);
+                }}>
+                  <div className='dph' />
+                </button>}
               </div>
             )}
           </div>

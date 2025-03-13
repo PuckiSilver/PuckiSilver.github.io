@@ -258,6 +258,38 @@ div.layout {
                             transform: translate(-50%, -50%);
                         }
                     }
+
+                    div.dph {
+                        width: 2rem;
+                        height: 2rem;
+                        background-color: #FF8904;
+                        border-radius: 50%;
+                        position: relative;
+
+                        &::before {
+                            content: '';
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            background-color: #F2491A;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+
+                        &::after {
+                            content: '';
+                            width: .75rem;
+                            height: .75rem;
+                            background-color: #1C1917;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
                 }
 
                 div.theme_select_popup {
